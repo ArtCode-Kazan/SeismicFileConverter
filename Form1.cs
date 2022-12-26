@@ -55,12 +55,11 @@ namespace BinaryToJSONConverterApp
         {
             BinarySeismicFile fileToConvert = new BinarySeismicFile(pathToOpenFile);
             JsonClass newJson = new JsonClass();
-            newJson.start_time = fileToConvert.DatetimeStart;
-            FileHeader binaryHeader = new FileHeader(0, 0 , new DateTime(), 0, 0);
-            binaryHeader = fileToConvert.GetFileHeader;
+            FileHeader binaryHeader = fileToConvert.GetFileHeader;
+            newJson.start_time = binaryHeader.datetimeStart;                        
             newJson.N_wgs84_latitude = Convert.ToString(binaryHeader.latitude);
             newJson.E_wgs84_longitude = Convert.ToString(binaryHeader.longitude);
-            newJson.filename = ;
+            newJson.filename = Convert.ToString(binaryHeader.); ;
             newJson.signal = ;
 
         }
