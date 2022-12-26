@@ -34,8 +34,8 @@ namespace BinaryToJSONConverterApp
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                textBoxLoadFromFolder.Text = folderBrowserDialog1.SelectedPath;
-                pathToOpenFile = folderBrowserDialog1.SelectedPath;
+                textBoxLoadFromFolder.Text = openFileDialog1.FileName;
+                pathToOpenFile = openFileDialog1.FileName;
             }
         }
 
@@ -59,8 +59,8 @@ namespace BinaryToJSONConverterApp
             newJson.start_time = binaryHeader.datetimeStart;                        
             newJson.N_wgs84_latitude = Convert.ToString(binaryHeader.latitude);
             newJson.E_wgs84_longitude = Convert.ToString(binaryHeader.longitude);
-            newJson.filename = Convert.ToString(binaryHeader.); ;
-            newJson.signal = ;
+            newJson.filename = BinaryFileInfo.name;
+            newJson.signal = fileToConvert.GetComponentSignal("Z");
 
         }
     }
