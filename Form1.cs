@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using BinReader;
+using JsonBinLib;
 using Newtonsoft.Json;
 
 namespace BinaryToJSONConverterApp
