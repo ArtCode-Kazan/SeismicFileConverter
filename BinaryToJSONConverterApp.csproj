@@ -84,7 +84,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonBinLib\JsonBinLib.csproj">
+    <ProjectReference Include="JsonBinLib\JsonBinLib.csproj">
       <Project>{28b6f9a3-0b0f-473a-8e06-034ac1fb7e24}</Project>
       <Name>JsonBinLib</Name>
     </ProjectReference>

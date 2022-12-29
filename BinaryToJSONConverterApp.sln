@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryToJSONConverterApp", "BinaryToJSONConverterApp.csproj", "{C8174EFE-F8FF-4D2F-88AF-A486936016F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBinLib", "..\JsonBinLib\JsonBinLib.csproj", "{28B6F9A3-0B0F-473A-8E06-034AC1FB7E24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBinLib", "JsonBinLib\JsonBinLib.csproj", "{28B6F9A3-0B0F-473A-8E06-034AC1FB7E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
