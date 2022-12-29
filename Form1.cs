@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using BinReader;
+using Newtonsoft.Json;
 
 namespace BinaryToJSONConverterApp
 {   
     public partial class Form1 : Form
     {
-        public string pathToOpenFile = "";
-        public string pathToSaveFile = "";
+        public string openedJson = "";
+        public string savedBinary = "";
         public Form1()
         {
             InitializeComponent();
@@ -18,16 +22,11 @@ namespace BinaryToJSONConverterApp
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
                 InitialDirectory = @"D:\",
-                Title = "Browse Binary Files",
-
+                Title = "Browse JSON Files",
                 CheckFileExists = true,
                 CheckPathExists = true,
-
-                //DefaultExt = "txt",
-                //Filter = "txt files (*.txt)|*.txt",
                 FilterIndex = 1,
                 RestoreDirectory = true,
-
                 ReadOnlyChecked = true,
                 ShowReadOnly = true
             };
@@ -35,33 +34,56 @@ namespace BinaryToJSONConverterApp
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = openFileDialog1.FileName;
-                pathToOpenFile = openFileDialog1.FileName;
+                openedJson = openFileDialog1.FileName;
             }
         }
 
         internal void buttonSaveBrowse_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save_file = new SaveFileDialog();
-            save_file.Filter = "JSON File (*.json*)|*.json*";
+            SaveFileDialog save_file = new SaveFileDialog();                       
+            save_file.Filter = "Baikal7|*.00|Baikal8|*.xx|Sigma|*.bin";
+
             save_file.FilterIndex = 1;
             if (save_file.ShowDialog() == DialogResult.OK)
-            {
-                pathToSaveFile = save_file.FileName + ".json";
-                textBoxSaveFolder.Text = save_file.FileName + ".json";
+            {                
+                textBoxSaveFolder.Text = save_file.FileName;
+                savedBinary = save_file.FileName;
             }
         }
 
         internal void buttonGo_Click(object sender, EventArgs e)
         {
-            BinarySeismicFile fileToConvert = new BinarySeismicFile(pathToOpenFile);
-            JsonClass newJson = new JsonClass();
-            FileHeader binaryHeader = fileToConvert.GetFileHeader;
-            newJson.start_time = binaryHeader.datetimeStart;                        
-            newJson.N_wgs84_latitude = Convert.ToString(binaryHeader.latitude);
-            newJson.E_wgs84_longitude = Convert.ToString(binaryHeader.longitude);
-            newJson.filename = BinaryFileInfo.name;
-            newJson.signal = fileToConvert.GetComponentSignal("Z");
+            JsonClass seisFile = new JsonClass();
 
+            using (StreamReader r = new StreamReader(openedJson))
+            {
+                string jsonInput = r.ReadToEnd();
+                seisFile = JsonConvert.DeserializeObject<JsonClass>(jsonInput);
+            }
+
+            float[] signal = seisFile.signal;
+            Int32[] signalInInt32 = new Int32[signal.Length];
+
+            double maximumOfSignal = signal.Max();
+            double minimumOfSignal = signal.Min();
+            double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
+
+            double coefNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
+            for (int i = 0; i < signal.Length; i++)
+            {
+                signalInInt32[i] = Convert.ToInt32(signal[i] * coefNorm);
+            }
+
+            double latitude = Convert.ToDouble(seisFile.N_wgs84_latitude.PadRight(8, '0').Substring(0,8).Replace('.',','));
+            double longitude = Convert.ToDouble(seisFile.E_wgs84_longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','));
+
+            DateTime dateTimeStart = seisFile.start_time;
+
+            
+
+            JsonFileBinary jsonya = new JsonFileBinary(savedBinary, signalInInt32, latitude, longitude, dateTimeStart);
+            jsonya.WriteBinaryFile(savedBinary);
+            MessageBox.Show("Гатова");
         }
     }
     public class JsonClass
