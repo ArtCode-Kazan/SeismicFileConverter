@@ -28,6 +28,7 @@ namespace BinaryToJSONConverterApp
                 ReadOnlyChecked = true,
                 ShowReadOnly = true
             };
+            openFileDialog1.Filter = "JSON files (*.json)|*.json";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -53,9 +54,9 @@ namespace BinaryToJSONConverterApp
             JsonClass seisFile = ReadClassFromJson(openedJson);
                         
             Int32[] signalInInt32 = NormalizeNConvertSignal(seisFile.signal);            
-            double latitude = Convert.ToDouble(seisFile.NWGS84Latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','));
-            double longitude = Convert.ToDouble(seisFile.EWGS84Longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','));
-            DateTime dateTimeStart = seisFile.startTime;
+            double latitude = Convert.ToDouble(seisFile.N_wgs84_latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','));
+            double longitude = Convert.ToDouble(seisFile.E_wgs84_longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','));
+            DateTime dateTimeStart = seisFile.start_time;
 
             JsonFileBinary jsonya = new JsonFileBinary(savedBinary, signalInInt32, latitude, longitude, dateTimeStart);
             jsonya.WriteBinaryFile(savedBinary);
@@ -93,10 +94,10 @@ namespace BinaryToJSONConverterApp
     }    
     public class JsonClass
     {
-        public DateTime startTime { get; set; }
-        public string NWGS84Latitude { get; set; }
-        public string EWGS84Longitude { get; set; }
-        public string fileName { get; set; }
+        public DateTime start_time { get; set; }
+        public string N_wgs84_latitude { get; set; }
+        public string E_wgs84_longitude { get; set; }
+        public string filename { get; set; }
         public float[] signal { get; set; }
     }
 }
