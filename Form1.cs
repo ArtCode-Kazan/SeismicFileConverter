@@ -12,6 +12,7 @@ namespace BinaryToJSONConverterApp
     {
         public string openedJson = "";
         public string savedBinary = "";
+
         public Form1()
         {
             InitializeComponent();
