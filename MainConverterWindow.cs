@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 
 namespace BinaryToJSONConverterApp
 {
-    public partial class Form1 : Form
+    public partial class MainConverterWindow : Form
     {
         public string openedJson;
         public string savedBinary = "";
 
-        public Form1()
+        public MainConverterWindow()
         {
             InitializeComponent();
         }

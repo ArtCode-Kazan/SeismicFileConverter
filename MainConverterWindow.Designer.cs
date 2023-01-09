@@ -1,6 +1,6 @@
 ﻿namespace BinaryToJSONConverterApp
 {
-    partial class Form1
+    partial class MainConverterWindow
     {
         /// <summary>
         /// Обязательная переменная конструктора.
