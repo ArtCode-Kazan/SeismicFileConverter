@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
+using System.Linq;
 
 namespace JsonBinLib
 {
@@ -14,23 +16,23 @@ namespace JsonBinLib
         public Int32[] signal;
         public int channelCount;
         public int frequency;
-        public double latitude;
-        public double longitude;
+        public string latitude;
+        public string longitude;
         public DateTime dateTimeStart;
 
 
         public JsonFileBinary(
             string pathToSave,
-            int[] signal,
-            double latitude = 0,
-            double longitude = 0,
+            int[] signalNormalize,
+            string latitude = "",
+            string longitude = "",
             DateTime dateTimeStart = new DateTime(),
             int channelCount = 3,
             int frequency = 1000
             )
         {
             this.path = pathToSave;
-            this.signal = signal;
+            this.signal = signalNormalize;
             this.channelCount = channelCount;
             this.frequency = frequency;
             this.latitude = latitude;
@@ -38,6 +40,22 @@ namespace JsonBinLib
             this.dateTimeStart = dateTimeStart;
         }
 
+        public JsonFileBinary(
+            string pathToJson, 
+            string pathToSave
+            )
+        {
+            JsonClass jsonya = returnJsonClass(pathToJson);
+            this.path = pathToSave;
+            this.signal = NormalizeNConvertSignal(jsonya.signal);
+            this.channelCount = order.Length;
+            this.frequency = 1000;
+            this.latitude = jsonya.N_wgs84_latitude;
+            this.longitude = jsonya.E_wgs84_longitude;
+            this.dateTimeStart = jsonya.start_time;
+
+        }
+        
         public void WriteBinaryFile(string path)
         {
             using (FileStream filestream = new FileStream(path, FileMode.Create))
@@ -52,9 +70,9 @@ namespace JsonBinLib
                         binaryWriter.Seek(24, SeekOrigin.Begin);
                         binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.frequency)));
                         binaryWriter.Seek(40, SeekOrigin.Begin);                        
-                        binaryWriter.Write(Convert.ToString(this.latitude)); //string 8 digits
+                        binaryWriter.Write(Convert.ToString(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))); //string 8 digits
                         binaryWriter.Seek(48, SeekOrigin.Begin);                        
-                        binaryWriter.Write(Convert.ToString(this.latitude)); //string 8 digits
+                        binaryWriter.Write(Convert.ToString(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))); //string 8 digits
                         binaryWriter.Seek(60, SeekOrigin.Begin);
                         string date = Convert.ToString(this.dateTimeStart.Year).Substring(2, 2)
                             + Convert.ToString(this.dateTimeStart.Month).PadLeft(2, '0')
@@ -74,9 +92,9 @@ namespace JsonBinLib
                         binaryWriter.Seek(22, SeekOrigin.Begin);
                         binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.frequency)));
                         binaryWriter.Seek(80, SeekOrigin.Begin);
-                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude)));
+                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                         binaryWriter.Seek(72, SeekOrigin.Begin);
-                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude)));
+                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                         binaryWriter.Seek(104, SeekOrigin.Begin);
 
                         DateTime constDatetime = new DateTime(1980, 1, 1);
@@ -101,10 +119,12 @@ namespace JsonBinLib
                         binaryWriter.Seek(56, SeekOrigin.Begin);                        
                         binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.dateTimeStart.Second)));
                         binaryWriter.Seek(72, SeekOrigin.Begin);
-                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude)));
+                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                         binaryWriter.Seek(80, SeekOrigin.Begin);
-                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude)));
+                        binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                     }
+
+                    
 
                     int headerMemorySize = 120 + 72 * this.channelCount;
                     int columnIndex = 1 * sizeof(int);
@@ -126,5 +146,38 @@ namespace JsonBinLib
                 return Path.GetExtension(this.path).Substring(1);
             }
         }
+        public JsonClass returnJsonClass(string pathToJson)
+        {
+            JsonClass seisFile;
+            using (StreamReader reader = new StreamReader(pathToJson))
+            {
+                seisFile = JsonConvert.DeserializeObject<JsonClass>(reader.ReadToEnd());
+            }
+
+            return seisFile;
+        }
+        public Int32[] NormalizeNConvertSignal(float[] originSignal)
+        {
+            Int32[] signalInInt32 = new Int32[originSignal.Length];
+            double maximumOfSignal = originSignal.Max();
+            double minimumOfSignal = originSignal.Min();
+            double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
+            double coefNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
+
+            for (int i = 0; i < originSignal.Length; i++)
+            {
+                signalInInt32[i] = Convert.ToInt32(originSignal[i] * coefNorm);
+            }
+
+            return signalInInt32;
+        }
+    }
+    public class JsonClass
+    {
+        public DateTime start_time { get; set; }
+        public string N_wgs84_latitude { get; set; }
+        public string E_wgs84_longitude { get; set; }
+        public string filename { get; set; }
+        public float[] signal { get; set; }
     }
 }
