@@ -71,7 +71,7 @@
             // 
             // buttonGo
             // 
-            this.buttonGo.Location = new System.Drawing.Point(165, 132);
+            this.buttonGo.Location = new System.Drawing.Point(169, 143);
             this.buttonGo.Name = "buttonGo";
             this.buttonGo.Size = new System.Drawing.Size(75, 23);
             this.buttonGo.TabIndex = 9;
@@ -117,7 +117,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 158);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 185);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(413, 22);
             this.statusStrip1.TabIndex = 13;
@@ -132,7 +132,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 180);
+            this.ClientSize = new System.Drawing.Size(413, 207);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.buttonSaveBrowse);
             this.Controls.Add(this.textBoxSaveFolder);
@@ -141,7 +141,10 @@
             this.Controls.Add(this.buttonBrowse);
             this.Controls.Add(this.textBoxLoadFromFolder);
             this.Controls.Add(this.labelLoadFromFolder);
+            this.MaximumSize = new System.Drawing.Size(429, 246);
+            this.MinimumSize = new System.Drawing.Size(429, 246);
             this.Name = "MainConverterWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Binary converter";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
