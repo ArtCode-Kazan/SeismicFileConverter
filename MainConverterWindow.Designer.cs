@@ -36,6 +36,10 @@
             this.buttonSaveBrowse = new System.Windows.Forms.Button();
             this.textBoxSaveFolder = new System.Windows.Forms.TextBox();
             this.labelSaveToFolder = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBrowse
@@ -52,6 +56,7 @@
             // 
             this.textBoxLoadFromFolder.Location = new System.Drawing.Point(47, 34);
             this.textBoxLoadFromFolder.Name = "textBoxLoadFromFolder";
+            this.textBoxLoadFromFolder.ReadOnly = true;
             this.textBoxLoadFromFolder.Size = new System.Drawing.Size(275, 20);
             this.textBoxLoadFromFolder.TabIndex = 7;
             // 
@@ -88,6 +93,7 @@
             // 
             this.textBoxSaveFolder.Location = new System.Drawing.Point(47, 78);
             this.textBoxSaveFolder.Name = "textBoxSaveFolder";
+            this.textBoxSaveFolder.ReadOnly = true;
             this.textBoxSaveFolder.Size = new System.Drawing.Size(275, 20);
             this.textBoxSaveFolder.TabIndex = 11;
             // 
@@ -100,11 +106,34 @@
             this.labelSaveToFolder.TabIndex = 10;
             this.labelSaveToFolder.Text = "Save:";
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "JSON files (*.json)|*.json";
+            this.openFileDialog1.Multiselect = true;
+            this.openFileDialog1.ReadOnlyChecked = true;
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 158);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip1.TabIndex = 13;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
             // MainConverterWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(413, 180);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.buttonSaveBrowse);
             this.Controls.Add(this.textBoxSaveFolder);
             this.Controls.Add(this.labelSaveToFolder);
@@ -114,6 +143,8 @@
             this.Controls.Add(this.labelLoadFromFolder);
             this.Name = "MainConverterWindow";
             this.Text = "Binary converter";
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,6 +160,9 @@
         private System.Windows.Forms.Button buttonSaveBrowse;
         private System.Windows.Forms.TextBox textBoxSaveFolder;
         private System.Windows.Forms.Label labelSaveToFolder;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

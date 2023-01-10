@@ -1,86 +1,64 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace JsonBinLib
 {
-    public class JsonFileBinary
+    public class JsonToBinary
     {
         public const string SigmaExt = "bin";
         public const string Baikal7Ext = "00";
         public const string Baikal8Ext = "xx";
         string order = "ZXY";
 
-        public string path;
-        public Int32[] signal;
-        public int channelCount;
-        public int frequency;
-        public string latitude;
-        public string longitude;
-        public DateTime dateTimeStart;
+        public string pathToJsonFile;
+        public string pathToSaveFolder;
 
-
-        public JsonFileBinary(
-            string pathToSave,
-            int[] signalNormalize,
-            string latitude = "",
-            string longitude = "",
-            DateTime dateTimeStart = new DateTime(),
-            int channelCount = 3,
-            int frequency = 1000
+        public JsonToBinary(
+            string pathToJsonFile,
+            string pathToSaveFolder
             )
         {
-            this.path = pathToSave;
-            this.signal = signalNormalize;
-            this.channelCount = channelCount;
-            this.frequency = frequency;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.dateTimeStart = dateTimeStart;
+            this.pathToJsonFile = pathToJsonFile;
+            this.pathToSaveFolder = pathToSaveFolder;
         }
 
-        public JsonFileBinary(
-            string pathToJson,
-            string pathToSave
-            )
+        public void WriteBinaryFiles()
         {
-            JsonClass jsonya = returnJsonClass(pathToJson);
-            this.path = pathToSave;
-            this.signal = NormalizeNConvertSignal(jsonya.signal);
-            this.channelCount = order.Length;
-            this.frequency = 1000;
-            this.latitude = jsonya.N_wgs84_latitude;
-            this.longitude = jsonya.E_wgs84_longitude;
-            this.dateTimeStart = jsonya.start_time;
+            JsonClass jsonya = returnJsonClass(pathToJsonFile);
+            string pathToSave = this.pathToSaveFolder + "/" + jsonya.filename + ".00";
+            Int32[] signal = NormalizeNConvertSignal(jsonya.signal);
+            int channelCount = order.Length;
+            int frequency = 1000;
+            string latitude = jsonya.N_wgs84_latitude;
+            string longitude = jsonya.E_wgs84_longitude;
+            DateTime dateTimeStart = jsonya.start_time;
 
-        }
-
-        public void WriteBinaryFile(string path)
-        {
-            using (FileStream filestream = new FileStream(path, FileMode.Create))
+            using (FileStream filestream = new FileStream(pathToSave, FileMode.Create))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(filestream))
                 {
                     binaryWriter.Seek(0, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.channelCount)));
+                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(channelCount)));
                     binaryWriter.Seek(22, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.frequency)));
+                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(frequency)));
                     binaryWriter.Seek(80, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
+                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                     binaryWriter.Seek(72, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
+                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
                     binaryWriter.Seek(104, SeekOrigin.Begin);
 
                     DateTime constDatetime = new DateTime(1980, 1, 1);
-                    double secondsDuraion = (this.dateTimeStart - constDatetime).TotalSeconds;
+                    double secondsDuraion = (dateTimeStart - constDatetime).TotalSeconds;
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
 
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
-                    int headerMemorySize = 120 + 72 * this.channelCount;
+                    int headerMemorySize = 120 + 72 * channelCount;
                     int columnIndex = 1 * sizeof(int);
-                    int stridesSize = sizeof(int) * this.channelCount;
+                    int stridesSize = sizeof(int) * channelCount;
                     binaryWriter.Seek(headerMemorySize + columnIndex, 0);
 
                     for (int i = 0; i < signal.Length; i++)
