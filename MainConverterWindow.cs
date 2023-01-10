@@ -40,7 +40,7 @@ namespace BinaryToJSONConverterApp
         internal void buttonSaveBrowse_Click(object sender, EventArgs e)
         {
             SaveFileDialog save_file = new SaveFileDialog();
-            save_file.Filter = "Baikal7|*.00|Baikal8|*.xx|Sigma|*.bin";
+            save_file.Filter = "Baikal7|*.00";
 
             if (save_file.ShowDialog() == DialogResult.OK)
             {
