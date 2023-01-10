@@ -40,7 +40,7 @@
             // 
             // buttonBrowse
             // 
-            this.buttonBrowse.Location = new System.Drawing.Point(384, 44);
+            this.buttonBrowse.Location = new System.Drawing.Point(320, 32);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowse.TabIndex = 8;
@@ -50,7 +50,7 @@
             // 
             // textBoxLoadFromFolder
             // 
-            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(111, 46);
+            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(47, 34);
             this.textBoxLoadFromFolder.Name = "textBoxLoadFromFolder";
             this.textBoxLoadFromFolder.Size = new System.Drawing.Size(275, 20);
             this.textBoxLoadFromFolder.TabIndex = 7;
@@ -58,15 +58,15 @@
             // labelLoadFromFolder
             // 
             this.labelLoadFromFolder.AutoSize = true;
-            this.labelLoadFromFolder.Location = new System.Drawing.Point(28, 49);
+            this.labelLoadFromFolder.Location = new System.Drawing.Point(7, 37);
             this.labelLoadFromFolder.Name = "labelLoadFromFolder";
-            this.labelLoadFromFolder.Size = new System.Drawing.Size(86, 13);
+            this.labelLoadFromFolder.Size = new System.Drawing.Size(34, 13);
             this.labelLoadFromFolder.TabIndex = 6;
-            this.labelLoadFromFolder.Text = "Load from folder:";
+            this.labelLoadFromFolder.Text = "Load:";
             // 
             // buttonGo
             // 
-            this.buttonGo.Location = new System.Drawing.Point(194, 384);
+            this.buttonGo.Location = new System.Drawing.Point(165, 132);
             this.buttonGo.Name = "buttonGo";
             this.buttonGo.Size = new System.Drawing.Size(75, 23);
             this.buttonGo.TabIndex = 9;
@@ -76,7 +76,7 @@
             // 
             // buttonSaveBrowse
             // 
-            this.buttonSaveBrowse.Location = new System.Drawing.Point(384, 136);
+            this.buttonSaveBrowse.Location = new System.Drawing.Point(320, 76);
             this.buttonSaveBrowse.Name = "buttonSaveBrowse";
             this.buttonSaveBrowse.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveBrowse.TabIndex = 12;
@@ -86,7 +86,7 @@
             // 
             // textBoxSaveFolder
             // 
-            this.textBoxSaveFolder.Location = new System.Drawing.Point(111, 138);
+            this.textBoxSaveFolder.Location = new System.Drawing.Point(47, 78);
             this.textBoxSaveFolder.Name = "textBoxSaveFolder";
             this.textBoxSaveFolder.Size = new System.Drawing.Size(275, 20);
             this.textBoxSaveFolder.TabIndex = 11;
@@ -94,17 +94,17 @@
             // labelSaveToFolder
             // 
             this.labelSaveToFolder.AutoSize = true;
-            this.labelSaveToFolder.Location = new System.Drawing.Point(28, 141);
+            this.labelSaveToFolder.Location = new System.Drawing.Point(6, 81);
             this.labelSaveToFolder.Name = "labelSaveToFolder";
-            this.labelSaveToFolder.Size = new System.Drawing.Size(76, 13);
+            this.labelSaveToFolder.Size = new System.Drawing.Size(35, 13);
             this.labelSaveToFolder.TabIndex = 10;
-            this.labelSaveToFolder.Text = "Save to folder:";
+            this.labelSaveToFolder.Text = "Save:";
             // 
             // MainConverterWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 450);
+            this.ClientSize = new System.Drawing.Size(413, 180);
             this.Controls.Add(this.buttonSaveBrowse);
             this.Controls.Add(this.textBoxSaveFolder);
             this.Controls.Add(this.labelSaveToFolder);
