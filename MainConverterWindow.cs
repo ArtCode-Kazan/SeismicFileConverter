@@ -55,5 +55,11 @@ namespace BinaryToJSONConverterApp
             }
             toolStripStatusLabel1.Text = "Success";
         }
+
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);           
+            Help.ShowHelp(this, exeDirectory + "\\" + "JsonСonverter.chm");
+        }
     }       
 }
