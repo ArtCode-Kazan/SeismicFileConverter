@@ -7,7 +7,7 @@ namespace JsonBinLib
 {
     public class SeisBinaryFile
     {
-        public const string componentOrder = "ZXY";
+        public const string componentsOrder = "ZXY";
 
         private string savePath;
         private float[] signal;
@@ -28,7 +28,7 @@ namespace JsonBinLib
         {
             this.savePath = pathToSaveFile;
             this.signal = signal;
-            this.channelCount = componentOrder.Length;
+            this.channelCount = componentsOrder.Length;
             this.frequency = frequency;
             this.latitude = latitude;
             this.longitude = longitude;
