@@ -34,7 +34,21 @@ namespace JsonBinLib
             this.longitude = longitude;
             this.dateTimeStart = dateTimeStart;
         }
+        public Int32[] NormalizeNConvertSignal(float[] originSignal)
+        {
+            Int32[] signalInInt32 = new Int32[originSignal.Length];
+            double maximumOfSignal = originSignal.Max();
+            double minimumOfSignal = originSignal.Min();
+            double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
+            double coefNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
 
+            for (int i = 0; i < originSignal.Length; i++)
+            {
+                signalInInt32[i] = Convert.ToInt32(originSignal[i] * coefNorm);
+            }
+
+            return signalInInt32;
+        }
         public void Save()
         {                        
             Int32[] normalSignal = NormalizeNConvertSignal(this.signal);                                                
@@ -45,16 +59,13 @@ namespace JsonBinLib
                 {
                     binaryWriter.Seek(0, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.channelCount)));
-
                     binaryWriter.Seek(22, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.frequency)));
-
                     binaryWriter.Seek(80, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.longitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
-
                     binaryWriter.Seek(72, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Convert.ToDouble(this.latitude.PadRight(8, '0').Substring(0, 8).Replace('.', ','))));
-
+                    
                     binaryWriter.Seek(104, SeekOrigin.Begin);
                     DateTime constDatetime = new DateTime(1980, 1, 1);
                     double secondsDuraion = (this.dateTimeStart - constDatetime).TotalSeconds;
@@ -73,23 +84,7 @@ namespace JsonBinLib
                     }
                 }
             }
-        }
-        
-        public Int32[] NormalizeNConvertSignal(float[] originSignal)
-        {
-            Int32[] signalInInt32 = new Int32[originSignal.Length];
-            double maximumOfSignal = originSignal.Max();
-            double minimumOfSignal = originSignal.Min();
-            double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
-            double coefNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
-
-            for (int i = 0; i < originSignal.Length; i++)
-            {
-                signalInInt32[i] = Convert.ToInt32(originSignal[i] * coefNorm);
-            }
-
-            return signalInInt32;
-        }
+        }                
     }
     public class SeisFileConverter
     {
