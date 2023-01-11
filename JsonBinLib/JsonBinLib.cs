@@ -13,8 +13,7 @@ namespace JsonBinLib
         private float[] signal;
         private string latitude;
         private string longitude;
-        private DateTime dateTimeStart;
-        private int channelCount;
+        private DateTime dateTimeStart;        
         private int frequency;
 
         public SeisBinaryFile(
@@ -27,16 +26,18 @@ namespace JsonBinLib
             )
         {
             this.savePath = pathToSaveFile;
-            this.signal = signal;
-            this.channelCount = componentsOrder.Length;
+            this.signal = signal;            
             this.frequency = frequency;
             this.latitude = latitude;
             this.longitude = longitude;
             this.dateTimeStart = dateTimeStart;
         }
         public int channelsCount
+        { 
+            get 
             { 
-            get { return channelCount; } 
+                return componentsOrder.Length; 
+            } 
         }
         public Int32[] NormalizeNConvertSignal(float[] originSignal)
         {
@@ -62,7 +63,7 @@ namespace JsonBinLib
                 using (BinaryWriter binaryWriter = new BinaryWriter(filestream))
                 {
                     binaryWriter.Seek(0, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.channelCount)));
+                    binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(channelsCount)));
                     binaryWriter.Seek(22, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Convert.ToUInt16(this.frequency)));
                     binaryWriter.Seek(80, SeekOrigin.Begin);
@@ -76,9 +77,9 @@ namespace JsonBinLib
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
-                    int headerMemorySize = 120 + 72 * this.channelCount;
+                    int headerMemorySize = 120 + 72 * channelsCount;
                     int columnIndex = 1 * sizeof(int);
-                    int stridesSize = sizeof(int) * this.channelCount;
+                    int stridesSize = sizeof(int) * channelsCount;
                     binaryWriter.Seek(headerMemorySize + columnIndex, 0);
 
                     for (int i = 0; i < signal.Length; i++)
