@@ -7,7 +7,7 @@ namespace JsonBinLib
 {
     public class SeisBinaryFile
     {
-        string order = "ZXY";
+        private const string order = "ZXY";
 
         private string savePath;
         private float[] signal;
@@ -22,7 +22,7 @@ namespace JsonBinLib
             float[] signal,
             string latitude = "",
             string longitude = "",
-            DateTime dateTimeStart = new DateTime(),            
+            DateTime dateTimeStart = new DateTime(),
             int frequency = 1000
             )
         {
@@ -38,7 +38,6 @@ namespace JsonBinLib
             { 
             get { return channelCount; } 
         }
-
         public Int32[] NormalizeNConvertSignal(float[] originSignal)
         {
             Int32[] signalInInt32 = new Int32[originSignal.Length];
