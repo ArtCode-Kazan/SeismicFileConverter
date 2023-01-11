@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using JsonBinLib;
-using Newtonsoft.Json;
 
 namespace BinaryToJSONConverterApp
 {
