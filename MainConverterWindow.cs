@@ -47,7 +47,7 @@ namespace BinaryToJSONConverterApp
             foreach (string path in this.pathsToJsonFiles)            
             {
                 SeisFileConverter converter = new SeisFileConverter(path, this.pathToSaveBinaryFileFolder);
-                converter.ConvertAndSave();     
+                converter.SaveBinary();     
                 toolStripStatusLabel.Text = "Processing...(" + i + "/" + Convert.ToString(this.pathsToJsonFiles.Count) + ")";                
                 statusStrip.Refresh();
                 i++;

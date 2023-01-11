@@ -34,6 +34,11 @@ namespace JsonBinLib
             this.longitude = longitude;
             this.dateTimeStart = dateTimeStart;
         }
+        public int channelsCount
+            { 
+            get { return channelCount; } 
+        }
+
         public Int32[] NormalizeNConvertSignal(float[] originSignal)
         {
             Int32[] signalInInt32 = new Int32[originSignal.Length];
@@ -96,9 +101,19 @@ namespace JsonBinLib
             this.pathToJsonFile = pathToJsonFile;
             this.pathToSaveFolder = pathToSaveFolder;
         }
-        public void ConvertAndSave()
+        private JsonClass ParseJson(string pathToJsonFile)
         {
-            JsonClass jsonBinary = returnJsonClass(this.pathToJsonFile);
+            JsonClass seisFile;
+            using (StreamReader reader = new StreamReader(pathToJsonFile))
+            {
+                seisFile = JsonConvert.DeserializeObject<JsonClass>(reader.ReadToEnd());
+            }
+
+            return seisFile;
+        }
+        public void SaveBinary()
+        {
+            JsonClass jsonBinary = ParseJson(this.pathToJsonFile);
             string saveBinaryPath = this.pathToSaveFolder + "/" + jsonBinary.filename + ".00";
             SeisBinaryFile binaryFile = new SeisBinaryFile(
                 saveBinaryPath,
@@ -108,16 +123,6 @@ namespace JsonBinLib
                 jsonBinary.start_time
                 );
             binaryFile.Save();            
-        }
-        private JsonClass returnJsonClass(string pathToJsonFile)
-        {
-            JsonClass seisFile;
-            using (StreamReader reader = new StreamReader(pathToJsonFile))
-            {
-                seisFile = JsonConvert.DeserializeObject<JsonClass>(reader.ReadToEnd());
-            }
-
-            return seisFile;
         }
     }
     public class JsonClass
