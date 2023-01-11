@@ -8,7 +8,7 @@ namespace JsonBinLib
     public class SeisBinaryFile
     {
         public const string componentsOrder = "ZXY";
-
+        private int componentOffset = 1;
         private string savePath;
         private float[] signal;
         private string latitude;
@@ -128,8 +128,8 @@ namespace JsonBinLib
     public class JsonClass
     {
         public DateTime start_time { get; set; }
-        public string N_wgs84_latitude { get; set; }
-        public string E_wgs84_longitude { get; set; }
+        public double N_wgs84_latitude { get; set; }
+        public double E_wgs84_longitude { get; set; }
         public string filename { get; set; }
         public float[] signal { get; set; }
     }
