@@ -94,35 +94,18 @@ namespace JsonBinLib
     public class SeisFileConverter
     {
         public string pathToJsonFile;
-        public string pathToSaveFolder;
+        public JsonClass jsonInfo;
 
         public SeisFileConverter(string pathToJsonFile, string pathToSaveFolder)
         {
-            this.pathToJsonFile = pathToJsonFile;
-            this.pathToSaveFolder = pathToSaveFolder;
+            this.pathToJsonFile = pathToJsonFile;            
         }
-        private JsonClass ParseJson(string pathToJsonFile)
-        {
-            JsonClass seisFile;
-            using (StreamReader reader = new StreamReader(pathToJsonFile))
+        private void ParseJson()
+        {         
+            using (StreamReader reader = new StreamReader(this.pathToJsonFile))
             {
-                seisFile = JsonConvert.DeserializeObject<JsonClass>(reader.ReadToEnd());
+                this.jsonInfo = JsonConvert.DeserializeObject<JsonClass>(reader.ReadToEnd());
             }
-
-            return seisFile;
-        }
-        public void SaveBinary()
-        {
-            JsonClass jsonBinary = ParseJson(this.pathToJsonFile);
-            string saveBinaryPath = this.pathToSaveFolder + "/" + jsonBinary.filename + ".00";
-            SeisBinaryFile binaryFile = new SeisBinaryFile(
-                saveBinaryPath,
-                jsonBinary.signal,
-                jsonBinary.N_wgs84_latitude,
-                jsonBinary.E_wgs84_longitude,
-                jsonBinary.start_time
-                );
-            binaryFile.Save();            
         }
     }
     public class JsonClass
