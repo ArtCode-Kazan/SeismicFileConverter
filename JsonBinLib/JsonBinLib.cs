@@ -13,7 +13,7 @@ namespace JsonBinLib
         public const string Baikal8Ext = "xx";
         string order = "ZXY";
 
-        public string pathToJsonFile;
+        public string pathToJsonFile;   
         public string pathToSaveFolder;
 
         public JsonToBinary(

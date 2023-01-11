@@ -28,30 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonBrowse = new System.Windows.Forms.Button();
+            this.buttonBrowseJsonFiles = new System.Windows.Forms.Button();
             this.textBoxLoadFromFolder = new System.Windows.Forms.TextBox();
             this.labelLoadFromFolder = new System.Windows.Forms.Label();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.buttonGo = new System.Windows.Forms.Button();
-            this.buttonSaveBrowse = new System.Windows.Forms.Button();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.buttonConvert = new System.Windows.Forms.Button();
+            this.buttonBrowseSaveFolder = new System.Windows.Forms.Button();
             this.textBoxSaveFolder = new System.Windows.Forms.TextBox();
             this.labelSaveToFolder = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonHelp = new System.Windows.Forms.Button();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonBrowse
+            // buttonBrowseJsonFiles
             // 
-            this.buttonBrowse.Location = new System.Drawing.Point(326, 62);
-            this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
-            this.buttonBrowse.TabIndex = 8;
-            this.buttonBrowse.Text = "browse";
-            this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            this.buttonBrowseJsonFiles.Location = new System.Drawing.Point(326, 62);
+            this.buttonBrowseJsonFiles.Name = "buttonBrowseJsonFiles";
+            this.buttonBrowseJsonFiles.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowseJsonFiles.TabIndex = 8;
+            this.buttonBrowseJsonFiles.Text = "browse";
+            this.buttonBrowseJsonFiles.UseVisualStyleBackColor = true;
+            this.buttonBrowseJsonFiles.Click += new System.EventHandler(this.buttonBrowseJsonFiles_Click);
             // 
             // textBoxLoadFromFolder
             // 
@@ -70,25 +70,25 @@
             this.labelLoadFromFolder.TabIndex = 6;
             this.labelLoadFromFolder.Text = "Load:";
             // 
-            // buttonGo
+            // buttonConvert
             // 
-            this.buttonGo.Location = new System.Drawing.Point(164, 179);
-            this.buttonGo.Name = "buttonGo";
-            this.buttonGo.Size = new System.Drawing.Size(75, 23);
-            this.buttonGo.TabIndex = 9;
-            this.buttonGo.Text = "Convert";
-            this.buttonGo.UseVisualStyleBackColor = true;
-            this.buttonGo.Click += new System.EventHandler(this.buttonGo_Click);
+            this.buttonConvert.Location = new System.Drawing.Point(164, 179);
+            this.buttonConvert.Name = "buttonConvert";
+            this.buttonConvert.Size = new System.Drawing.Size(75, 23);
+            this.buttonConvert.TabIndex = 9;
+            this.buttonConvert.Text = "Convert";
+            this.buttonConvert.UseVisualStyleBackColor = true;
+            this.buttonConvert.Click += new System.EventHandler(this.buttonConvert_Click);
             // 
-            // buttonSaveBrowse
+            // buttonBrowseSaveFolder
             // 
-            this.buttonSaveBrowse.Location = new System.Drawing.Point(326, 106);
-            this.buttonSaveBrowse.Name = "buttonSaveBrowse";
-            this.buttonSaveBrowse.Size = new System.Drawing.Size(75, 23);
-            this.buttonSaveBrowse.TabIndex = 12;
-            this.buttonSaveBrowse.Text = "browse";
-            this.buttonSaveBrowse.UseVisualStyleBackColor = true;
-            this.buttonSaveBrowse.Click += new System.EventHandler(this.buttonSaveBrowse_Click);
+            this.buttonBrowseSaveFolder.Location = new System.Drawing.Point(326, 106);
+            this.buttonBrowseSaveFolder.Name = "buttonBrowseSaveFolder";
+            this.buttonBrowseSaveFolder.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowseSaveFolder.TabIndex = 12;
+            this.buttonBrowseSaveFolder.Text = "browse";
+            this.buttonBrowseSaveFolder.UseVisualStyleBackColor = true;
+            this.buttonBrowseSaveFolder.Click += new System.EventHandler(this.buttonBrowseSaveFolder_Click);
             // 
             // textBoxSaveFolder
             // 
@@ -107,27 +107,27 @@
             this.labelSaveToFolder.TabIndex = 10;
             this.labelSaveToFolder.Text = "Save:";
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.Filter = "JSON files (*.json)|*.json";
-            this.openFileDialog1.Multiselect = true;
-            this.openFileDialog1.ReadOnlyChecked = true;
-            this.openFileDialog1.RestoreDirectory = true;
+            this.openFileDialog.Filter = "JSON files (*.json)|*.json";
+            this.openFileDialog.Multiselect = true;
+            this.openFileDialog.ReadOnlyChecked = true;
+            this.openFileDialog.RestoreDirectory = true;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 239);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(413, 22);
-            this.statusStrip1.TabIndex = 13;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 239);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip.TabIndex = 13;
+            this.statusStrip.Text = "statusStrip";
             // 
-            // toolStripStatusLabel1
+            // toolStripStatusLabel
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // buttonHelp
             // 
@@ -146,12 +146,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(413, 261);
             this.Controls.Add(this.buttonHelp);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.buttonSaveBrowse);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.buttonBrowseSaveFolder);
             this.Controls.Add(this.textBoxSaveFolder);
             this.Controls.Add(this.labelSaveToFolder);
-            this.Controls.Add(this.buttonGo);
-            this.Controls.Add(this.buttonBrowse);
+            this.Controls.Add(this.buttonConvert);
+            this.Controls.Add(this.buttonBrowseJsonFiles);
             this.Controls.Add(this.textBoxLoadFromFolder);
             this.Controls.Add(this.labelLoadFromFolder);
             this.MaximumSize = new System.Drawing.Size(429, 300);
@@ -159,8 +159,8 @@
             this.Name = "MainConverterWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Binary converter";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,17 +168,17 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonBrowse;
+        private System.Windows.Forms.Button buttonBrowseJsonFiles;
         private System.Windows.Forms.TextBox textBoxLoadFromFolder;
         private System.Windows.Forms.Label labelLoadFromFolder;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button buttonGo;
-        private System.Windows.Forms.Button buttonSaveBrowse;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.Button buttonConvert;
+        private System.Windows.Forms.Button buttonBrowseSaveFolder;
         private System.Windows.Forms.TextBox textBoxSaveFolder;
         private System.Windows.Forms.Label labelSaveToFolder;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.Button buttonHelp;
     }
 }
