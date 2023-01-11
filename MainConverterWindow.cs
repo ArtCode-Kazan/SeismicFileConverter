@@ -15,8 +15,7 @@ namespace BinaryToJSONConverterApp
         public MainConverterWindow()
         {
             InitializeComponent();
-            toolStripStatusLabel.Text = "Ready";
-            
+            toolStripStatusLabel.Text = "Ready";            
         }
 
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
@@ -24,16 +23,16 @@ namespace BinaryToJSONConverterApp
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = "";
-                foreach (String file in openFileDialog.FileNames)
+                foreach (String path in openFileDialog.FileNames)
                 {
-                    this.pathsToJsonFiles.Add(file);
+                    this.pathsToJsonFiles.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
                 }                
             }
         }
 
         internal void buttonBrowseSaveFolder_Click(object sender, EventArgs e)
-        {            
+        {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxSaveFolder.Text = folderBrowserDialog.SelectedPath;
@@ -44,6 +43,7 @@ namespace BinaryToJSONConverterApp
         internal void buttonConvert_Click(object sender, EventArgs e)
         {
             int i = 1;
+
             foreach (string path in this.pathsToJsonFiles)            
             {
                 SeisFileConverter converter = new SeisFileConverter(path, this.pathToSaveBinaryFileFolder);
@@ -52,6 +52,7 @@ namespace BinaryToJSONConverterApp
                 statusStrip.Refresh();
                 i++;
             }
+
             toolStripStatusLabel.Text = "Success";
         }
         
