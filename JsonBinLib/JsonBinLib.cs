@@ -40,11 +40,11 @@ namespace JsonBinLib
             double maximumOfSignal = originSignal.Max();
             double minimumOfSignal = originSignal.Min();
             double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
-            double coefNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
+            double coeffNorm = Convert.ToDouble(1024) / maximumOfAmplitude;
 
             for (int i = 0; i < originSignal.Length; i++)
             {
-                signalInInt32[i] = Convert.ToInt32(originSignal[i] * coefNorm);
+                signalInInt32[i] = Convert.ToInt32(originSignal[i] * coeffNorm);
             }
 
             return signalInInt32;
