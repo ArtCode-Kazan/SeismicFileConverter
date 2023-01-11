@@ -48,22 +48,24 @@ namespace BinaryToJSONConverterApp
             int i = 1;
             foreach (string path in this.pathsToJsonFiles)            
             {
-                JsonToBinary jsonFile = new JsonToBinary(path, this.pathToSaveBinaryFileFolder);
-                jsonFile.WriteBinaryFiles();
+                SeisFileConverter converter = new SeisFileConverter(path, this.pathToSaveBinaryFileFolder);
+                converter.ConvertAndSave();     
                 toolStripStatusLabel.Text = "Processing...(" + i + "/" + Convert.ToString(this.pathsToJsonFiles.Count) + ")";                
                 statusStrip.Refresh();
                 i++;
             }
             toolStripStatusLabel.Text = "Success";
         }
-
+        
         private void buttonHelp_Click(object sender, EventArgs e)
         {
             string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
             if (File.Exists(exeDirectory + "\\" + helpFileName) == true)
             {
                 Help.ShowHelp(this, exeDirectory + "\\" + helpFileName);
             }
+
             else
             {
                 MessageBox.Show("Help file not found.");
