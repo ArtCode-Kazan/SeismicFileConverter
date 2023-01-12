@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -9,8 +10,7 @@ namespace JsonBinLib
     {
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
-        public const int componentOffset = 1;
-        public const Int32 signalStub = -9999;
+        public const Int32 nullValue = -9999;
         public static UInt16 channelsCount
         {
             get
@@ -18,7 +18,22 @@ namespace JsonBinLib
                 return Convert.ToUInt16(Constants.ComponentsOrder.Length);
             }
         }
+        public static Dictionary<string, int> ComponentsIndex
+        {
+            get
+            {
+                var componentsIndexes = new Dictionary<string, int>();
+
+                for (int i = 0; i < ComponentsOrder.Length; i++)
+                {
+                    componentsIndexes.Add(ComponentsOrder[i].ToString(), i);
+                }
+
+                return componentsIndexes;
+            }
+        }
     }
+
     public class JsonDataContainer
     {
         public DateTime start_time { get; set; }
@@ -29,6 +44,7 @@ namespace JsonBinLib
         public UInt16 frequency { get; set; }
         public string componentName { get; set; }
     }
+
     public class JsonParser
     {
         public string pathToJsonFile;
@@ -45,6 +61,7 @@ namespace JsonBinLib
             }
         }
     }
+
     public class SeisBinaryFile
     {
         public JsonDataContainer jsonInfo;
@@ -63,15 +80,16 @@ namespace JsonBinLib
             float maximumOrigin = originSignal.Max();   
             float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
             double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
-            double amplitudeCorrectCoeff = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
+            double amplitudeOffset = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
 
             for (int i = 0; i < originSignal.Length; i++)
             {
-                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - amplitudeCorrectCoeff);
+                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - amplitudeOffset);
             }
 
             return normalizedSignal;
         }
+
         public void SaveToBaykal7Format()
         {
             Int32[] normalSignal = NormalizeSignal(this.jsonInfo.signal);
@@ -95,16 +113,24 @@ namespace JsonBinLib
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
-                    int headerMemorySize = 120 + 72 * Constants.channelsCount;
-                    int columnIndex = Constants.componentOffset * sizeof(int);
-                    int stridesSize = sizeof(int) * Constants.channelsCount;
-                    binaryWriter.Seek(headerMemorySize + columnIndex, SeekOrigin.Begin);
+                    int headerMemorySize = 120 + 72 * Constants.channelsCount;                                        
+                    Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
 
+                    binaryWriter.Seek(headerMemorySize, SeekOrigin.Begin);
+
+                    Int32[] signalStack = new Int32[normalSignal.Length * 3];   
+                    
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
-                        binaryWriter.Write(BitConverter.GetBytes(normalSignal[i]));
-                        binaryWriter.Write(BitConverter.GetBytes(Constants.signalStub));
-                        binaryWriter.Write(BitConverter.GetBytes(Constants.signalStub));                        
+                        signalStack[i * 3 + 0] = Constants.nullValue;
+                        signalStack[i * 3 + 1] = Constants.nullValue;
+                        signalStack[i * 3 + 2] = Constants.nullValue;
+                        signalStack[i * 3 + columnIndex] = normalSignal[i];
+                    }            
+
+                    for (int i = 0; i < signalStack.Length; i++)
+                    {
+                        binaryWriter.Write(BitConverter.GetBytes(signalStack[i]));                      
                     }
                 }
             }
