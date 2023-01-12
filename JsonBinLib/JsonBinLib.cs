@@ -5,12 +5,39 @@ using System.Linq;
 
 namespace JsonBinLib
 {
-    public class SeisBinaryFile
+    internal class Constants 
     {
         public const string ComponentsOrder = "ZXY";
-        private const int NormalizationMaximum = 32768;
-        private int componentOffset = 1;
-                
+        public const int NormalizationMaximum = 32768;
+        public const int componentOffset = 1;
+    }
+    public class JsonDataContainer
+    {
+        public DateTime start_time { get; set; }
+        public double N_wgs84_latitude { get; set; }
+        public double E_wgs84_longitude { get; set; }
+        public string filename { get; set; }
+        public float[] signal { get; set; }
+        public UInt16 frequency { get; set; }
+        public string componentName { get; set; }
+    }    
+    public class JsonParser
+    {
+        public string pathToJsonFile;
+        public JsonDataContainer jsonDeserialized;        
+
+        public JsonParser(string pathToJsonFile)
+        {
+            this.pathToJsonFile = pathToJsonFile;
+
+            using (StreamReader reader = new StreamReader(this.pathToJsonFile))
+            {
+                this.jsonDeserialized = JsonConvert.DeserializeObject<JsonDataContainer>(reader.ReadToEnd());
+            }
+        }        
+    }
+    public class SeisBinaryFile
+    {        
         public JsonDataContainer jsonInfo;
         public string savePath;
 
@@ -20,11 +47,11 @@ namespace JsonBinLib
             this.savePath = savePath;
         }
         public UInt16 channelsCount
-        { 
-            get 
-            { 
-                return Convert.ToUInt16(ComponentsOrder.Length); 
-            } 
+        {
+            get
+            {
+                return Convert.ToUInt16(Constants.ComponentsOrder.Length);
+            }
         }
         public Int32[] NormalizeSignal(float[] originSignal)
         {
@@ -32,7 +59,7 @@ namespace JsonBinLib
             double maximumOfSignal = originSignal.Max();
             double minimumOfSignal = originSignal.Min();
             double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
-            double coeffNorm = Convert.ToDouble(NormalizationMaximum) / maximumOfAmplitude;
+            double coeffNorm = Convert.ToDouble(Constants.NormalizationMaximum) / maximumOfAmplitude;
 
             for (int i = 0; i < originSignal.Length; i++)
             {
@@ -42,8 +69,8 @@ namespace JsonBinLib
             return normalizedSignal;
         }
         public void SaveToBaykal7Format()
-        {                        
-            Int32[] normalSignal = NormalizeSignal(this.jsonInfo.signal);                                                
+        {
+            Int32[] normalSignal = NormalizeSignal(this.jsonInfo.signal);
 
             using (FileStream filestream = new FileStream(this.savePath, FileMode.Create))
             {
@@ -65,7 +92,7 @@ namespace JsonBinLib
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
                     int headerMemorySize = 120 + 72 * channelsCount;
-                    int columnIndex = this.componentOffset * sizeof(int);
+                    int columnIndex = Constants.componentOffset * sizeof(int);
                     int stridesSize = sizeof(int) * channelsCount;
                     binaryWriter.Seek(headerMemorySize + columnIndex, SeekOrigin.Begin);
 
@@ -76,32 +103,6 @@ namespace JsonBinLib
                     }
                 }
             }
-        }                
-    }
-    public class SeisJsonParser
-    {
-        public string pathToJsonFile;
-        public JsonDataContainer jsonDeserialized;
-
-        public SeisJsonParser(string pathToJsonFile)
-        {
-            this.pathToJsonFile = pathToJsonFile;
-
-            using (StreamReader reader = new StreamReader(this.pathToJsonFile))
-            {
-                this.jsonDeserialized = JsonConvert.DeserializeObject<JsonDataContainer>(reader.ReadToEnd());
-            }
         }
-        
-    }
-    public class JsonDataContainer
-    {
-        public DateTime start_time { get; set; }
-        public double N_wgs84_latitude { get; set; }
-        public double E_wgs84_longitude { get; set; }
-        public string filename { get; set; }
-        public float[] signal { get; set; }
-        public UInt16 frequency { get; set; }
-        public int componentName { get; set; }
     }
 }

@@ -8,9 +8,10 @@ namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
+        public const string HelpFileName = "JsonСonverter.chm";
+
         public List<string> pathsJsons = new List<string>();
-        public string pathFolderBinarySave = "";
-        public string helpFileName = "JsonСonverter.chm";
+        public string pathFolderBinarySave = "";        
 
         public MainConverterWindow()
         {
@@ -45,7 +46,7 @@ namespace BinaryToJSONConverterApp
             for (int i = 0; i < this.pathsJsons.Count; i++)  
             {
                 string path = this.pathsJsons[i];
-                SeisJsonParser jsonParser = new SeisJsonParser(path);                
+                JsonParser jsonParser = new JsonParser(path);                
                 string binaryFileName = jsonParser.jsonDeserialized.filename + ".00";
                 string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);                
     
@@ -60,10 +61,11 @@ namespace BinaryToJSONConverterApp
         private void buttonHelp_Click(object sender, EventArgs e)
         {
             string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string helpFilePath = Path.Combine(exeDirectory, HelpFileName);
 
-            if (File.Exists(exeDirectory + "\\" + helpFileName) == true)
+            if (File.Exists(helpFilePath) == true)
             {
-                Help.ShowHelp(this, exeDirectory + "\\" + helpFileName);
+                Help.ShowHelp(this, helpFilePath);
             }
             else
             {
