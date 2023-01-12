@@ -63,10 +63,11 @@ namespace JsonBinLib
             float maximumOrigin = originSignal.Max();   
             float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
             double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
+            double amplitudeCorrectCoeff = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
 
             for (int i = 0; i < originSignal.Length; i++)
             {
-                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - (Constants.NormalizationMaximum + (minimumOrigin * coeffNorm)));
+                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - amplitudeCorrectCoeff);
             }
 
             return normalizedSignal;
