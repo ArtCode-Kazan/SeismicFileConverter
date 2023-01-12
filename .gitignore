@@ -363,3 +363,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# HelpNDoc files - files for help dialog
+JsonСonverter.chm
