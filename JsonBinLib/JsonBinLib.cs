@@ -107,7 +107,8 @@ namespace JsonBinLib
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
                         binaryWriter.Write(BitConverter.GetBytes(normalSignal[i]));
-                        binaryWriter.Seek(stridesSize - sizeof(int), SeekOrigin.Current);
+                        binaryWriter.Write(BitConverter.GetBytes(Constants.signalStub));
+                        binaryWriter.Write(BitConverter.GetBytes(Constants.signalStub));                        
                     }
                 }
             }

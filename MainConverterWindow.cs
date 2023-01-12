@@ -71,7 +71,7 @@ namespace BinaryToJSONConverterApp
 
         private void hyperlinkLabelControl_Click(object sender, EventArgs e)
         {
-            string target = "mailto:ArtCode-Kazan@yandex.ru?subject=Support";
+            string target = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
 
             try
             {
