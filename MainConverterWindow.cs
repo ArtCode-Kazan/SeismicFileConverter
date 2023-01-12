@@ -68,5 +68,24 @@ namespace BinaryToJSONConverterApp
                 MessageBox.Show("Help file not found.");
             }
         }
+
+        private void hyperlinkLabelControl_Click(object sender, EventArgs e)
+        {
+            string target = "mailto:ArtCode-Kazan@yandex.ru";
+
+            try
+            {
+                System.Diagnostics.Process.Start(target);
+            }
+            catch (System.ComponentModel.Win32Exception noBrowser)
+            {
+                if (noBrowser.ErrorCode == -2147467259)
+                    MessageBox.Show(noBrowser.Message);
+            }
+            catch (Exception other)
+            {
+                MessageBox.Show(other.Message);
+            }
+        }
     }       
 }

@@ -40,6 +40,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonHelp = new System.Windows.Forms.Button();
+            this.hyperlinkProblemLabel = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,11 +141,21 @@
             this.buttonHelp.UseVisualStyleBackColor = false;
             this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
+            // hyperlinkProblemLabel
+            // 
+            this.hyperlinkProblemLabel.Location = new System.Drawing.Point(349, 242);
+            this.hyperlinkProblemLabel.Name = "hyperlinkProblemLabel";
+            this.hyperlinkProblemLabel.Size = new System.Drawing.Size(57, 13);
+            this.hyperlinkProblemLabel.TabIndex = 15;
+            this.hyperlinkProblemLabel.Text = "Have issue?";
+            this.hyperlinkProblemLabel.Click += new System.EventHandler(this.hyperlinkLabelControl_Click);
+            // 
             // MainConverterWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(413, 261);
+            this.Controls.Add(this.hyperlinkProblemLabel);
             this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.buttonBrowseSaveFolder);
@@ -180,6 +191,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.Button buttonHelp;
+        private DevExpress.XtraEditors.HyperlinkLabelControl hyperlinkProblemLabel;
     }
 }
 
