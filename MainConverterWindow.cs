@@ -18,7 +18,6 @@ namespace BinaryToJSONConverterApp
             InitializeComponent();
             toolStripStatusLabel.Text = "Ready";            
         }
-
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
         {                                    
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -31,7 +30,6 @@ namespace BinaryToJSONConverterApp
                 }                
             }
         }
-
         internal void buttonBrowseSaveFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -40,7 +38,6 @@ namespace BinaryToJSONConverterApp
                 this.pathFolderBinarySave = folderBrowserDialog.SelectedPath;
             }
         }
-
         internal void buttonConvert_Click(object sender, EventArgs e)
         {            
             for (int i = 0; i < this.pathsJsons.Count; i++)  
@@ -56,8 +53,7 @@ namespace BinaryToJSONConverterApp
             }
 
             toolStripStatusLabel.Text = "Success";
-        }
-        
+        }        
         private void buttonHelp_Click(object sender, EventArgs e)
         {
             string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace JsonBinLib
 {
-    internal class Constants 
+    internal class Constants
     {
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
@@ -20,11 +20,11 @@ namespace JsonBinLib
         public float[] signal { get; set; }
         public UInt16 frequency { get; set; }
         public string componentName { get; set; }
-    }    
+    }
     public class JsonParser
     {
         public string pathToJsonFile;
-        public JsonDataContainer jsonDeserialized;        
+        public JsonDataContainer jsonDeserialized;
 
         public JsonParser(string pathToJsonFile)
         {
@@ -34,10 +34,10 @@ namespace JsonBinLib
             {
                 this.jsonDeserialized = JsonConvert.DeserializeObject<JsonDataContainer>(reader.ReadToEnd());
             }
-        }        
+        }
     }
     public class SeisBinaryFile
-    {        
+    {
         public JsonDataContainer jsonInfo;
         public string savePath;
 
@@ -55,15 +55,21 @@ namespace JsonBinLib
         }
         public Int32[] NormalizeSignal(float[] originSignal)
         {
-            Int32[] normalizedSignal = new Int32[originSignal.Length];
-            double maximumOfSignal = originSignal.Max();
-            double minimumOfSignal = originSignal.Min();
-            double maximumOfAmplitude = Math.Max(Math.Abs(maximumOfSignal), Math.Abs(minimumOfSignal));
-            double coeffNorm = Convert.ToDouble(Constants.NormalizationMaximum) / maximumOfAmplitude;
+            float minimumOrigin = originSignal.Min();
+            float[] positiveSignal = originSignal;
+
+            for (int i = 0; i < positiveSignal.Length; i++)
+            {
+                positiveSignal[i] -= minimumOrigin;
+            }
+
+            float maximumPositive = positiveSignal.Max();
+            double coeffNorm = (Constants.NormalizationMaximum * 2) / maximumPositive;
+            Int32[] normalizedSignal = new Int32[positiveSignal.Length];
 
             for (int i = 0; i < originSignal.Length; i++)
             {
-                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm);
+                normalizedSignal[i] = Convert.ToInt32(positiveSignal[i] * coeffNorm - Constants.NormalizationMaximum);
             }
 
             return normalizedSignal;
