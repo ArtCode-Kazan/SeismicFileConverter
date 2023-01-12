@@ -10,6 +10,14 @@ namespace JsonBinLib
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
         public const int componentOffset = 1;
+        public const Int32 signalStub = -9999;
+        public static UInt16 channelsCount
+        {
+            get
+            {
+                return Convert.ToUInt16(Constants.ComponentsOrder.Length);
+            }
+        }
     }
     public class JsonDataContainer
     {
@@ -46,14 +54,7 @@ namespace JsonBinLib
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
-        }
-        public UInt16 channelsCount
-        {
-            get
-            {
-                return Convert.ToUInt16(Constants.ComponentsOrder.Length);
-            }
-        }
+        }        
         public Int32[] NormalizeSignal(float[] originSignal)
         {
             float minimumOrigin = originSignal.Min();
@@ -84,7 +85,7 @@ namespace JsonBinLib
                 using (BinaryWriter binaryWriter = new BinaryWriter(filestream))
                 {
                     binaryWriter.Seek(0, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(channelsCount));
+                    binaryWriter.Write(BitConverter.GetBytes(Constants.channelsCount));
                     binaryWriter.Seek(22, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.frequency));
                     binaryWriter.Seek(80, SeekOrigin.Begin);
@@ -98,9 +99,9 @@ namespace JsonBinLib
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
-                    int headerMemorySize = 120 + 72 * channelsCount;
+                    int headerMemorySize = 120 + 72 * Constants.channelsCount;
                     int columnIndex = Constants.componentOffset * sizeof(int);
-                    int stridesSize = sizeof(int) * channelsCount;
+                    int stridesSize = sizeof(int) * Constants.channelsCount;
                     binaryWriter.Seek(headerMemorySize + columnIndex, SeekOrigin.Begin);
 
                     for (int i = 0; i < normalSignal.Length; i++)
