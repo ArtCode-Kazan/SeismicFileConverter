@@ -32,7 +32,8 @@ namespace JsonBinLib
 
             using (StreamReader reader = new StreamReader(this.pathToJsonFile))
             {
-                this.jsonDeserialized = JsonConvert.DeserializeObject<JsonDataContainer>(reader.ReadToEnd());
+                string jsonString = reader.ReadToEnd();
+                this.jsonDeserialized = JsonConvert.DeserializeObject<JsonDataContainer>(jsonString);
             }
         }
     }
