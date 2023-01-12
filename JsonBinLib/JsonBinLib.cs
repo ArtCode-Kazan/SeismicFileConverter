@@ -57,21 +57,16 @@ namespace JsonBinLib
         }        
         public Int32[] NormalizeSignal(float[] originSignal)
         {
-            float minimumOrigin = originSignal.Min();
-            float[] positiveSignal = originSignal;
+            Int32[] normalizedSignal = new Int32[originSignal.Length];
 
-            for (int i = 0; i < positiveSignal.Length; i++)
-            {
-                positiveSignal[i] -= minimumOrigin;
-            }
-
-            float maximumPositive = positiveSignal.Max();
-            double coeffNorm = (Constants.NormalizationMaximum * 2) / maximumPositive;
-            Int32[] normalizedSignal = new Int32[positiveSignal.Length];
+            float minimumOrigin = originSignal.Min();            
+            float maximumOrigin = originSignal.Max();   
+            float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
+            double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
 
             for (int i = 0; i < originSignal.Length; i++)
             {
-                normalizedSignal[i] = Convert.ToInt32(positiveSignal[i] * coeffNorm - Constants.NormalizationMaximum);
+                normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - (Constants.NormalizationMaximum + (minimumOrigin * coeffNorm)));
             }
 
             return normalizedSignal;
