@@ -118,18 +118,22 @@ namespace JsonBinLib
 
                     binaryWriter.Seek(headerMemorySize, SeekOrigin.Begin);
 
+                    Int32 value;
+
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
                         for (int j = 0; j < Constants.channelsCount; j++)
                         {
                             if (j == columnIndex)
                             {
-                                binaryWriter.Write(BitConverter.GetBytes(normalSignal[i]));
+                                value = normalSignal[i];
                             }
                             else
                             {
-                                binaryWriter.Write(BitConverter.GetBytes(Constants.nullValue));
+                                value = Constants.nullValue;
                             }
+
+                            binaryWriter.Write(BitConverter.GetBytes(value));
                         }
                     }
                 }
