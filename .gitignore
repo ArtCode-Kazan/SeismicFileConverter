@@ -27,6 +27,8 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
+JsonBinLib/obj/
+obj/
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
@@ -361,3 +363,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# HelpNDoc files - files for help dialog
+JsonСonverter.chm
