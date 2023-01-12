@@ -8,8 +8,8 @@ namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
-        public List<string> pathsToJson = new List<string>();
-        public string pathSaveBinaryFolder = "";
+        public List<string> pathsJsons = new List<string>();
+        public string pathFolderBinarySave = "";
         public string helpFileName = "JsonСonverter.chm";
 
         public MainConverterWindow()
@@ -25,7 +25,7 @@ namespace BinaryToJSONConverterApp
                 textBoxLoadFromFolder.Text = "";
                 foreach (String path in openFileDialog.FileNames)
                 {
-                    this.pathsToJson.Add(path);
+                    this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
                 }                
             }
@@ -36,21 +36,21 @@ namespace BinaryToJSONConverterApp
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxSaveFolder.Text = folderBrowserDialog.SelectedPath;
-                this.pathSaveBinaryFolder = folderBrowserDialog.SelectedPath;
+                this.pathFolderBinarySave = folderBrowserDialog.SelectedPath;
             }
         }
 
         internal void buttonConvert_Click(object sender, EventArgs e)
         {            
-            for (int i = 0; i < this.pathsToJson.Count; i++)  
+            for (int i = 0; i < this.pathsJsons.Count; i++)  
             {
-                string path = this.pathsToJson[i];
+                string path = this.pathsJsons[i];
                 SeisJsonParser jsonParser = new SeisJsonParser(path);                
                 string binaryFileName = jsonParser.jsonDeserialized.filename + ".00";
-                string pathSaveBinary = Path.Combine(this.pathSaveBinaryFolder, binaryFileName);                
+                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);                
     
                 SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, path);
-                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsToJson.Count) + ")";                
+                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";                
                 statusStrip.Refresh();             
             }
 

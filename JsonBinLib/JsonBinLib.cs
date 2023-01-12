@@ -101,7 +101,7 @@ namespace JsonBinLib
         public double E_wgs84_longitude { get; set; }
         public string filename { get; set; }
         public float[] signal { get; set; }
-        public int frequency { get; set; }
+        public UInt16 frequency { get; set; }
         public int componentName { get; set; }
     }
 }
