@@ -36,10 +36,10 @@ namespace JsonBinLib
 
     public class JsonDataContainer
     {
-        public DateTime start_time { get; set; }
-        public double N_wgs84_latitude { get; set; }
-        public double E_wgs84_longitude { get; set; }
-        public string filename { get; set; }
+        public DateTime startTime { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public string fileName { get; set; }
         public float[] signal { get; set; }
         public UInt16 frequency { get; set; }
         public string componentName { get; set; }
@@ -103,13 +103,13 @@ namespace JsonBinLib
                     binaryWriter.Seek(22, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.frequency));
                     binaryWriter.Seek(80, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.E_wgs84_longitude));
+                    binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.longitude));
                     binaryWriter.Seek(72, SeekOrigin.Begin);
-                    binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.N_wgs84_latitude));
+                    binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.latitude));
 
                     binaryWriter.Seek(104, SeekOrigin.Begin);
                     DateTime constDatetime = new DateTime(1980, 1, 1);
-                    double secondsDuraion = (this.jsonInfo.start_time - constDatetime).TotalSeconds;
+                    double secondsDuraion = (this.jsonInfo.startTime - constDatetime).TotalSeconds;
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 

@@ -44,7 +44,7 @@ namespace BinaryToJSONConverterApp
             {
                 string path = this.pathsJsons[i];
                 JsonParser jsonParser = new JsonParser(path);                
-                string binaryFileName = jsonParser.jsonDeserialized.filename + ".00";
+                string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
                 string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);                    
                 SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
