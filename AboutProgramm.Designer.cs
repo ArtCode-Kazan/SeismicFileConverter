@@ -54,9 +54,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.GrayText;
             this.label2.Location = new System.Drawing.Point(12, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(170, 13);
+            this.label2.Size = new System.Drawing.Size(167, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Copyright© 2022-2023 by Art-Code";
+            this.label2.Text = "Copyright© 2022-2023 by ArtCode";
             // 
             // label3
             // 
