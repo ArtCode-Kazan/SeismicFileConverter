@@ -53,13 +53,14 @@ namespace BinaryToJSONConverterApp
             }
 
             toolStripStatusLabel.Text = "Success";
-        }        
-        private void buttonHelp_Click(object sender, EventArgs e)
+        }                      
+
+        private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string helpFilePath = Path.Combine(exeDirectory, HelpFileName);
 
-            if (File.Exists(helpFilePath) == true)
+            if (File.Exists(helpFilePath))
             {
                 Help.ShowHelp(this, helpFilePath);
             }
@@ -68,7 +69,14 @@ namespace BinaryToJSONConverterApp
                 MessageBox.Show("Help file not found.");
             }
         }
-        private void hyperlinkLabelControl_Click(object sender, EventArgs e)
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form formHelp = new AboutProgramm();
+            formHelp.ShowDialog();            
+        }
+
+        private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string target = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
 

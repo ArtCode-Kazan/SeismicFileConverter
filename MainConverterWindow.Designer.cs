@@ -39,16 +39,23 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.buttonHelp = new System.Windows.Forms.Button();
-            this.hyperlinkProblemLabel = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ReportAProblemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBrowseJsonFiles
             // 
-            this.buttonBrowseJsonFiles.Location = new System.Drawing.Point(326, 62);
+            this.buttonBrowseJsonFiles.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buttonBrowseJsonFiles.Location = new System.Drawing.Point(345, 63);
             this.buttonBrowseJsonFiles.Name = "buttonBrowseJsonFiles";
-            this.buttonBrowseJsonFiles.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowseJsonFiles.Size = new System.Drawing.Size(58, 25);
             this.buttonBrowseJsonFiles.TabIndex = 8;
             this.buttonBrowseJsonFiles.Text = "browse";
             this.buttonBrowseJsonFiles.UseVisualStyleBackColor = true;
@@ -56,26 +63,29 @@
             // 
             // textBoxLoadFromFolder
             // 
-            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(53, 64);
+            this.textBoxLoadFromFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(119, 64);
             this.textBoxLoadFromFolder.Name = "textBoxLoadFromFolder";
             this.textBoxLoadFromFolder.ReadOnly = true;
-            this.textBoxLoadFromFolder.Size = new System.Drawing.Size(275, 20);
+            this.textBoxLoadFromFolder.Size = new System.Drawing.Size(226, 23);
             this.textBoxLoadFromFolder.TabIndex = 7;
             // 
             // labelLoadFromFolder
             // 
             this.labelLoadFromFolder.AutoSize = true;
-            this.labelLoadFromFolder.Location = new System.Drawing.Point(13, 67);
+            this.labelLoadFromFolder.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelLoadFromFolder.Location = new System.Drawing.Point(12, 65);
             this.labelLoadFromFolder.Name = "labelLoadFromFolder";
-            this.labelLoadFromFolder.Size = new System.Drawing.Size(34, 13);
+            this.labelLoadFromFolder.Size = new System.Drawing.Size(101, 19);
             this.labelLoadFromFolder.TabIndex = 6;
-            this.labelLoadFromFolder.Text = "Load:";
+            this.labelLoadFromFolder.Text = "Input json files:";
             // 
             // buttonConvert
             // 
-            this.buttonConvert.Location = new System.Drawing.Point(164, 179);
+            this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConvert.Location = new System.Drawing.Point(174, 186);
             this.buttonConvert.Name = "buttonConvert";
-            this.buttonConvert.Size = new System.Drawing.Size(75, 23);
+            this.buttonConvert.Size = new System.Drawing.Size(82, 33);
             this.buttonConvert.TabIndex = 9;
             this.buttonConvert.Text = "Convert";
             this.buttonConvert.UseVisualStyleBackColor = true;
@@ -83,9 +93,10 @@
             // 
             // buttonBrowseSaveFolder
             // 
-            this.buttonBrowseSaveFolder.Location = new System.Drawing.Point(326, 106);
+            this.buttonBrowseSaveFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buttonBrowseSaveFolder.Location = new System.Drawing.Point(345, 107);
             this.buttonBrowseSaveFolder.Name = "buttonBrowseSaveFolder";
-            this.buttonBrowseSaveFolder.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrowseSaveFolder.Size = new System.Drawing.Size(58, 25);
             this.buttonBrowseSaveFolder.TabIndex = 12;
             this.buttonBrowseSaveFolder.Text = "browse";
             this.buttonBrowseSaveFolder.UseVisualStyleBackColor = true;
@@ -93,20 +104,22 @@
             // 
             // textBoxSaveFolder
             // 
-            this.textBoxSaveFolder.Location = new System.Drawing.Point(53, 108);
+            this.textBoxSaveFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.textBoxSaveFolder.Location = new System.Drawing.Point(119, 108);
             this.textBoxSaveFolder.Name = "textBoxSaveFolder";
             this.textBoxSaveFolder.ReadOnly = true;
-            this.textBoxSaveFolder.Size = new System.Drawing.Size(275, 20);
+            this.textBoxSaveFolder.Size = new System.Drawing.Size(226, 23);
             this.textBoxSaveFolder.TabIndex = 11;
             // 
             // labelSaveToFolder
             // 
             this.labelSaveToFolder.AutoSize = true;
-            this.labelSaveToFolder.Location = new System.Drawing.Point(12, 111);
+            this.labelSaveToFolder.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelSaveToFolder.Location = new System.Drawing.Point(12, 109);
             this.labelSaveToFolder.Name = "labelSaveToFolder";
-            this.labelSaveToFolder.Size = new System.Drawing.Size(35, 13);
+            this.labelSaveToFolder.Size = new System.Drawing.Size(81, 19);
             this.labelSaveToFolder.TabIndex = 10;
-            this.labelSaveToFolder.Text = "Save:";
+            this.labelSaveToFolder.Text = "Export root:";
             // 
             // openFileDialog
             // 
@@ -117,47 +130,82 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 239);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip.Size = new System.Drawing.Size(414, 22);
             this.statusStrip.TabIndex = 13;
             this.statusStrip.Text = "statusStrip";
             // 
             // toolStripStatusLabel
             // 
+            this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // buttonHelp
+            // menuStrip
             // 
-            this.buttonHelp.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonHelp.Location = new System.Drawing.Point(386, 7);
-            this.buttonHelp.Name = "buttonHelp";
-            this.buttonHelp.Size = new System.Drawing.Size(20, 20);
-            this.buttonHelp.TabIndex = 14;
-            this.buttonHelp.Text = "?";
-            this.buttonHelp.UseVisualStyleBackColor = false;
-            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.оПрограммеToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(414, 27);
+            this.menuStrip.TabIndex = 16;
+            this.menuStrip.Text = "Menu";
             // 
-            // hyperlinkProblemLabel
+            // оПрограммеToolStripMenuItem
             // 
-            this.hyperlinkProblemLabel.Location = new System.Drawing.Point(349, 242);
-            this.hyperlinkProblemLabel.Name = "hyperlinkProblemLabel";
-            this.hyperlinkProblemLabel.Size = new System.Drawing.Size(57, 13);
-            this.hyperlinkProblemLabel.TabIndex = 15;
-            this.hyperlinkProblemLabel.Text = "Have issue?";
-            this.hyperlinkProblemLabel.Click += new System.EventHandler(this.hyperlinkLabelControl_Click);
+            this.оПрограммеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OpenHelpToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.ReportAProblemToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.AboutToolStripMenuItem});
+            this.оПрограммеToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(49, 23);
+            this.оПрограммеToolStripMenuItem.Text = "Help";
+            // 
+            // OpenHelpToolStripMenuItem
+            // 
+            this.OpenHelpToolStripMenuItem.Name = "OpenHelpToolStripMenuItem";
+            this.OpenHelpToolStripMenuItem.Size = new System.Drawing.Size(219, 24);
+            this.OpenHelpToolStripMenuItem.Text = "Open help";
+            this.OpenHelpToolStripMenuItem.Click += new System.EventHandler(this.OpenHelpToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
+            // 
+            // ReportAProblemToolStripMenuItem
+            // 
+            this.ReportAProblemToolStripMenuItem.Name = "ReportAProblemToolStripMenuItem";
+            this.ReportAProblemToolStripMenuItem.Size = new System.Drawing.Size(219, 24);
+            this.ReportAProblemToolStripMenuItem.Text = "Report a problem";
+            this.ReportAProblemToolStripMenuItem.Click += new System.EventHandler(this.ReportAProblemToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(216, 6);
+            // 
+            // AboutToolStripMenuItem
+            // 
+            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(219, 24);
+            this.AboutToolStripMenuItem.Text = "About BinaryConverter";
+            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // MainConverterWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 261);
-            this.Controls.Add(this.hyperlinkProblemLabel);
-            this.Controls.Add(this.buttonHelp);
+            this.ClientSize = new System.Drawing.Size(414, 261);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.buttonBrowseSaveFolder);
             this.Controls.Add(this.textBoxSaveFolder);
             this.Controls.Add(this.labelSaveToFolder);
@@ -165,13 +213,19 @@
             this.Controls.Add(this.buttonBrowseJsonFiles);
             this.Controls.Add(this.textBoxLoadFromFolder);
             this.Controls.Add(this.labelLoadFromFolder);
-            this.MaximumSize = new System.Drawing.Size(429, 300);
-            this.MinimumSize = new System.Drawing.Size(429, 300);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(430, 300);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(430, 300);
             this.Name = "MainConverterWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Binary converter";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,8 +244,13 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.Button buttonHelp;
-        private DevExpress.XtraEditors.HyperlinkLabelControl hyperlinkProblemLabel;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenHelpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ReportAProblemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
