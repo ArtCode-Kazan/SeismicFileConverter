@@ -60,7 +60,7 @@ namespace BinaryToJSONConverterApp
             string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string helpFilePath = Path.Combine(exeDirectory, HelpFileName);
 
-            if (File.Exists(helpFilePath) == true)
+            if (File.Exists(helpFilePath))
             {
                 Help.ShowHelp(this, helpFilePath);
             }
