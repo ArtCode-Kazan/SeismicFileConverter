@@ -214,7 +214,9 @@
             this.Controls.Add(this.textBoxLoadFromFolder);
             this.Controls.Add(this.labelLoadFromFolder);
             this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(429, 300);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(429, 300);
             this.Name = "MainConverterWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
