@@ -40,37 +40,38 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label1.Location = new System.Drawing.Point(12, 31);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 17);
+            this.label1.Size = new System.Drawing.Size(137, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "SeismicConverter 1.0";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.label2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label2.Location = new System.Drawing.Point(12, 48);
+            this.label2.Location = new System.Drawing.Point(14, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 13);
+            this.label2.Size = new System.Drawing.Size(156, 12);
             this.label2.TabIndex = 1;
             this.label2.Text = "Copyright© 2022-2023 by ArtCode";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label3.Location = new System.Drawing.Point(12, 96);
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label3.Location = new System.Drawing.Point(13, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(177, 15);
+            this.label3.Size = new System.Drawing.Size(174, 15);
             this.label3.TabIndex = 2;
             this.label3.Text = "Thank for using this programm.";
             // 
             // buttonClose
             // 
-            this.buttonClose.Location = new System.Drawing.Point(123, 203);
+            this.buttonClose.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonClose.Location = new System.Drawing.Point(123, 131);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(71, 33);
             this.buttonClose.TabIndex = 3;
@@ -80,7 +81,8 @@
             // 
             // buttonMail
             // 
-            this.buttonMail.Location = new System.Drawing.Point(12, 203);
+            this.buttonMail.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonMail.Location = new System.Drawing.Point(15, 131);
             this.buttonMail.Name = "buttonMail";
             this.buttonMail.Size = new System.Drawing.Size(71, 33);
             this.buttonMail.TabIndex = 4;
@@ -90,8 +92,9 @@
             // 
             // separatorControl
             // 
+            this.separatorControl.BackColor = System.Drawing.SystemColors.Control;
             this.separatorControl.LineColor = System.Drawing.Color.Silver;
-            this.separatorControl.Location = new System.Drawing.Point(-17, 174);
+            this.separatorControl.Location = new System.Drawing.Point(-16, 102);
             this.separatorControl.Name = "separatorControl";
             this.separatorControl.Size = new System.Drawing.Size(240, 23);
             this.separatorControl.TabIndex = 5;
@@ -100,7 +103,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(206, 248);
+            this.ClientSize = new System.Drawing.Size(206, 176);
             this.Controls.Add(this.separatorControl);
             this.Controls.Add(this.buttonMail);
             this.Controls.Add(this.buttonClose);
@@ -111,10 +114,10 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(222, 287);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(222, 287);
+            this.MinimumSize = new System.Drawing.Size(222, 215);
             this.Name = "AboutProgramm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "About SeismicConverter";
+            this.Text = "About programm";
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

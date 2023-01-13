@@ -64,10 +64,10 @@
             // textBoxLoadFromFolder
             // 
             this.textBoxLoadFromFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(99, 64);
+            this.textBoxLoadFromFolder.Location = new System.Drawing.Point(119, 64);
             this.textBoxLoadFromFolder.Name = "textBoxLoadFromFolder";
             this.textBoxLoadFromFolder.ReadOnly = true;
-            this.textBoxLoadFromFolder.Size = new System.Drawing.Size(246, 23);
+            this.textBoxLoadFromFolder.Size = new System.Drawing.Size(226, 23);
             this.textBoxLoadFromFolder.TabIndex = 7;
             // 
             // labelLoadFromFolder
@@ -76,9 +76,9 @@
             this.labelLoadFromFolder.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.labelLoadFromFolder.Location = new System.Drawing.Point(12, 65);
             this.labelLoadFromFolder.Name = "labelLoadFromFolder";
-            this.labelLoadFromFolder.Size = new System.Drawing.Size(74, 19);
+            this.labelLoadFromFolder.Size = new System.Drawing.Size(101, 19);
             this.labelLoadFromFolder.TabIndex = 6;
-            this.labelLoadFromFolder.Text = "Input json:";
+            this.labelLoadFromFolder.Text = "Input json files:";
             // 
             // buttonConvert
             // 
@@ -105,10 +105,10 @@
             // textBoxSaveFolder
             // 
             this.textBoxSaveFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxSaveFolder.Location = new System.Drawing.Point(99, 108);
+            this.textBoxSaveFolder.Location = new System.Drawing.Point(119, 108);
             this.textBoxSaveFolder.Name = "textBoxSaveFolder";
             this.textBoxSaveFolder.ReadOnly = true;
-            this.textBoxSaveFolder.Size = new System.Drawing.Size(246, 23);
+            this.textBoxSaveFolder.Size = new System.Drawing.Size(226, 23);
             this.textBoxSaveFolder.TabIndex = 11;
             // 
             // labelSaveToFolder
@@ -130,12 +130,12 @@
             // 
             // statusStrip
             // 
-            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9.3F);
+            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 235);
+            this.statusStrip.Location = new System.Drawing.Point(0, 239);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(409, 22);
+            this.statusStrip.Size = new System.Drawing.Size(413, 22);
             this.statusStrip.TabIndex = 13;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -151,7 +151,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(409, 27);
+            this.menuStrip.Size = new System.Drawing.Size(413, 27);
             this.menuStrip.TabIndex = 16;
             this.menuStrip.Text = "Menu";
             // 
