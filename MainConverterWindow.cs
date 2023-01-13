@@ -8,7 +8,7 @@ namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
-        public const string HelpFileName = "JsonСonverter.chm";
+        public const string HelpFileName = "ConverterHelpFile.chm";
 
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";        

@@ -33,8 +33,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.buttonMail = new System.Windows.Forms.Button();
-            this.separatorControl = new DevExpress.XtraEditors.SeparatorControl();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl)).BeginInit();
+            this.pictureBoxSeparator = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSeparator)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -90,21 +90,21 @@
             this.buttonMail.UseVisualStyleBackColor = true;
             this.buttonMail.Click += new System.EventHandler(this.buttonMail_Click);
             // 
-            // separatorControl
+            // pictureBoxSeparator
             // 
-            this.separatorControl.BackColor = System.Drawing.SystemColors.Control;
-            this.separatorControl.LineColor = System.Drawing.Color.Silver;
-            this.separatorControl.Location = new System.Drawing.Point(-16, 102);
-            this.separatorControl.Name = "separatorControl";
-            this.separatorControl.Size = new System.Drawing.Size(240, 23);
-            this.separatorControl.TabIndex = 5;
+            this.pictureBoxSeparator.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pictureBoxSeparator.Location = new System.Drawing.Point(0, 117);
+            this.pictureBoxSeparator.Name = "pictureBoxSeparator";
+            this.pictureBoxSeparator.Size = new System.Drawing.Size(227, 1);
+            this.pictureBoxSeparator.TabIndex = 5;
+            this.pictureBoxSeparator.TabStop = false;
             // 
             // AboutProgramm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(206, 176);
-            this.Controls.Add(this.separatorControl);
+            this.Controls.Add(this.pictureBoxSeparator);
             this.Controls.Add(this.buttonMail);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.label3);
@@ -118,7 +118,7 @@
             this.Name = "AboutProgramm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About programm";
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSeparator)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,6 +131,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button buttonMail;
-        private DevExpress.XtraEditors.SeparatorControl separatorControl;
+        private System.Windows.Forms.PictureBox pictureBoxSeparator;
     }
 }
