@@ -83,7 +83,7 @@
             // buttonConvert
             // 
             this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonConvert.Location = new System.Drawing.Point(156, 186);
+            this.buttonConvert.Location = new System.Drawing.Point(174, 186);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(82, 33);
             this.buttonConvert.TabIndex = 9;
@@ -135,7 +135,7 @@
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 239);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip.Size = new System.Drawing.Size(414, 22);
             this.statusStrip.TabIndex = 13;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -151,7 +151,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(413, 27);
+            this.menuStrip.Size = new System.Drawing.Size(414, 27);
             this.menuStrip.TabIndex = 16;
             this.menuStrip.Text = "Menu";
             // 
@@ -203,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 261);
+            this.ClientSize = new System.Drawing.Size(414, 261);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.buttonBrowseSaveFolder);
@@ -216,9 +216,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(429, 300);
+            this.MaximumSize = new System.Drawing.Size(430, 300);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(429, 300);
+            this.MinimumSize = new System.Drawing.Size(430, 300);
             this.Name = "MainConverterWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Binary converter";
