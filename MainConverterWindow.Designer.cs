@@ -133,9 +133,9 @@
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9.3F);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 239);
+            this.statusStrip.Location = new System.Drawing.Point(0, 235);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip.Size = new System.Drawing.Size(409, 22);
             this.statusStrip.TabIndex = 13;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -151,7 +151,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(413, 27);
+            this.menuStrip.Size = new System.Drawing.Size(409, 27);
             this.menuStrip.TabIndex = 16;
             this.menuStrip.Text = "Menu";
             // 
@@ -213,6 +213,7 @@
             this.Controls.Add(this.buttonBrowseJsonFiles);
             this.Controls.Add(this.textBoxLoadFromFolder);
             this.Controls.Add(this.labelLoadFromFolder);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(429, 300);
