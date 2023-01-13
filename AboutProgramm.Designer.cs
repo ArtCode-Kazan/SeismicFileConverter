@@ -107,7 +107,13 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(222, 287);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(222, 287);
             this.Name = "AboutProgramm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About SeismicConverter";
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl)).EndInit();
             this.ResumeLayout(false);
