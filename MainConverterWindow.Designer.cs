@@ -83,7 +83,7 @@
             // buttonConvert
             // 
             this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonConvert.Location = new System.Drawing.Point(174, 186);
+            this.buttonConvert.Location = new System.Drawing.Point(166, 185);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(82, 33);
             this.buttonConvert.TabIndex = 9;
