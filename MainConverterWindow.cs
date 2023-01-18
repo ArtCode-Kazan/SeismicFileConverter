@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using JsonBinLib;
 
@@ -11,15 +13,58 @@ namespace BinaryToJSONConverterApp
         public const string HelpFileName = "ConverterHelpFile.chm";
 
         public List<string> pathsJsons = new List<string>();
-        public string pathFolderBinarySave = "";        
+        public string pathFolderBinarySave = "";
 
         public MainConverterWindow()
         {
             InitializeComponent();
-            toolStripStatusLabel.Text = "Ready";            
+            string path = "C:/Users/user/Desktop/Новая папка/descripton.txt";
+            IsVersionLatest(path);
+            toolStripStatusLabel.Text = "Ready";
+        }
+        public bool IsVersionLatest(string path)
+        {
+            if (GetServerAssemblyVersion(path) == OriginAssemblyVersion)
+            {                
+                MessageBox.Show("актуальная");
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("не актуальная");
+                return false;
+            }
+             
+        }
+        public string GetServerAssemblyVersion(string path)
+        {
+            string s;
+            string result = "";
+
+            using (var f = new StreamReader(path))
+            {
+                while ((s = f.ReadLine()) != null)
+                {
+                    if (s.Contains("version:"))
+                    {
+                        result = s.Split(':')[1];
+                    }
+                }
+            }
+
+            return result;
+        }
+        public string OriginAssemblyVersion
+        {
+            get
+            {
+                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                MessageBox.Show(ver);
+                return ver;
+            }
         }
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
-        {                                    
+        {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = "";
@@ -27,7 +72,7 @@ namespace BinaryToJSONConverterApp
                 {
                     this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
-                }                
+                }
             }
         }
         internal void buttonBrowseSaveFolder_Click(object sender, EventArgs e)
@@ -39,21 +84,21 @@ namespace BinaryToJSONConverterApp
             }
         }
         internal void buttonConvert_Click(object sender, EventArgs e)
-        {            
-            for (int i = 0; i < this.pathsJsons.Count; i++)  
+        {
+            for (int i = 0; i < this.pathsJsons.Count; i++)
             {
                 string path = this.pathsJsons[i];
-                JsonParser jsonParser = new JsonParser(path);                
+                JsonParser jsonParser = new JsonParser(path);
                 string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
-                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);                    
+                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);
                 SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
-                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";                
-                statusStrip.Refresh();             
+                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
+                statusStrip.Refresh();
             }
 
             toolStripStatusLabel.Text = "Success";
-        }                      
+        }
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -73,7 +118,7 @@ namespace BinaryToJSONConverterApp
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form formHelp = new AboutProgramm();
-            formHelp.ShowDialog();            
+            formHelp.ShowDialog();
         }
 
         private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,5 +139,5 @@ namespace BinaryToJSONConverterApp
                 MessageBox.Show(other.Message);
             }
         }
-    }       
+    }
 }
