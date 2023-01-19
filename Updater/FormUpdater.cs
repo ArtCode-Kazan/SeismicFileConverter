@@ -9,16 +9,15 @@ namespace Updater
 {    
     public partial class FormUpdater : Form
     {
+        public const string PathToZip = @"C:\Users\user\Desktop\Новая папка\programm.zip";
+        public const string PathToTxt = "C:/Users/user/Desktop/Новая папка/descripton.txt";
+
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = GetServerAssemblyVersion("C:/Users/user/Desktop/Новая папка/descripton.txt");
+            labelversion.Text = GetServerAssemblyVersion(PathToTxt);
         }
 
-        public class Constants
-        {
-            public const string PathToZip = @"C:\Users\user\Desktop\Новая папка\programm.zip";            
-        }
         public string GetServerAssemblyVersion(string path)
         {
             string s;
@@ -38,13 +37,22 @@ namespace Updater
             return result;
         }
 
-        public string pathToFolder
+        public string PathToFolder
         {
             get
             {
                 string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
+        }
+
+        public void RunConverter()
+        {
+            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug\SeisJsonConverter.exe");
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            info.CreateNoWindow = true;
+            Process process = Process.Start(info);
+            Close();
         }
 
         public void DeleteFiles()
@@ -61,20 +69,13 @@ namespace Updater
         private void buttonUpdate_Click(object sender, EventArgs e)
         {            
             DeleteFiles();
-            ZipFile.ExtractToDirectory(Constants.PathToZip, Environment.CurrentDirectory);
-            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug\SeisJsonConverter.exe");
-            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            info.CreateNoWindow = true;
-
-            Process process = Process.Start(info);
-            Close();
+            ZipFile.ExtractToDirectory(PathToZip, Environment.CurrentDirectory);
+            RunConverter();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            Process[] info = Process.GetProcessesByName("SeisJsonConveterUpdater");            
-            MessageBox.Show(Environment.CurrentDirectory);            
-            //Close();
+            Close();
         }
     }
 }

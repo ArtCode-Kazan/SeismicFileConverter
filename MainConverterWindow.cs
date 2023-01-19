@@ -16,21 +16,21 @@ namespace BinaryToJSONConverterApp
         public string pathFolderBinarySave = "";
 
         public MainConverterWindow()
-        {            
+        {
             InitializeComponent();
-            toolStripStatusLabel.Text = "Ready";            
+            toolStripStatusLabel.Text = "Ready";
         }
 
         public string OriginAssemblyVersion
         {
             get
             {
-                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();                
+                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 return ver;
             }
         }
 
-        public string GetServerAssemblyVersion(string path)
+        public string GetTxtAssemblyVersion(string path)
         {
             string s;
             string result = "";
@@ -51,7 +51,7 @@ namespace BinaryToJSONConverterApp
 
         public bool IsVersionLatest(string path)
         {
-            if (GetServerAssemblyVersion(path) == OriginAssemblyVersion)
+            if (GetTxtAssemblyVersion(path) == OriginAssemblyVersion)
             {
                 return true;
             }
@@ -60,7 +60,14 @@ namespace BinaryToJSONConverterApp
                 return false;
             }
 
-        }        
+        }
+        public void RunUpdater()
+        {
+            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug\SeisJsonConveterUpdater.exe");
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);            
+            Process process = Process.Start(info);
+            Close();
+        }
 
         public void UpdateProgramm()
         {
@@ -74,13 +81,8 @@ namespace BinaryToJSONConverterApp
 
             if (result == DialogResult.Yes)
             {
-                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug\SeisJsonConveterUpdater.exe");                
-                info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);                
-                info.CreateNoWindow = true;                
-
-                Process process = Process.Start(info);
-                Close();
-            }    
+                RunUpdater();
+            }
 
             this.TopMost = true;
         }
@@ -167,7 +169,7 @@ namespace BinaryToJSONConverterApp
             string path = "C:/Users/user/Desktop/Новая папка/descripton.txt";
             if (IsVersionLatest(path))
             {
-                MessageBox.Show("Версия последняя", "Обновление");
+                MessageBox.Show("Установлена последняя версия", "Обновление");
             }
             else
             {
