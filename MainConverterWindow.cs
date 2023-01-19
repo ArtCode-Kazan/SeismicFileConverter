@@ -75,7 +75,7 @@ namespace BinaryToJSONConverterApp
 
             if (result == DialogResult.Yes)
             {
-                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug");                
+                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug\SeisJsonConveterUpdater.exe");                
                 info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);                
                 info.CreateNoWindow = true;                
 
@@ -84,8 +84,8 @@ namespace BinaryToJSONConverterApp
             }    
 
             this.TopMost = true;
-        }               
-                 
+        }
+
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)

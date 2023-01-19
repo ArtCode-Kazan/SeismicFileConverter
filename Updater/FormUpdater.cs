@@ -38,7 +38,7 @@ namespace Updater
 
         public void DeleteFiles()
         {
-            string dir = @"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug";
+            string dir = Environment.CurrentDirectory;
             string[] paths = Directory.GetFiles(dir);
             
             foreach (string path in paths)
@@ -50,13 +50,13 @@ namespace Updater
         private void buttonUpdate_Click(object sender, EventArgs e)
         {            
             DeleteFiles();
-            ZipFile.ExtractToDirectory(Constants.PathToZip, Constants.PathToDir);
+            ZipFile.ExtractToDirectory(Constants.PathToZip, Environment.CurrentDirectory);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Process[] info = Process.GetProcessesByName("SeisJsonConveterUpdater");            
-            MessageBox.Show(Process.GetCurrentProcess().StartInfo.WorkingDirectory);
+            MessageBox.Show(Environment.CurrentDirectory);            
             //Close();
         }
     }
