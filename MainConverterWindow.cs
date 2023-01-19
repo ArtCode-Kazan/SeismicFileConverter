@@ -30,36 +30,43 @@ namespace BinaryToJSONConverterApp
             }
         }
 
-        public string GetTxtAssemblyVersion(string path)
+        public string GetServerAssemblyVersion(string url)
         {
             string s;
             string result = "";
-
-            using (var f = new StreamReader(path))
+            using (WebClient client = new WebClient())
             {
-                while ((s = f.ReadLine()) != null)
+                using (Stream stream = client.OpenRead(url))
                 {
-                    if (s.Contains("version:"))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
-                        result = s.Split(':')[1];
+                        while ((s = reader.ReadLine()) != null)
+                        {
+                            if (s.Contains("version:"))
+                            {
+                                result = s.Split(':')[1].Split(' ')[1];
+                            }
+                        }
                     }
                 }
             }
-
             return result;
         }
 
         public bool IsVersionLatest(string path)
         {
-            if (GetTxtAssemblyVersion(path) == OriginAssemblyVersion)
+            string[] originVersion = OriginAssemblyVersion.Split('.');
+            string[] serverVersion = GetServerAssemblyVersion(path).Split('.');
+
+            for (int i=0; i < 4; i++)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                if (originVersion[i] != serverVersion[i])
+                {
+                    return false;
+                }                
             }
 
+            return true;
         }
 
         public void RunUpdater()

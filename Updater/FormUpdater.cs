@@ -19,7 +19,7 @@ namespace Updater
         public List<string> MainFilesName = new List<string>() 
         { 
             ZipName, 
-            System.AppDomain.CurrentDomain.FriendlyName,
+            AppDomain.CurrentDomain.FriendlyName,
             "SeisJsonConveterUpdater.pdb"
         };
 
@@ -120,7 +120,7 @@ namespace Updater
 
         public void RunConverter()
         {
-            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug\SeisJsonConverter.exe");
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programmFolder, "SeisJsonConverter.exe"));
             info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
             Process process = Process.Start(info);
@@ -154,9 +154,8 @@ namespace Updater
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(System.AppDomain.CurrentDomain.FriendlyName);
-            //Close();
+        {            
+            Close();
         }
     }
 }
