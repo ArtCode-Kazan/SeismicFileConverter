@@ -21,63 +21,16 @@ namespace BinaryToJSONConverterApp
             InitializeComponent();
             toolStripStatusLabel.Text = "Ready";            
         }
-        public void UpdateProgramm()
-        {
-            DialogResult result = MessageBox.Show(
-            "Доступна новая версия приложения.\nОбновить?",
-            "Обновление",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Information,
-            MessageBoxDefaultButton.Button1,
-            MessageBoxOptions.DefaultDesktopOnly);
 
-            if (result == DialogResult.Yes)
-            {
-                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\Updater\bin\Debug\SeisJsonConveterUpdater.exe");
-                info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                info.CreateNoWindow = true;
-                info.Verb = "runas";
-
-                Process process = Process.Start(info);
-                Close();
-            }    
-
-            this.TopMost = true;
-        }
-        public void KillUpdater()
-        {
-            try
-            {
-                foreach (Process proc in Process.GetProcessesByName("SeisJsonConveterUpdater"))
-                {
-                    proc.Kill();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        public bool IsVersionLatest(string path)
-        {
-            if (GetServerAssemblyVersion(path) == OriginAssemblyVersion)
-            {                                
-                return true;
-            }
-            else
-            {                
-                return false;
-            }
-             
-        }
         public string OriginAssemblyVersion
         {
             get
             {
-                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();                
+                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 return ver;
             }
         }
+
         public string GetServerAssemblyVersion(string path)
         {
             string s;
@@ -95,7 +48,44 @@ namespace BinaryToJSONConverterApp
             }
 
             return result;
+        }
+
+        public bool IsVersionLatest(string path)
+        {
+            if (GetServerAssemblyVersion(path) == OriginAssemblyVersion)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }        
+
+        public void UpdateProgramm()
+        {
+            DialogResult result = MessageBox.Show(
+            "Доступна новая версия приложения.\nОбновить?",
+            "Обновление",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Information,
+            MessageBoxDefaultButton.Button1,
+            MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result == DialogResult.Yes)
+            {
+                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug");                
+                info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);                
+                info.CreateNoWindow = true;                
+
+                Process process = Process.Start(info);
+                Close();
+            }    
+
+            this.TopMost = true;
+        }               
+                 
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
