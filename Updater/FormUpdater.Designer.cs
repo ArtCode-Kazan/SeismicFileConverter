@@ -37,9 +37,9 @@
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.buttonCancel.Location = new System.Drawing.Point(140, 178);
+            this.buttonCancel.Location = new System.Drawing.Point(125, 170);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(90, 40);
             this.buttonCancel.TabIndex = 0;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -48,9 +48,9 @@
             // buttonUpdate
             // 
             this.buttonUpdate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.buttonUpdate.Location = new System.Drawing.Point(12, 178);
+            this.buttonUpdate.Location = new System.Drawing.Point(12, 170);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdate.Size = new System.Drawing.Size(90, 40);
             this.buttonUpdate.TabIndex = 1;
             this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
@@ -85,6 +85,9 @@
             this.Controls.Add(this.labelavailableversion);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.buttonCancel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormUpdater";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";
