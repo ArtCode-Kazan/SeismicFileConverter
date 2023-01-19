@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 EndProject
 Project("{E729F059-12D4-455F-A2A4-FDA8DD25E08A}") = "SeisJsonConverterInstall", "C:\InstallShield 2022 Projects\SeisJsonConverterInstall.isproj", "{5EF1B522-39DC-487A-BF30-F71C7A3C9ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeisJsonConveterUpdater", "Updater\SeisJsonConveterUpdater.csproj", "{CB0978D8-C5FD-451C-941C-2B85DA040220}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeisJsonConverterUpdater", "Updater\SeisJsonConverterUpdater.csproj", "{CB0978D8-C5FD-451C-941C-2B85DA040220}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

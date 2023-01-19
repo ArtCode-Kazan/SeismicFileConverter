@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB0978D8-C5FD-451C-941C-2B85DA040220}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SeisJsonConveterUpdater</RootNamespace>
-    <AssemblyName>SeisJsonConveterUpdater</AssemblyName>
+    <RootNamespace>SeisJsonConverterUpdater</RootNamespace>
+    <AssemblyName>SeisJsonConverterUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
