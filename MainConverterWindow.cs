@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 using JsonBinLib;
@@ -11,6 +12,7 @@ namespace BinaryToJSONConverterApp
     public partial class MainConverterWindow : Form
     {
         public const string HelpFileName = "ConverterHelpFile.chm";
+        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
 
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";
@@ -30,13 +32,22 @@ namespace BinaryToJSONConverterApp
             }
         }
 
-        public string GetServerAssemblyVersion(string url)
+        public string ProgrammFolderPath
+        {
+            get
+            {
+                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                return pathToFolder;
+            }
+        }
+
+        public string GetServerAssemblyVersion()
         {
             string s;
             string result = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(url))
+                using (Stream stream = client.OpenRead(TxtUrl))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
@@ -53,10 +64,10 @@ namespace BinaryToJSONConverterApp
             return result;
         }
 
-        public bool IsVersionLatest(string path)
+        public bool IsVersionLatest()
         {
             string[] originVersion = OriginAssemblyVersion.Split('.');
-            string[] serverVersion = GetServerAssemblyVersion(path).Split('.');
+            string[] serverVersion = GetServerAssemblyVersion().Split('.');
 
             for (int i=0; i < 4; i++)
             {
@@ -65,13 +76,12 @@ namespace BinaryToJSONConverterApp
                     return false;
                 }                
             }
-
             return true;
         }
 
         public void RunUpdater()
         {
-            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug\SeisJsonConveterUpdater.exe");
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, "SeisJsonConverterUpdater.exe"));
             info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);            
             Process process = Process.Start(info);
             Close();
@@ -175,9 +185,8 @@ namespace BinaryToJSONConverterApp
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string path = "C:/Users/user/Desktop/Новая папка/descripton.txt";
-            if (IsVersionLatest(path))
+        {            
+            if (IsVersionLatest())
             {
                 MessageBox.Show("Установлена последняя версия", "Обновление");
             }

@@ -108,14 +108,14 @@ namespace Updater
 
         public bool IsZipBroken()
         {
-            if (GetZipHashSum(Path.Combine(programmFolder, ZipName)) == GetServerHashSum())
+            if (File.Exists(Path.Combine(programmFolder, ZipName)))
             {
-                return false;
+                if (GetZipHashSum(Path.Combine(programmFolder, ZipName)) == GetServerHashSum())
+                {
+                    return false;
+                }                
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
 
         public void RunConverter()
