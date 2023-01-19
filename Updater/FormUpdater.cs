@@ -19,12 +19,30 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
+            labelversion.Text = GetServerAssemblyVersion("C:/Users/user/Desktop/Новая папка/descripton.txt");
         }
 
         public class Constants
         {
-            public const string PathToZip = @"C:\Users\user\Desktop\Новая папка\programm.zip";
-            public const string PathToDir = @"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug";
+            public const string PathToZip = @"C:\Users\user\Desktop\Новая папка\programm.zip";            
+        }
+        public string GetServerAssemblyVersion(string path)
+        {
+            string s;
+            string result = "";
+
+            using (var f = new StreamReader(path))
+            {
+                while ((s = f.ReadLine()) != null)
+                {
+                    if (s.Contains("version:"))
+                    {
+                        result = s.Split(':')[1];
+                    }
+                }
+            }
+
+            return result;
         }
 
         public string pathToFolder
@@ -51,6 +69,12 @@ namespace Updater
         {            
             DeleteFiles();
             ZipFile.ExtractToDirectory(Constants.PathToZip, Environment.CurrentDirectory);
+            ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug\SeisJsonConverter.exe");
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            info.CreateNoWindow = true;
+
+            Process process = Process.Start(info);
+            Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

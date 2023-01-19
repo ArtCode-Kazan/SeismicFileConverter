@@ -26,7 +26,7 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();                
                 return ver;
             }
         }
