@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -16,25 +17,66 @@ namespace BinaryToJSONConverterApp
         public string pathFolderBinarySave = "";
 
         public MainConverterWindow()
-        {
+        {            
             InitializeComponent();
-            string path = "C:/Users/user/Desktop/Новая папка/descripton.txt";
-            IsVersionLatest(path);
-            toolStripStatusLabel.Text = "Ready";
+            toolStripStatusLabel.Text = "Ready";            
+        }
+        public void UpdateProgramm()
+        {
+            DialogResult result = MessageBox.Show(
+            "Доступна новая версия приложения.\nОбновить?",
+            "Обновление",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Information,
+            MessageBoxDefaultButton.Button1,
+            MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result == DialogResult.Yes)
+            {
+                ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\Updater\bin\Debug\SeisJsonConveterUpdater.exe");
+                info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                info.CreateNoWindow = true;
+                info.Verb = "runas";
+
+                Process process = Process.Start(info);
+                Close();
+            }    
+
+            this.TopMost = true;
+        }
+        public void KillUpdater()
+        {
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("SeisJsonConveterUpdater"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public bool IsVersionLatest(string path)
         {
             if (GetServerAssemblyVersion(path) == OriginAssemblyVersion)
-            {                
-                MessageBox.Show("актуальная");
+            {                                
                 return true;
             }
             else
-            {
-                MessageBox.Show("не актуальная");
+            {                
                 return false;
             }
              
+        }
+        public string OriginAssemblyVersion
+        {
+            get
+            {
+                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();                
+                return ver;
+            }
         }
         public string GetServerAssemblyVersion(string path)
         {
@@ -53,16 +95,7 @@ namespace BinaryToJSONConverterApp
             }
 
             return result;
-        }
-        public string OriginAssemblyVersion
-        {
-            get
-            {
-                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                MessageBox.Show(ver);
-                return ver;
-            }
-        }
+        }        
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -137,6 +170,19 @@ namespace BinaryToJSONConverterApp
             catch (Exception other)
             {
                 MessageBox.Show(other.Message);
+            }
+        }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = "C:/Users/user/Desktop/Новая папка/descripton.txt";
+            if (IsVersionLatest(path))
+            {
+                MessageBox.Show("Версия последняя", "Обновление");
+            }
+            else
+            {
+                UpdateProgramm();
             }
         }
     }
