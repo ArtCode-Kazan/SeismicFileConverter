@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -8,12 +9,19 @@ using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace Updater
-{    
+{
     public partial class FormUpdater : Form
     {
         public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
-        public const string ZipUrl = "https://sigma-geophys.com/Distr/SeisJsonConveter-0.0.0.0.zip";
+        public const string ZipUrl = "https://sigma-geophys.com/Distr/SeisJsonConveter.zip";
         public const string ZipName = "ConverterLatestVersion.zip";
+
+        public List<string> MainFilesName = new List<string>() 
+        { 
+            ZipName, 
+            System.AppDomain.CurrentDomain.FriendlyName,
+            "SeisJsonConveterUpdater.pdb"
+        };
 
         public FormUpdater()
         {
@@ -78,12 +86,15 @@ namespace Updater
 
         public dynamic GetZipHashSum(string path)
         {
-            var fs = new FileStream(path, FileMode.Open);
-            var md5 = MD5.Create();
-            byte[] hashValue = md5.ComputeHash(fs);
-            string hash = BitConverter.ToString(hashValue)
-                .Replace("-", string.Empty)
-                .ToLower();
+            string hash = "";
+            using (var fs = new FileStream(path, FileMode.Open))
+            {
+                var md5 = MD5.Create();
+                byte[] hashValue = md5.ComputeHash(fs);
+                hash = BitConverter.ToString(hashValue)
+                    .Replace("-", string.Empty)
+                    .ToLower();
+            }
             return hash;
         }
 
@@ -123,21 +134,28 @@ namespace Updater
             
             foreach (string path in paths)
             {
-                File.Delete(path);
+                if (!MainFilesName.Contains(Path.GetFileName(path)))
+                {
+                    File.Delete(path);
+                }                
             }            
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             DownloadZip();
-            DeleteFiles();
-            ZipFile.ExtractToDirectory(Path.Combine(programmFolder, ZipName), Environment.CurrentDirectory);
+            if (IsZipBroken() == false)
+            {
+                DeleteFiles();
+                ZipFile.ExtractToDirectory(Path.Combine(programmFolder, ZipName), Environment.CurrentDirectory);
+                File.Delete(Path.Combine(programmFolder, ZipName));
+            }                        
             RunConverter();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            GetZipHashSum(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug/SeisJsonConveter-0.0.0.0.zip");
+            MessageBox.Show(System.AppDomain.CurrentDomain.FriendlyName);
             //Close();
         }
     }
