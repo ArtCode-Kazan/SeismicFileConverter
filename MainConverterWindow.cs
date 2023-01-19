@@ -61,6 +61,7 @@ namespace BinaryToJSONConverterApp
             }
 
         }
+
         public void RunUpdater()
         {
             ProcessStartInfo info = new ProcessStartInfo(@"D:\Codingapps\BinaryToJSONConverterApp\Updater\bin\Debug\SeisJsonConveterUpdater.exe");
@@ -99,6 +100,7 @@ namespace BinaryToJSONConverterApp
                 }
             }
         }
+
         internal void buttonBrowseSaveFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -107,6 +109,7 @@ namespace BinaryToJSONConverterApp
                 this.pathFolderBinarySave = folderBrowserDialog.SelectedPath;
             }
         }
+
         internal void buttonConvert_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < this.pathsJsons.Count; i++)

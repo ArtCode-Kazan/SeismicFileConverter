@@ -2,47 +2,108 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace Updater
 {    
     public partial class FormUpdater : Form
     {
-        public const string PathToZip = @"C:\Users\user\Desktop\Новая папка\programm.zip";
-        public const string PathToTxt = "C:/Users/user/Desktop/Новая папка/descripton.txt";
+        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
+        public const string ZipUrl = "https://sigma-geophys.com/Distr/SeisJsonConveter-0.0.0.0.zip";
+        public const string ZipName = "ConverterLatestVersion.zip";
 
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = GetServerAssemblyVersion(PathToTxt);
+            labelversion.Text = GetServerAssemblyVersion(TxtUrl);
         }
 
-        public string GetServerAssemblyVersion(string path)
-        {
-            string s;
-            string result = "";
-
-            using (var f = new StreamReader(path))
-            {
-                while ((s = f.ReadLine()) != null)
-                {
-                    if (s.Contains("version:"))
-                    {
-                        result = s.Split(':')[1];
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public string PathToFolder
+        public string programmFolder
         {
             get
             {
                 string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
+            }
+        }
+
+        public string GetServerAssemblyVersion(string url)
+        {
+            string s;
+            string result = "";
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(url))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        while ((s = reader.ReadLine()) != null)
+                        {
+                            if (s.Contains("version:"))
+                            {
+                                result = s.Split(':')[1].Split(' ')[1];
+                            }
+                        }
+                    }              
+                }
+            }                                
+            return result;
+        }
+
+        public string GetServerHashSum()
+        {
+            string s;
+            string result = "";
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(TxtUrl))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        while ((s = reader.ReadLine()) != null)
+                        {
+                            if (s.Contains("MD5:"))
+                            {
+                                result = s.Split(':')[1].Split(' ')[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public dynamic GetZipHashSum(string path)
+        {
+            var fs = new FileStream(path, FileMode.Open);
+            var md5 = MD5.Create();
+            byte[] hashValue = md5.ComputeHash(fs);
+            string hash = BitConverter.ToString(hashValue)
+                .Replace("-", string.Empty)
+                .ToLower();
+            return hash;
+        }
+
+        public void DownloadZip()
+        {
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(ZipUrl, Path.Combine(programmFolder, ZipName));
+            }
+        }
+
+        public bool IsZipBroken()
+        {
+            if (GetZipHashSum(Path.Combine(programmFolder, ZipName)) == GetServerHashSum())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -67,15 +128,17 @@ namespace Updater
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
-        {            
+        {
+            DownloadZip();
             DeleteFiles();
-            ZipFile.ExtractToDirectory(PathToZip, Environment.CurrentDirectory);
+            ZipFile.ExtractToDirectory(Path.Combine(programmFolder, ZipName), Environment.CurrentDirectory);
             RunConverter();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            Close();
+            GetZipHashSum(@"D:\Codingapps\BinaryToJSONConverterApp\bin\Debug/SeisJsonConveter-0.0.0.0.zip");
+            //Close();
         }
     }
 }
