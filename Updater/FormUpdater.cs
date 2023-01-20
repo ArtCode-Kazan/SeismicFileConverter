@@ -7,6 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using UpdaterLib;
 
 namespace Updater
 {
@@ -112,8 +113,7 @@ namespace Updater
     }
 
     public class Constants
-    {
-        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
+    {        
         public const string ConverterAppName = "SeisJsonConverter.exe";
         public const string ZipName = "ConverterLatestVersion.zip";
 
@@ -123,88 +123,5 @@ namespace Updater
             AppDomain.CurrentDomain.FriendlyName,
             "SeisJsonConveterUpdater.pdb"
         };
-    }
-
-    public class ServerInfo
-    {
-        public const string ArchiveName = "SeisJsonConveter.zip";
-        public const string DescriptionName = "version.txt";        
-        public const string VersionFieldName = "version:";
-        public const string HashsumMD5FieldName = "MD5:";
-
-        public Uri uriServer;
-
-        public ServerInfo(string serverUrlString)
-        {
-            this.uriServer = new Uri(serverUrlString);
-        }
-
-        public Uri DescriptionUri
-        {
-            get
-            {
-                Uri uriToDescription = new Uri(
-                    baseUri: this.uriServer, 
-                    relativeUri: ServerInfo.DescriptionName);
-                return uriToDescription;
-            }
-        }
-
-        public Uri ArchiveUri
-        {
-            get
-            {
-                Uri archiveUri = new Uri(
-                    baseUri: this.uriServer, 
-                    relativeUri: ServerInfo.ArchiveName);
-                return archiveUri;
-            }
-        }
-
-        public string AppVersion()
-        {
-            string line;
-            string serverVersion = "";
-            using (WebClient client = new WebClient())
-            {
-                using (Stream stream = client.OpenRead(DescriptionUri))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(ServerInfo.VersionFieldName))
-                            {
-                                serverVersion = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverVersion;
-        }
-
-        public string Hashsum()
-        {
-            string line;
-            string serverHashsum = "";
-            using (WebClient client = new WebClient())
-            {
-                using (Stream stream = client.OpenRead(DescriptionUri))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(ServerInfo.HashsumMD5FieldName))
-                            {
-                                serverHashsum = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverHashsum;
-        }
-    }
+    }    
 }
