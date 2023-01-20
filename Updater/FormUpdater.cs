@@ -15,7 +15,7 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
-            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
             labelversion.Text = serverInfo.AppVersion();
         }
 
@@ -26,7 +26,7 @@ namespace Updater
                 string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
-        }        
+        }
 
         public dynamic GetZipHashSum(string path)
         {
@@ -44,19 +44,21 @@ namespace Updater
 
         public void DownloadZip()
         {
+            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
+
             using (WebClient wclient = new WebClient())
             {
                 wclient.DownloadFile(
-                    address: Constants.ZipUrl, 
+                    address: serverInfo.ArchiveUri,
                     fileName: Path.Combine(
-                        path1: programmFolderPath, 
+                        path1: programmFolderPath,
                         path2: Constants.ZipName));
             }
         }
 
         public bool IsZipBroken()
         {
-            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
             string serverHashsum = serverInfo.Hashsum();
 
             if (File.Exists(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)))
@@ -101,12 +103,12 @@ namespace Updater
                 DeleteFiles();
                 ZipFile.ExtractToDirectory(
                     sourceArchiveFileName: Path.Combine(
-                        path1: programmFolderPath, 
-                        path2: Constants.ZipName), 
+                        path1: programmFolderPath,
+                        path2: Constants.ZipName),
                     destinationDirectoryName: Environment.CurrentDirectory);
                 File.Delete(
                     path: Path.Combine(
-                        path1: programmFolderPath, 
+                        path1: programmFolderPath,
                         path2: Constants.ZipName));
             }
             RunConverter();
@@ -120,10 +122,9 @@ namespace Updater
 
     public class Constants
     {
-        public const string ZipUrl = "https://sigma-geophys.com/Distr/SeisJsonConveter.zip";
-        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";        
+        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
         public const string ConverterAppName = "SeisJsonConverter.exe";
-        public const string ZipName = "ConverterLatestVersion.zip";        
+        public const string ZipName = "ConverterLatestVersion.zip";
 
         public static List<string> FriendlyFileNames = new List<string>()
         {
@@ -135,14 +136,34 @@ namespace Updater
 
     public class ServerInfo
     {
+        public const string ArchiveName = "SeisJsonConveter.zip";
+        public const string DescriptionName = "version.txt";        
         public const string VersionFieldName = "version:";
         public const string HashsumMD5FieldName = "MD5:";
 
-        public string url;
+        public Uri uriServer;
 
-        public ServerInfo(string url)
+        public ServerInfo(string serverUrlString)
         {
-            this.url = url;
+            this.uriServer = new Uri(serverUrlString);
+        }
+
+        public Uri DescriptionUri
+        {
+            get
+            {
+                Uri uriToDescription = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.DescriptionName);
+                return uriToDescription;
+            }
+        }
+
+        public Uri ArchiveUri
+        {
+            get
+            {
+                Uri archiveUri = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.ArchiveName);
+                return archiveUri;
+            }
         }
 
         public string AppVersion()
@@ -151,7 +172,7 @@ namespace Updater
             string serverVersion = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(address: url))
+                using (Stream stream = client.OpenRead(address: DescriptionUri))
                 {
                     using (StreamReader reader = new StreamReader(stream: stream))
                     {
@@ -174,7 +195,7 @@ namespace Updater
             string serverHashsum = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(address: Constants.TxtUrl))
+                using (Stream stream = client.OpenRead(address: DescriptionUri))
                 {
                     using (StreamReader reader = new StreamReader(stream: stream))
                     {

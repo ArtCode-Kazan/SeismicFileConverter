@@ -161,14 +161,14 @@ namespace BinaryToJSONConverterApp
     public class Constants
     {
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
-        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
+        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
         public const string HelpFileName = "ConverterHelpFile.chm";
     }
 
     public class ServerInfo
     {
-        public const string DescriptionTxtName = "version.txt";
+        public const string DescriptionName = "version.txt";
         public const string VersionFieldName = "version:";
 
         public Uri uriServer;
@@ -182,9 +182,9 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                Uri uriToDescription = new Uri(baseUri: this.uriServer, relativeUri: DescriptionTxtName);                
-                return uriToDescription; 
-            }            
+                Uri DescriptionUri = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.DescriptionName);
+                return DescriptionUri;
+            }
         }
 
         public string AppVersion()
@@ -192,7 +192,7 @@ namespace BinaryToJSONConverterApp
             string line;
             string serverVersion = "";
             using (WebClient wclient = new WebClient())
-            {                
+            {
                 using (Stream stream = wclient.OpenRead(address: DescriptionUri))
                 {
                     using (StreamReader reader = new StreamReader(stream: stream))
