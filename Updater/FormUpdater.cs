@@ -15,14 +15,14 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = GetServerAssemblyVersion(Constants.TxtUrl);
+            labelversion.Text = GetServerAssemblyVersion(url: Constants.TxtUrl);
         }
 
         public string programmFolderPath
         {
             get
             {
-                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
         }
@@ -33,13 +33,13 @@ namespace Updater
             string serverVersion = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(url))
+                using (Stream stream = client.OpenRead(address: url))
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    using (StreamReader reader = new StreamReader(stream: stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(Constants.VersionFieldName))
+                            if (line.Contains(value: Constants.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -56,13 +56,13 @@ namespace Updater
             string serverHashsum = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(Constants.TxtUrl))
+                using (Stream stream = client.OpenRead(address: Constants.TxtUrl))
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    using (StreamReader reader = new StreamReader(stream: stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(Constants.HashsumMD5FieldName))
+                            if (line.Contains(value: Constants.HashsumMD5FieldName))
                             {
                                 serverHashsum = line.Split(':')[1].Split(' ')[1];
                             }
@@ -76,12 +76,12 @@ namespace Updater
         public dynamic GetZipHashSum(string path)
         {
             string hashsum = "";
-            using (FileStream fstream = new FileStream(path, FileMode.Open))
+            using (FileStream fstream = new FileStream(path: path, mode: FileMode.Open))
             {
                 var md5 = MD5.Create();
-                byte[] hashValue = md5.ComputeHash(fstream);
-                hashsum = BitConverter.ToString(hashValue)
-                    .Replace("-", string.Empty)
+                byte[] hashValue = md5.ComputeHash(inputStream: fstream);
+                hashsum = BitConverter.ToString(value: hashValue)
+                    .Replace(oldValue: "-", newValue: string.Empty)
                     .ToLower();
             }
             return hashsum;
@@ -91,42 +91,46 @@ namespace Updater
         {
             using (WebClient wclient = new WebClient())
             {
-                wclient.DownloadFile(Constants.ZipUrl, Path.Combine(programmFolderPath, Constants.ZipName));
+                wclient.DownloadFile(
+                    address: Constants.ZipUrl, 
+                    fileName: Path.Combine(
+                        path1: programmFolderPath, 
+                        path2: Constants.ZipName));
             }
         }
 
         public bool IsZipBroken()
         {
-            if (File.Exists(Path.Combine(programmFolderPath, Constants.ZipName)))
+            if (File.Exists(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)))
             {
-                if (GetZipHashSum(Path.Combine(programmFolderPath, Constants.ZipName)) == GetServerHashSum())
+                if (GetZipHashSum(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)) == GetServerHashSum())
                 {
                     return false;
                 }
             }
-            MessageBox.Show("Archive file is broken. Try again", "Archive error");
+            MessageBox.Show(text: "Archive file is broken. Try again", "Archive error");
             return true;
         }
 
         public void RunConverter()
         {
-            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programmFolderPath, Constants.ConverterAppName));
-            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(path1: programmFolderPath, path2: Constants.ConverterAppName));
+            info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
-            Process process = Process.Start(info);
+            Process process = Process.Start(startInfo: info);
             Close();
         }
 
         public void DeleteFiles()
         {
             string dir = Environment.CurrentDirectory;
-            string[] paths = Directory.GetFiles(dir);
+            string[] paths = Directory.GetFiles(path: dir);
 
             foreach (string path in paths)
             {
-                if (!Constants.FriendlyFileNames.Contains(Path.GetFileName(path)))
+                if (!Constants.FriendlyFileNames.Contains(item: Path.GetFileName(path: path)))
                 {
-                    File.Delete(path);
+                    File.Delete(path: path);
                 }
             }
         }
@@ -137,8 +141,15 @@ namespace Updater
             if (!IsZipBroken())
             {
                 DeleteFiles();
-                ZipFile.ExtractToDirectory(Path.Combine(programmFolderPath, Constants.ZipName), Environment.CurrentDirectory);
-                File.Delete(Path.Combine(programmFolderPath, Constants.ZipName));
+                ZipFile.ExtractToDirectory(
+                    sourceArchiveFileName: Path.Combine(
+                        path1: programmFolderPath, 
+                        path2: Constants.ZipName), 
+                    destinationDirectoryName: Environment.CurrentDirectory);
+                File.Delete(
+                    path: Path.Combine(
+                        path1: programmFolderPath, 
+                        path2: Constants.ZipName));
             }
             RunConverter();
         }
