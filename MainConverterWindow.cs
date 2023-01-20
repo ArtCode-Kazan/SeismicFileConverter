@@ -36,7 +36,7 @@ namespace BinaryToJSONConverterApp
                 string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
-        }              
+        }
 
         public void RunUpdater()
         {
@@ -145,7 +145,7 @@ namespace BinaryToJSONConverterApp
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
 
             if (serverInfo.IsVersionLatest(currentVersion: OriginAssemblyVersion))
             {
@@ -160,20 +160,31 @@ namespace BinaryToJSONConverterApp
 
     public class Constants
     {
-        public const string HelpFileName = "ConverterHelpFile.chm";
-        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
-        public const string VersionFieldName = "version:";
-        public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
+        public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
+        public const string HelpFileName = "ConverterHelpFile.chm";
     }
 
     public class ServerInfo
     {
-        public string url;
+        public const string DescriptionTxtName = "version.txt";
+        public const string VersionFieldName = "version:";
 
-        public ServerInfo(string url)
+        public Uri uriServer;
+
+        public ServerInfo(string serverUrlString)
         {
-            this.url = url;
+            this.uriServer = new Uri(serverUrlString);
+        }
+
+        public Uri DescriptionUri
+        {
+            get
+            {
+                Uri uriToDescription = new Uri(baseUri: this.uriServer, relativeUri: DescriptionTxtName);                
+                return uriToDescription; 
+            }            
         }
 
         public string AppVersion()
@@ -181,14 +192,14 @@ namespace BinaryToJSONConverterApp
             string line;
             string serverVersion = "";
             using (WebClient wclient = new WebClient())
-            {
-                using (Stream stream = wclient.OpenRead(address: url))
+            {                
+                using (Stream stream = wclient.OpenRead(address: DescriptionUri))
                 {
                     using (StreamReader reader = new StreamReader(stream: stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: Constants.VersionFieldName))
+                            if (line.Contains(value: ServerInfo.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -200,7 +211,7 @@ namespace BinaryToJSONConverterApp
         }
 
         public bool IsVersionLatest(string currentVersion)
-        {            
+        {
             string[] originVersion = currentVersion.Split('.');
             string[] serverVersion = AppVersion().Split('.');
 

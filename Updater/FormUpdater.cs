@@ -120,12 +120,10 @@ namespace Updater
 
     public class Constants
     {
-        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
         public const string ZipUrl = "https://sigma-geophys.com/Distr/SeisJsonConveter.zip";
-        public const string ZipName = "ConverterLatestVersion.zip";
+        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";        
         public const string ConverterAppName = "SeisJsonConverter.exe";
-        public const string VersionFieldName = "version:";
-        public const string HashsumMD5FieldName = "MD5:";
+        public const string ZipName = "ConverterLatestVersion.zip";        
 
         public static List<string> FriendlyFileNames = new List<string>()
         {
@@ -137,6 +135,9 @@ namespace Updater
 
     public class ServerInfo
     {
+        public const string VersionFieldName = "version:";
+        public const string HashsumMD5FieldName = "MD5:";
+
         public string url;
 
         public ServerInfo(string url)
@@ -156,7 +157,7 @@ namespace Updater
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: Constants.VersionFieldName))
+                            if (line.Contains(value: ServerInfo.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -179,7 +180,7 @@ namespace Updater
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: Constants.HashsumMD5FieldName))
+                            if (line.Contains(value: ServerInfo.HashsumMD5FieldName))
                             {
                                 serverHashsum = line.Split(':')[1].Split(' ')[1];
                             }
