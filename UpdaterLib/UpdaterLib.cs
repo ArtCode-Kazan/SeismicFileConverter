@@ -8,11 +8,11 @@ namespace UpdaterLib
     {
         public Uri serverUrl;
         public string archiveName;
-        public string descriptionName;        
+        public string descriptionName;
         public string versionFieldName;
         public string hashsumMD5FieldName;
-        
-        public ServerInfo(string serverUrlString = "https://sigma-geophys.com/Distr/", 
+
+        public ServerInfo(string serverUrlString = "https://sigma-geophys.com/Distr/",
             string archiveName = "SeisJsonConveter.zip",
             string descriptionName = "version.txt",
             string versionFieldName = "version:",
@@ -115,7 +115,7 @@ namespace UpdaterLib
                 return true;
             }
             else
-            { 
+            {
                 return false;
             }
         }

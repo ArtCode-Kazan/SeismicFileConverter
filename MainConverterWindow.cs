@@ -32,7 +32,7 @@ namespace BinaryToJSONConverterApp
             }
         }
 
-        public string ProgrammFolderPath
+        public string ProgramFolderPath
         {
             get
             {
@@ -43,7 +43,7 @@ namespace BinaryToJSONConverterApp
 
         public void RunUpdater()
         {
-            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, Constants.UpdaterAppName));
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgramFolderPath, Constants.UpdaterAppName));
             info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Process process = Process.Start(info);
             Close();
@@ -147,7 +147,7 @@ namespace BinaryToJSONConverterApp
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             if (serverInfo.IsVersionLatest(OriginAssemblyVersion))
             {
                 MessageBox.Show(text: "The latest version is installed", caption: "Update");
@@ -164,5 +164,5 @@ namespace BinaryToJSONConverterApp
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
         public const string HelpFileName = "ConverterHelpFile.chm";
-    }    
+    }
 }

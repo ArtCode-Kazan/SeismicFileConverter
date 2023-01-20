@@ -26,7 +26,7 @@ namespace JsonBinLib
 
                 for (int i = 0; i < ComponentsOrder.Length; i++)
                 {
-                    componentsIndexes.Add(ComponentsOrder[i].ToString(), i);
+                    componentsIndexes.Add(key: ComponentsOrder[i].ToString(), value: i);
                 }
 
                 return componentsIndexes;
@@ -79,8 +79,8 @@ namespace JsonBinLib
             float minimumOrigin = originSignal.Min();            
             float maximumOrigin = originSignal.Max();   
             float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
-            double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
-            double amplitudeOffset = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
+            double coeffNorm = Constants.NormalizationMaximum * 2 / height;                                    
+            double amplitudeOffset = minimumOrigin * coeffNorm + Constants.NormalizationMaximum;
 
             for (int i = 0; i < originSignal.Length; i++)
             {

@@ -17,7 +17,7 @@ namespace Updater
 
         public FormUpdater()
         {
-            InitializeComponent();            
+            InitializeComponent();
             labelversion.Text = this.serverInfo.GetAppVersion();
         }
 
@@ -44,8 +44,6 @@ namespace Updater
 
         public void DownloadZip()
         {
-            ServerInfo serverInfo = new ServerInfo();
-
             using (WebClient wclient = new WebClient())
             {
                 wclient.DownloadFile(
@@ -65,14 +63,14 @@ namespace Updater
                     return false;
                 }
             }
-            MessageBox.Show(text: "Archive file is broken. Try again", "Archive error");
+            MessageBox.Show("Archive file is broken. Try again", "Archive error");
             return true;
         }
 
         public void RunConverter()
         {
-            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(programmFolderPath, Constants.ConverterAppName));
-            info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programmFolderPath, Constants.ConverterAppName));
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
             Process process = Process.Start(info);
             Close();
@@ -113,7 +111,7 @@ namespace Updater
     }
 
     public class Constants
-    {        
+    {
         public const string ConverterAppName = "SeisJsonConverter.exe";
         public const string ZipName = "ConverterLatestVersion.zip";
         public const string UpdaterLibDll = "UpdaterLib.dll";
@@ -127,5 +125,5 @@ namespace Updater
             UpdaterLibDll,
             UpdaterLibPbd
         };
-    }    
+    }
 }
