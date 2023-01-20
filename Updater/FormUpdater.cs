@@ -142,8 +142,8 @@ namespace Updater
         public ServerInfo(string url)
         {
             this.url = url;
-
         }
+
         public string AppVersion()
         {
             string line;
