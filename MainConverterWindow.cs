@@ -43,25 +43,25 @@ namespace BinaryToJSONConverterApp
 
         public string GetServerAssemblyVersion()
         {
-            string s;
-            string result = "";
+            string line;
+            string appVersion = "";
             using (WebClient client = new WebClient())
             {
                 using (Stream stream = client.OpenRead(TxtUrl))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
-                        while ((s = reader.ReadLine()) != null)
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            if (s.Contains("version:"))
+                            if (line.Contains("version:"))
                             {
-                                result = s.Split(':')[1].Split(' ')[1];
+                                appVersion = line.Split(':')[1].Split(' ')[1];
                             }
                         }
                     }
                 }
             }
-            return result;
+            return appVersion;
         }
 
         public bool IsVersionLatest()
@@ -69,12 +69,12 @@ namespace BinaryToJSONConverterApp
             string[] originVersion = OriginAssemblyVersion.Split('.');
             string[] serverVersion = GetServerAssemblyVersion().Split('.');
 
-            for (int i=0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (originVersion[i] != serverVersion[i])
                 {
                     return false;
-                }                
+                }
             }
             return true;
         }
@@ -82,7 +82,7 @@ namespace BinaryToJSONConverterApp
         public void RunUpdater()
         {
             ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, "SeisJsonConverterUpdater.exe"));
-            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);            
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Process process = Process.Start(info);
             Close();
         }
@@ -185,7 +185,7 @@ namespace BinaryToJSONConverterApp
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             if (IsVersionLatest())
             {
                 MessageBox.Show("The latest version is installed", "Update");
