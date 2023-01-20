@@ -6,11 +6,14 @@ using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 using JsonBinLib;
+using UpdaterLib;
 
 namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
+        public ServerInfo serverInfo = new ServerInfo();
+
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";
 
@@ -144,9 +147,7 @@ namespace BinaryToJSONConverterApp
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
-
+        {            
             if (serverInfo.IsVersionLatest(OriginAssemblyVersion))
             {
                 MessageBox.Show(text: "The latest version is installed", caption: "Update");
@@ -162,69 +163,6 @@ namespace BinaryToJSONConverterApp
     {
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
-        public const string ServerUrl = "https://sigma-geophys.com/Distr/";
         public const string HelpFileName = "ConverterHelpFile.chm";
-    }
-
-    public class ServerInfo
-    {
-        public const string DescriptionName = "version.txt";
-        public const string VersionFieldName = "version:";
-
-        public Uri uriServer;
-
-        public ServerInfo(string serverUrlString)
-        {
-            this.uriServer = new Uri(serverUrlString);
-        }
-
-        public Uri DescriptionUri
-        {
-            get
-            {
-                Uri DescriptionUri = new Uri(
-                    baseUri: this.uriServer, 
-                    relativeUri: ServerInfo.DescriptionName);
-                return DescriptionUri;
-            }
-        }
-
-        public string AppVersion()
-        {
-            string line;
-            string serverVersion = "";
-            using (WebClient wclient = new WebClient())
-            {
-                using (Stream stream = wclient.OpenRead(DescriptionUri))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(ServerInfo.VersionFieldName))
-                            {
-                                serverVersion = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverVersion;
-        }
-
-        public bool IsVersionLatest(string currentVersion)
-        {
-            string[] originVersion = currentVersion.Split('.');
-            string[] serverVersion = AppVersion().Split('.');
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
+    }    
 }

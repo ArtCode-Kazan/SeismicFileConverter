@@ -13,11 +13,12 @@ namespace Updater
 {
     public partial class FormUpdater : Form
     {
+        public ServerInfo serverInfo = new ServerInfo();
+
         public FormUpdater()
         {
-            InitializeComponent();
-            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
-            labelversion.Text = serverInfo.AppVersion();
+            InitializeComponent();            
+            labelversion.Text = this.serverInfo.GetAppVersion();
         }
 
         public string programmFolderPath
@@ -43,7 +44,7 @@ namespace Updater
 
         public void DownloadZip()
         {
-            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
+            ServerInfo serverInfo = new ServerInfo();
 
             using (WebClient wclient = new WebClient())
             {
@@ -55,12 +56,11 @@ namespace Updater
 
         public bool IsZipBroken()
         {
-            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
-            string serverHashsum = serverInfo.Hashsum();
+            string pathToZip = Path.Combine(programmFolderPath, Constants.ZipName);
 
-            if (File.Exists(path: Path.Combine(programmFolderPath, Constants.ZipName)))
+            if (File.Exists(pathToZip))
             {
-                if (GetZipHashSum(path: Path.Combine(programmFolderPath, Constants.ZipName)) == serverHashsum)
+                if (this.serverInfo.IsHashsumEqual(GetZipHashSum(Path.Combine(programmFolderPath, Constants.ZipName))))
                 {
                     return false;
                 }
@@ -116,12 +116,16 @@ namespace Updater
     {        
         public const string ConverterAppName = "SeisJsonConverter.exe";
         public const string ZipName = "ConverterLatestVersion.zip";
+        public const string UpdaterLibDll = "UpdaterLib.dll";
+        public const string UpdaterLibPbd = "UpdaterLib.pdb";
 
         public static List<string> FriendlyFileNames = new List<string>()
         {
             ZipName,
             AppDomain.CurrentDomain.FriendlyName,
-            "SeisJsonConveterUpdater.pdb"
+            "SeisJsonConveterUpdater.pdb",
+            UpdaterLibDll,
+            UpdaterLibPbd
         };
     }    
 }
