@@ -36,45 +36,7 @@ namespace BinaryToJSONConverterApp
                 string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
-        }
-
-        public string GetServerAssemblyVersion()
-        {
-            string line;
-            string serverVersion = "";
-            using (WebClient wclient = new WebClient())
-            {
-                using (Stream stream = wclient.OpenRead(address: Constants.TxtUrl))
-                {
-                    using (StreamReader reader = new StreamReader(stream: stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(value: Constants.VersionFieldName))
-                            {
-                                serverVersion = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverVersion;
-        }
-
-        public bool IsVersionLatest()
-        {
-            string[] originVersion = OriginAssemblyVersion.Split('.');
-            string[] serverVersion = GetServerAssemblyVersion().Split('.');
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (originVersion[i] != serverVersion[i])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        }              
 
         public void RunUpdater()
         {
@@ -183,7 +145,9 @@ namespace BinaryToJSONConverterApp
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (IsVersionLatest())
+            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+
+            if (serverInfo.IsVersionLatest(currentVersion: OriginAssemblyVersion))
             {
                 MessageBox.Show(text: "The latest version is installed", caption: "Update");
             }
@@ -201,5 +165,53 @@ namespace BinaryToJSONConverterApp
         public const string VersionFieldName = "version:";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+    }
+
+    public class ServerInfo
+    {
+        public string url;
+
+        public ServerInfo(string url)
+        {
+            this.url = url;
+        }
+
+        public string AppVersion()
+        {
+            string line;
+            string serverVersion = "";
+            using (WebClient wclient = new WebClient())
+            {
+                using (Stream stream = wclient.OpenRead(address: url))
+                {
+                    using (StreamReader reader = new StreamReader(stream: stream))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains(value: Constants.VersionFieldName))
+                            {
+                                serverVersion = line.Split(':')[1].Split(' ')[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return serverVersion;
+        }
+
+        public bool IsVersionLatest(string currentVersion)
+        {            
+            string[] originVersion = currentVersion.Split('.');
+            string[] serverVersion = AppVersion().Split('.');
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (originVersion[i] != serverVersion[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
