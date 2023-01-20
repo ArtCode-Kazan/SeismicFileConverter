@@ -15,7 +15,8 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = GetServerAssemblyVersion(url: Constants.TxtUrl);
+            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+            labelversion.Text = serverInfo.AppVersion();
         }
 
         public string programmFolderPath
@@ -25,53 +26,7 @@ namespace Updater
                 string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
-        }
-
-        public string GetServerAssemblyVersion(string url)
-        {
-            string line;
-            string serverVersion = "";
-            using (WebClient client = new WebClient())
-            {
-                using (Stream stream = client.OpenRead(address: url))
-                {
-                    using (StreamReader reader = new StreamReader(stream: stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(value: Constants.VersionFieldName))
-                            {
-                                serverVersion = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverVersion;
-        }
-
-        public string GetServerHashSum()
-        {
-            string line;
-            string serverHashsum = "";
-            using (WebClient client = new WebClient())
-            {
-                using (Stream stream = client.OpenRead(address: Constants.TxtUrl))
-                {
-                    using (StreamReader reader = new StreamReader(stream: stream))
-                    {
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (line.Contains(value: Constants.HashsumMD5FieldName))
-                            {
-                                serverHashsum = line.Split(':')[1].Split(' ')[1];
-                            }
-                        }
-                    }
-                }
-            }
-            return serverHashsum;
-        }
+        }        
 
         public dynamic GetZipHashSum(string path)
         {
@@ -101,9 +56,12 @@ namespace Updater
 
         public bool IsZipBroken()
         {
+            ServerInfo serverInfo = new ServerInfo(url: Constants.TxtUrl);
+            string serverHashsum = serverInfo.Hashsum();
+
             if (File.Exists(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)))
             {
-                if (GetZipHashSum(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)) == GetServerHashSum())
+                if (GetZipHashSum(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)) == serverHashsum)
                 {
                     return false;
                 }
@@ -175,5 +133,61 @@ namespace Updater
             AppDomain.CurrentDomain.FriendlyName,
             "SeisJsonConveterUpdater.pdb"
         };
+    }
+
+    public class ServerInfo
+    {
+        public string url;
+
+        public ServerInfo(string url)
+        {
+            this.url = url;
+
+        }
+        public string AppVersion()
+        {
+            string line;
+            string serverVersion = "";
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(address: url))
+                {
+                    using (StreamReader reader = new StreamReader(stream: stream))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains(value: Constants.VersionFieldName))
+                            {
+                                serverVersion = line.Split(':')[1].Split(' ')[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return serverVersion;
+        }
+
+        public string Hashsum()
+        {
+            string line;
+            string serverHashsum = "";
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(address: Constants.TxtUrl))
+                {
+                    using (StreamReader reader = new StreamReader(stream: stream))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains(value: Constants.HashsumMD5FieldName))
+                            {
+                                serverHashsum = line.Split(':')[1].Split(' ')[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return serverHashsum;
+        }
     }
 }
