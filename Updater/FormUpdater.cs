@@ -76,10 +76,10 @@ namespace Updater
         public dynamic GetZipHashSum(string path)
         {
             string hashsum = "";
-            using (var fs = new FileStream(path, FileMode.Open))
+            using (FileStream fstream = new FileStream(path, FileMode.Open))
             {
                 var md5 = MD5.Create();
-                byte[] hashValue = md5.ComputeHash(fs);
+                byte[] hashValue = md5.ComputeHash(fstream);
                 hashsum = BitConverter.ToString(hashValue)
                     .Replace("-", string.Empty)
                     .ToLower();
@@ -89,9 +89,9 @@ namespace Updater
 
         public void DownloadZip()
         {
-            using (var client = new WebClient())
+            using (WebClient wclient = new WebClient())
             {
-                client.DownloadFile(Constants.ZipUrl, Path.Combine(programmFolderPath, Constants.ZipName));
+                wclient.DownloadFile(Constants.ZipUrl, Path.Combine(programmFolderPath, Constants.ZipName));
             }
         }
 
@@ -124,7 +124,7 @@ namespace Updater
 
             foreach (string path in paths)
             {
-                if (!Constants.MainFileNames.Contains(Path.GetFileName(path)))
+                if (!Constants.FriendlyFileNames.Contains(Path.GetFileName(path)))
                 {
                     File.Delete(path);
                 }
@@ -158,7 +158,7 @@ namespace Updater
         public const string VersionFieldName = "version:";
         public const string HashsumMD5FieldName = "MD5:";
 
-        public static List<string> MainFileNames = new List<string>()
+        public static List<string> FriendlyFileNames = new List<string>()
         {
             ZipName,
             AppDomain.CurrentDomain.FriendlyName,

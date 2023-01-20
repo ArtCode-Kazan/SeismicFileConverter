@@ -24,8 +24,8 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                return ver;
+                string appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return appVersion;
             }
         }
 
@@ -42,9 +42,9 @@ namespace BinaryToJSONConverterApp
         {
             string line;
             string serverVersion = "";
-            using (WebClient client = new WebClient())
+            using (WebClient wclient = new WebClient())
             {
-                using (Stream stream = client.OpenRead(Constants.TxtUrl))
+                using (Stream stream = wclient.OpenRead(Constants.TxtUrl))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
