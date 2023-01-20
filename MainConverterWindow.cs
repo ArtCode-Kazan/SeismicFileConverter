@@ -33,7 +33,7 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
         }
@@ -44,13 +44,13 @@ namespace BinaryToJSONConverterApp
             string serverVersion = "";
             using (WebClient wclient = new WebClient())
             {
-                using (Stream stream = wclient.OpenRead(Constants.TxtUrl))
+                using (Stream stream = wclient.OpenRead(address: Constants.TxtUrl))
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    using (StreamReader reader = new StreamReader(stream: stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(Constants.VersionFieldName))
+                            if (line.Contains(value: Constants.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -78,21 +78,21 @@ namespace BinaryToJSONConverterApp
 
         public void RunUpdater()
         {
-            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, Constants.UpdaterAppName));
-            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Process process = Process.Start(info);
+            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(path1: ProgrammFolderPath, path2: Constants.UpdaterAppName));
+            info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
+            Process process = Process.Start(startInfo: info);
             Close();
         }
 
         public void UpdateProgramm()
         {
             DialogResult result = MessageBox.Show(
-            "New version available.\nUpdate?",
-            "Update",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Information,
-            MessageBoxDefaultButton.Button1,
-            MessageBoxOptions.DefaultDesktopOnly);
+            text: "New version available.\nUpdate?",
+            caption: "Update",
+            buttons: MessageBoxButtons.YesNo,
+            icon: MessageBoxIcon.Information,
+            defaultButton: MessageBoxDefaultButton.Button1,
+            options: MessageBoxOptions.DefaultDesktopOnly);
 
             if (result == DialogResult.Yes)
             {
@@ -109,7 +109,7 @@ namespace BinaryToJSONConverterApp
                 textBoxLoadFromFolder.Text = "";
                 foreach (string path in openFileDialog.FileNames)
                 {
-                    this.pathsJsons.Add(path);
+                    this.pathsJsons.Add(item: path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
                 }
             }
@@ -129,12 +129,12 @@ namespace BinaryToJSONConverterApp
             for (int i = 0; i < this.pathsJsons.Count; i++)
             {
                 string path = this.pathsJsons[i];
-                JsonParser jsonParser = new JsonParser(path);
+                JsonParser jsonParser = new JsonParser(pathToJsonFile: path);
                 string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
-                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);
-                SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, pathSaveBinary);
+                string pathSaveBinary = Path.Combine(path1: this.pathFolderBinarySave, path2: binaryFileName);
+                SeisBinaryFile binaryFile = new SeisBinaryFile(jsonDeserialized: jsonParser.jsonDeserialized, savePath: pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
-                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
+                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(value: this.pathsJsons.Count) + ")";
                 statusStrip.Refresh();
             }
 
@@ -143,16 +143,16 @@ namespace BinaryToJSONConverterApp
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string exeDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string helpFilePath = Path.Combine(exeDirectory, Constants.HelpFileName);
+            string exeDirectory = Path.GetDirectoryName(path: Assembly.GetEntryAssembly().Location);
+            string helpFilePath = Path.Combine(path1: exeDirectory, path2: Constants.HelpFileName);
 
-            if (File.Exists(helpFilePath))
+            if (File.Exists(path: helpFilePath))
             {
-                Help.ShowHelp(this, helpFilePath);
+                Help.ShowHelp(parent: this, url: helpFilePath);
             }
             else
             {
-                MessageBox.Show("Help file not found.");
+                MessageBox.Show(text: "Help file not found.");
             }
         }
 
@@ -164,20 +164,20 @@ namespace BinaryToJSONConverterApp
 
         private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string target = Constants.SupportMailToUrl;
+            string mailtoUrl = Constants.SupportMailtoUrl;
 
             try
             {
-                Process.Start(fileName: target);
+                Process.Start(fileName: mailtoUrl);
             }
             catch (System.ComponentModel.Win32Exception noBrowser)
             {
                 if (noBrowser.ErrorCode == -2147467259)
-                    MessageBox.Show(noBrowser.Message);
+                    MessageBox.Show(text: noBrowser.Message);
             }
             catch (Exception other)
             {
-                MessageBox.Show(other.Message);
+                MessageBox.Show(text: other.Message);
             }
         }
 
@@ -185,7 +185,7 @@ namespace BinaryToJSONConverterApp
         {
             if (IsVersionLatest())
             {
-                MessageBox.Show("The latest version is installed", "Update");
+                MessageBox.Show(text: "The latest version is installed", caption: "Update");
             }
             else
             {
@@ -200,6 +200,6 @@ namespace BinaryToJSONConverterApp
         public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
         public const string VersionFieldName = "version:";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
-        public const string SupportMailToUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+        public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
     }
 }
