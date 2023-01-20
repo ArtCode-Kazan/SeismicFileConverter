@@ -15,7 +15,7 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
-            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
+            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
             labelversion.Text = serverInfo.AppVersion();
         }
 
@@ -23,7 +23,7 @@ namespace Updater
         {
             get
             {
-                string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
+                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
         }
@@ -31,39 +31,35 @@ namespace Updater
         public dynamic GetZipHashSum(string path)
         {
             string hashsum = "";
-            using (FileStream fstream = new FileStream(path: path, mode: FileMode.Open))
+            using (FileStream fstream = new FileStream(path, FileMode.Open))
             {
                 var md5 = MD5.Create();
                 byte[] hashValue = md5.ComputeHash(inputStream: fstream);
-                hashsum = BitConverter.ToString(value: hashValue)
-                    .Replace(oldValue: "-", newValue: string.Empty)
-                    .ToLower();
+                hashsum = BitConverter.ToString(hashValue).Replace(oldValue: "-", newValue: string.Empty).ToLower();
             }
             return hashsum;
         }
 
         public void DownloadZip()
         {
-            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
+            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
 
             using (WebClient wclient = new WebClient())
             {
                 wclient.DownloadFile(
                     address: serverInfo.ArchiveUri,
-                    fileName: Path.Combine(
-                        path1: programmFolderPath,
-                        path2: Constants.ZipName));
+                    fileName: Path.Combine(programmFolderPath, Constants.ZipName));
             }
         }
 
         public bool IsZipBroken()
         {
-            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
+            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
             string serverHashsum = serverInfo.Hashsum();
 
-            if (File.Exists(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)))
+            if (File.Exists(path: Path.Combine(programmFolderPath, Constants.ZipName)))
             {
-                if (GetZipHashSum(path: Path.Combine(path1: programmFolderPath, path2: Constants.ZipName)) == serverHashsum)
+                if (GetZipHashSum(path: Path.Combine(programmFolderPath, Constants.ZipName)) == serverHashsum)
                 {
                     return false;
                 }
@@ -74,23 +70,23 @@ namespace Updater
 
         public void RunConverter()
         {
-            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(path1: programmFolderPath, path2: Constants.ConverterAppName));
+            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(programmFolderPath, Constants.ConverterAppName));
             info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
-            Process process = Process.Start(startInfo: info);
+            Process process = Process.Start(info);
             Close();
         }
 
         public void DeleteFiles()
         {
             string dir = Environment.CurrentDirectory;
-            string[] paths = Directory.GetFiles(path: dir);
+            string[] paths = Directory.GetFiles(dir);
 
             foreach (string path in paths)
             {
-                if (!Constants.FriendlyFileNames.Contains(item: Path.GetFileName(path: path)))
+                if (!Constants.FriendlyFileNames.Contains(Path.GetFileName(path)))
                 {
-                    File.Delete(path: path);
+                    File.Delete(path);
                 }
             }
         }
@@ -102,14 +98,9 @@ namespace Updater
             {
                 DeleteFiles();
                 ZipFile.ExtractToDirectory(
-                    sourceArchiveFileName: Path.Combine(
-                        path1: programmFolderPath,
-                        path2: Constants.ZipName),
+                    sourceArchiveFileName: Path.Combine(programmFolderPath, Constants.ZipName),
                     destinationDirectoryName: Environment.CurrentDirectory);
-                File.Delete(
-                    path: Path.Combine(
-                        path1: programmFolderPath,
-                        path2: Constants.ZipName));
+                File.Delete(Path.Combine(programmFolderPath, Constants.ZipName));
             }
             RunConverter();
         }
@@ -152,7 +143,9 @@ namespace Updater
         {
             get
             {
-                Uri uriToDescription = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.DescriptionName);
+                Uri uriToDescription = new Uri(
+                    baseUri: this.uriServer, 
+                    relativeUri: ServerInfo.DescriptionName);
                 return uriToDescription;
             }
         }
@@ -161,7 +154,9 @@ namespace Updater
         {
             get
             {
-                Uri archiveUri = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.ArchiveName);
+                Uri archiveUri = new Uri(
+                    baseUri: this.uriServer, 
+                    relativeUri: ServerInfo.ArchiveName);
                 return archiveUri;
             }
         }
@@ -172,13 +167,13 @@ namespace Updater
             string serverVersion = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(address: DescriptionUri))
+                using (Stream stream = client.OpenRead(DescriptionUri))
                 {
-                    using (StreamReader reader = new StreamReader(stream: stream))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: ServerInfo.VersionFieldName))
+                            if (line.Contains(ServerInfo.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -195,13 +190,13 @@ namespace Updater
             string serverHashsum = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(address: DescriptionUri))
+                using (Stream stream = client.OpenRead(DescriptionUri))
                 {
-                    using (StreamReader reader = new StreamReader(stream: stream))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: ServerInfo.HashsumMD5FieldName))
+                            if (line.Contains(ServerInfo.HashsumMD5FieldName))
                             {
                                 serverHashsum = line.Split(':')[1].Split(' ')[1];
                             }

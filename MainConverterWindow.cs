@@ -33,16 +33,16 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                string pathToFolder = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
+                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 return pathToFolder;
             }
         }
 
         public void RunUpdater()
         {
-            ProcessStartInfo info = new ProcessStartInfo(fileName: Path.Combine(path1: ProgrammFolderPath, path2: Constants.UpdaterAppName));
-            info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
-            Process process = Process.Start(startInfo: info);
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, Constants.UpdaterAppName));
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Process process = Process.Start(info);
             Close();
         }
 
@@ -71,7 +71,7 @@ namespace BinaryToJSONConverterApp
                 textBoxLoadFromFolder.Text = "";
                 foreach (string path in openFileDialog.FileNames)
                 {
-                    this.pathsJsons.Add(item: path);
+                    this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
                 }
             }
@@ -91,12 +91,12 @@ namespace BinaryToJSONConverterApp
             for (int i = 0; i < this.pathsJsons.Count; i++)
             {
                 string path = this.pathsJsons[i];
-                JsonParser jsonParser = new JsonParser(pathToJsonFile: path);
+                JsonParser jsonParser = new JsonParser(path);
                 string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
-                string pathSaveBinary = Path.Combine(path1: this.pathFolderBinarySave, path2: binaryFileName);
+                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);
                 SeisBinaryFile binaryFile = new SeisBinaryFile(jsonDeserialized: jsonParser.jsonDeserialized, savePath: pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
-                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(value: this.pathsJsons.Count) + ")";
+                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
                 statusStrip.Refresh();
             }
 
@@ -105,16 +105,16 @@ namespace BinaryToJSONConverterApp
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string exeDirectory = Path.GetDirectoryName(path: Assembly.GetEntryAssembly().Location);
-            string helpFilePath = Path.Combine(path1: exeDirectory, path2: Constants.HelpFileName);
+            string exeDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string helpFilePath = Path.Combine(exeDirectory, Constants.HelpFileName);
 
-            if (File.Exists(path: helpFilePath))
+            if (File.Exists(helpFilePath))
             {
                 Help.ShowHelp(parent: this, url: helpFilePath);
             }
             else
             {
-                MessageBox.Show(text: "Help file not found.");
+                MessageBox.Show("Help file not found.");
             }
         }
 
@@ -130,24 +130,24 @@ namespace BinaryToJSONConverterApp
 
             try
             {
-                Process.Start(fileName: mailtoUrl);
+                Process.Start(mailtoUrl);
             }
             catch (System.ComponentModel.Win32Exception noBrowser)
             {
                 if (noBrowser.ErrorCode == -2147467259)
-                    MessageBox.Show(text: noBrowser.Message);
+                    MessageBox.Show(noBrowser.Message);
             }
             catch (Exception other)
             {
-                MessageBox.Show(text: other.Message);
+                MessageBox.Show(other.Message);
             }
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ServerInfo serverInfo = new ServerInfo(serverUrlString: Constants.ServerUrl);
+            ServerInfo serverInfo = new ServerInfo(Constants.ServerUrl);
 
-            if (serverInfo.IsVersionLatest(currentVersion: OriginAssemblyVersion))
+            if (serverInfo.IsVersionLatest(OriginAssemblyVersion))
             {
                 MessageBox.Show(text: "The latest version is installed", caption: "Update");
             }
@@ -182,7 +182,9 @@ namespace BinaryToJSONConverterApp
         {
             get
             {
-                Uri DescriptionUri = new Uri(baseUri: this.uriServer, relativeUri: ServerInfo.DescriptionName);
+                Uri DescriptionUri = new Uri(
+                    baseUri: this.uriServer, 
+                    relativeUri: ServerInfo.DescriptionName);
                 return DescriptionUri;
             }
         }
@@ -193,13 +195,13 @@ namespace BinaryToJSONConverterApp
             string serverVersion = "";
             using (WebClient wclient = new WebClient())
             {
-                using (Stream stream = wclient.OpenRead(address: DescriptionUri))
+                using (Stream stream = wclient.OpenRead(DescriptionUri))
                 {
-                    using (StreamReader reader = new StreamReader(stream: stream))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains(value: ServerInfo.VersionFieldName))
+                            if (line.Contains(ServerInfo.VersionFieldName))
                             {
                                 serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
@@ -217,7 +219,7 @@ namespace BinaryToJSONConverterApp
 
             for (int i = 0; i < 4; i++)
             {
-                if (originVersion[i] != serverVersion[i])
+                if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
                 {
                     return false;
                 }
