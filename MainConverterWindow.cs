@@ -90,8 +90,8 @@ namespace BinaryToJSONConverterApp
         public void UpdateProgramm()
         {
             DialogResult result = MessageBox.Show(
-            "Доступна новая версия приложения.\nОбновить?",
-            "Обновление",
+            "New version available.\nUpdate?",
+            "Update",
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Information,
             MessageBoxDefaultButton.Button1,
@@ -171,7 +171,7 @@ namespace BinaryToJSONConverterApp
 
             try
             {
-                System.Diagnostics.Process.Start(target);
+                System.Diagnostics.Process.Start(fileName: target);
             }
             catch (System.ComponentModel.Win32Exception noBrowser)
             {
@@ -188,7 +188,7 @@ namespace BinaryToJSONConverterApp
         {            
             if (IsVersionLatest())
             {
-                MessageBox.Show("Установлена последняя версия", "Обновление");
+                MessageBox.Show("The latest version is installed", "Update");
             }
             else
             {

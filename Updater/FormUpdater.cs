@@ -115,7 +115,7 @@ namespace Updater
                     return false;
                 }                
             }
-            MessageBox.Show("Файл архива поврежден. Повторите попытку","Ошибка загрузки");
+            MessageBox.Show("Archive file is broken. Try again","Archive error");
             return true;
         }
 
