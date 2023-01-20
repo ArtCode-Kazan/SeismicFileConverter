@@ -11,9 +11,6 @@ namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
-        public const string HelpFileName = "ConverterHelpFile.chm";
-        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
-
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";
 
@@ -44,24 +41,24 @@ namespace BinaryToJSONConverterApp
         public string GetServerAssemblyVersion()
         {
             string line;
-            string appVersion = "";
+            string serverVersion = "";
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(TxtUrl))
+                using (Stream stream = client.OpenRead(Constants.TxtUrl))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.Contains("version:"))
+                            if (line.Contains(Constants.VersionFieldName))
                             {
-                                appVersion = line.Split(':')[1].Split(' ')[1];
+                                serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
                         }
                     }
                 }
             }
-            return appVersion;
+            return serverVersion;
         }
 
         public bool IsVersionLatest()
@@ -81,7 +78,7 @@ namespace BinaryToJSONConverterApp
 
         public void RunUpdater()
         {
-            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, "SeisJsonConverterUpdater.exe"));
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgrammFolderPath, Constants.UpdaterAppName));
             info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Process process = Process.Start(info);
             Close();
@@ -110,7 +107,7 @@ namespace BinaryToJSONConverterApp
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = "";
-                foreach (String path in openFileDialog.FileNames)
+                foreach (string path in openFileDialog.FileNames)
                 {
                     this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
@@ -146,8 +143,8 @@ namespace BinaryToJSONConverterApp
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string helpFilePath = Path.Combine(exeDirectory, HelpFileName);
+            string exeDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string helpFilePath = Path.Combine(exeDirectory, Constants.HelpFileName);
 
             if (File.Exists(helpFilePath))
             {
@@ -167,11 +164,11 @@ namespace BinaryToJSONConverterApp
 
         private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string target = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+            string target = Constants.SupportMailToUrl;
 
             try
             {
-                System.Diagnostics.Process.Start(fileName: target);
+                Process.Start(fileName: target);
             }
             catch (System.ComponentModel.Win32Exception noBrowser)
             {
@@ -195,5 +192,14 @@ namespace BinaryToJSONConverterApp
                 UpdateProgramm();
             }
         }
+    }
+
+    public class Constants
+    {
+        public const string HelpFileName = "ConverterHelpFile.chm";
+        public const string TxtUrl = "https://sigma-geophys.com/Distr/version.txt";
+        public const string VersionFieldName = "version:";
+        public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
+        public const string SupportMailToUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
     }
 }
