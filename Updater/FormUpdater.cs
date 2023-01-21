@@ -21,7 +21,7 @@ namespace Updater
             labelversion.Text = this.serverInfo.GetAppVersion();
         }
 
-        public string programmFolderPath
+        public string programFolderPath
         {
             get
             {
@@ -48,17 +48,17 @@ namespace Updater
             {
                 wclient.DownloadFile(
                     address: serverInfo.ArchiveUri,
-                    fileName: Path.Combine(programmFolderPath, Constants.ZipName));
+                    fileName: Path.Combine(programFolderPath, Constants.ZipName));
             }
         }
 
         public bool IsZipBroken()
         {
-            string pathToZip = Path.Combine(programmFolderPath, Constants.ZipName);
+            string pathToZip = Path.Combine(programFolderPath, Constants.ZipName);
 
             if (File.Exists(pathToZip))
             {
-                if (this.serverInfo.IsHashsumEqual(GetZipHashSum(Path.Combine(programmFolderPath, Constants.ZipName))))
+                if (this.serverInfo.IsHashsumEqual(GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName))))
                 {
                     return false;
                 }
@@ -69,7 +69,7 @@ namespace Updater
 
         public void RunConverter()
         {
-            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programmFolderPath, Constants.ConverterAppName));
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programFolderPath, Constants.ConverterAppName));
             info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
             Process process = Process.Start(info);
@@ -97,9 +97,9 @@ namespace Updater
             {
                 DeleteFiles();
                 ZipFile.ExtractToDirectory(
-                    sourceArchiveFileName: Path.Combine(programmFolderPath, Constants.ZipName),
+                    sourceArchiveFileName: Path.Combine(programFolderPath, Constants.ZipName),
                     destinationDirectoryName: Environment.CurrentDirectory);
-                File.Delete(Path.Combine(programmFolderPath, Constants.ZipName));
+                File.Delete(Path.Combine(programFolderPath, Constants.ZipName));
             }
             RunConverter();
         }
