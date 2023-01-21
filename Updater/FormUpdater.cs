@@ -58,7 +58,9 @@ namespace Updater
 
             if (File.Exists(pathToZip))
             {
-                if (this.serverInfo.IsHashsumEqual(GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName))))
+                string actualHashsum = GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName));
+
+                if (this.serverInfo.IsHashsumEqual(actualHashsum))
                 {
                     return false;
                 }
