@@ -66,35 +66,41 @@ namespace ServerConnectorLib
             string line;
             string serverHashsum = "";
             string serverVersion = "";
-
-            using (WebClient client = new WebClient())
+            try
             {
-                using (Stream stream = client.OpenRead(DescriptionUri))
+                using (WebClient client = new WebClient())
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    using (Stream stream = client.OpenRead(DescriptionUri))
                     {
-                        while ((line = reader.ReadLine()) != null)
+                        using (StreamReader reader = new StreamReader(stream))
                         {
-                            if (line.Contains(this.hashsumMD5FieldName))
+                            while ((line = reader.ReadLine()) != null)
                             {
-                                serverHashsum = line.Split(':')[1].Split(' ')[1];
-                            }
+                                if (line.Contains(this.hashsumMD5FieldName))
+                                {
+                                    serverHashsum = line.Split(':')[1].Split(' ')[1];
+                                }
 
-                            if (line.Contains(this.versionFieldName))
-                            {
-                                serverVersion = line.Split(':')[1].Split(' ')[1];
+                                if (line.Contains(this.versionFieldName))
+                                {
+                                    serverVersion = line.Split(':')[1].Split(' ')[1];
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (WebException e)
+            {
+                MessageBox.Show(text: e.Message, caption: "Exception Caught!");
+            }
 
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
-        
+
         public bool IsVersionLatest(string currentVersion)
         {
-            if (GetDescription().version.Length == currentVersion.Length)
+            if (GetDescription().version.Split('.').Length == currentVersion.Split('.').Length)
             {
                 string[] originVersion = currentVersion.Split('.');
                 string[] serverVersion = GetDescription().version.Split('.');
@@ -116,7 +122,7 @@ namespace ServerConnectorLib
 
         public bool IsHashsumEqual(string originHashsum)
         {
-            if (originHashsum == GetDescription().version)
+            if (originHashsum == GetDescription().hashsum)
             {
                 return true;
             }
@@ -128,30 +134,38 @@ namespace ServerConnectorLib
 
         public void DownloadFile(string savePath, Uri url)
         {
-            using (WebClient wclient = new WebClient())
+            try
             {
-                wclient.DownloadFile(address: url, fileName: savePath);
+
+                using (WebClient wclient = new WebClient())
+                {
+                    wclient.DownloadFile(address: url, fileName: savePath);
+                }
+            }
+            catch (WebException e)
+            {
+                MessageBox.Show(text: e.Message, caption: "Exception Caught!");
             }
         }
-    }
 
-    [Serializable]
-    internal class InvalidVersionFormat : Exception
-    {
-        public InvalidVersionFormat()
+        [Serializable]
+        internal class InvalidVersionFormat : Exception
         {
-        }
+            public InvalidVersionFormat()
+            {
+            }
 
-        public InvalidVersionFormat(string message) : base(message)
-        {
-        }
+            public InvalidVersionFormat(string message) : base(message)
+            {
+            }
 
-        public InvalidVersionFormat(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+            public InvalidVersionFormat(string message, Exception innerException) : base(message, innerException)
+            {
+            }
 
-        protected InvalidVersionFormat(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+            protected InvalidVersionFormat(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
     }
 }
