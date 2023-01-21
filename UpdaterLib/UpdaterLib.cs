@@ -7,6 +7,8 @@ namespace UpdaterLib
 {
     public class ServerInfo
     {
+        public const int VersionSegmentsAmount = 4;
+
         public Uri serverUrl;
         public string archiveName;
         public string descriptionName;
@@ -97,7 +99,7 @@ namespace UpdaterLib
                 string[] originVersion = currentVersion.Split('.');
                 string[] serverVersion = GetAppVersion().Split('.');
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
                     if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
                     {
