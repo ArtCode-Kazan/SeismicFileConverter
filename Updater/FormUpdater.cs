@@ -121,11 +121,11 @@ namespace Updater
 
         public static List<string> FriendlyFileNames = new List<string>()
         {
-            ZipName,
+            Constants.ZipName,
             AppDomain.CurrentDomain.FriendlyName,
             "SeisJsonConveterUpdater.pdb",
-            UpdaterLibDll,
-            UpdaterLibPbd
+            Constants.UpdaterLibDll,
+            Constants.UpdaterLibPbd
         };
     }
 }
