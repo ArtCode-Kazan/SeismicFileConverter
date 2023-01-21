@@ -7,18 +7,18 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Windows.Forms;
-using UpdaterLib;
+using ServerConnectorLib;
 
 namespace Updater
 {
     public partial class FormUpdater : Form
     {
-        public ServerInfo serverInfo = new ServerInfo();
+        ServerConnector server = new ServerConnector(Constants.serverUrlString, Constants.archiveName);
 
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = this.serverInfo.GetAppVersion();
+            labelversion.Text = this.server.GetDescription().version;
         }
 
         public string programFolderPath
@@ -40,17 +40,7 @@ namespace Updater
                 hashsum = BitConverter.ToString(hashValue).Replace(oldValue: "-", newValue: string.Empty).ToLower();
             }
             return hashsum;
-        }
-
-        public void DownloadZip()
-        {
-            using (WebClient wclient = new WebClient())
-            {
-                wclient.DownloadFile(
-                    address: serverInfo.ArchiveUri,
-                    fileName: Path.Combine(programFolderPath, Constants.ZipName));
-            }
-        }
+        }        
 
         public bool IsZipBroken()
         {
@@ -60,7 +50,7 @@ namespace Updater
             {
                 string actualHashsum = GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName));
 
-                if (this.serverInfo.IsHashsumEqual(actualHashsum))
+                if (this.server.IsHashsumEqual(actualHashsum))
                 {
                     return false;
                 }
@@ -93,8 +83,8 @@ namespace Updater
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            DownloadZip();
+        {                        
+            server.DownloadFile(Path.Combine(programFolderPath, Constants.ZipName), server.ArchiveUri);
             if (!IsZipBroken())
             {
                 DeleteFiles();
@@ -118,6 +108,8 @@ namespace Updater
         public const string ZipName = "ConverterLatestVersion.zip";
         public const string UpdaterLibDll = "UpdaterLib.dll";
         public const string UpdaterLibPbd = "UpdaterLib.pdb";
+        public const string serverUrlString = "https://sigma-geophys.com/Distr/";
+        public const string archiveName = "SeisJsonConveter.zip";
 
         public static List<string> FriendlyFileNames = new List<string>()
         {

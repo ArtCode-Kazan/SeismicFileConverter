@@ -6,13 +6,13 @@ using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 using JsonBinLib;
-using UpdaterLib;
+using ServerConnectorLib;
 
 namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
-        public ServerInfo serverInfo = new ServerInfo();
+        ServerConnector server = new ServerConnector(Constants.serverUrlString, Constants.archiveName);
 
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";
@@ -148,7 +148,7 @@ namespace BinaryToJSONConverterApp
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (serverInfo.IsVersionLatest(OriginAssemblyVersion))
+            if (server.IsVersionLatest(OriginAssemblyVersion))
             {
                 MessageBox.Show(text: "The latest version is installed", caption: "Update");
             }
@@ -164,5 +164,7 @@ namespace BinaryToJSONConverterApp
         public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
         public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
         public const string HelpFileName = "ConverterHelpFile.chm";
+        public const string serverUrlString = "https://sigma-geophys.com/Distr/";
+        public const string archiveName = "SeisJsonConveter.zip";
     }
 }
