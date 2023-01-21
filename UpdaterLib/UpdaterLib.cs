@@ -29,9 +29,7 @@ namespace UpdaterLib
         {
             get
             {
-                Uri uriToDescription = new Uri(
-                    baseUri: this.serverUrl,
-                    relativeUri: this.descriptionName);
+                Uri uriToDescription = new Uri(baseUri: this.serverUrl, relativeUri: this.descriptionName);
                 return uriToDescription;
             }
         }
@@ -40,9 +38,7 @@ namespace UpdaterLib
         {
             get
             {
-                Uri archiveUri = new Uri(
-                    baseUri: this.serverUrl,
-                    relativeUri: this.archiveName);
+                Uri archiveUri = new Uri(baseUri: this.serverUrl, relativeUri: this.archiveName);
                 return archiveUri;
             }
         }
