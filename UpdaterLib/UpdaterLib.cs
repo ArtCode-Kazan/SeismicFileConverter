@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.Serialization;
 
 namespace UpdaterLib
 {
@@ -91,15 +92,22 @@ namespace UpdaterLib
 
         public bool IsVersionLatest(string currentVersion)
         {
-            string[] originVersion = currentVersion.Split('.');
-            string[] serverVersion = GetAppVersion().Split('.');
-
-            for (int i = 0; i < 4; i++)
+            if (GetAppVersion().Length == currentVersion.Length)
             {
-                if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
+                string[] originVersion = currentVersion.Split('.');
+                string[] serverVersion = GetAppVersion().Split('.');
+
+                for (int i = 0; i < 4; i++)
                 {
-                    return false;
+                    if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
+                    {
+                        return false;
+                    }
                 }
+            }
+            else
+            {
+                throw new InvalidVersionFormat("Invalid version format");
             }
             return true;
         }
@@ -114,6 +122,26 @@ namespace UpdaterLib
             {
                 return false;
             }
+        }
+    }
+
+    [Serializable]
+    internal class InvalidVersionFormat : Exception
+    {
+        public InvalidVersionFormat()
+        {
+        }
+
+        public InvalidVersionFormat(string message) : base(message)
+        {
+        }
+
+        public InvalidVersionFormat(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected InvalidVersionFormat(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
