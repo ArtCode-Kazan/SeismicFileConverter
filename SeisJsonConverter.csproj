@@ -55,6 +55,9 @@
     <Reference Include="SeisJsonConverterUpdater">
       <HintPath>Updater\bin\Debug\SeisJsonConverterUpdater.exe</HintPath>
     </Reference>
+    <Reference Include="ServerConnector">
+      <HintPath>ServerConnector\bin\Debug\ServerConnector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -70,9 +73,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient" />
-    <Reference Include="UpdaterLib">
-      <HintPath>UpdaterLib\bin\Debug\UpdaterLib.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>

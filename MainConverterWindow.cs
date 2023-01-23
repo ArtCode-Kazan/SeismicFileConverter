@@ -148,13 +148,20 @@ namespace BinaryToJSONConverterApp
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (server.IsVersionLatest(OriginAssemblyVersion))
+            try
             {
-                MessageBox.Show(text: "The latest version is installed", caption: "Update");
+                if (server.IsVersionLatest(OriginAssemblyVersion))
+                {
+                    MessageBox.Show(text: "The latest version is installed", caption: "Update");
+                }
+                else
+                {
+                    UpdateProgramm();
+                }
             }
-            else
+            catch (WebException exc)
             {
-                UpdateProgramm();
+                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
             }
         }
     }

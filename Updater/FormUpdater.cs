@@ -18,7 +18,14 @@ namespace Updater
         public FormUpdater()
         {
             InitializeComponent();
-            labelversion.Text = this.server.GetDescription().version;
+            try
+            {
+                labelversion.Text = this.server.GetDescription().version;
+            }
+            catch (WebException exc)
+            {
+                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+            }
         }
 
         public string programFolderPath
@@ -40,7 +47,7 @@ namespace Updater
                 hashsum = BitConverter.ToString(hashValue).Replace(oldValue: "-", newValue: string.Empty).ToLower();
             }
             return hashsum;
-        }        
+        }
 
         public bool IsZipBroken()
         {
@@ -48,13 +55,21 @@ namespace Updater
 
             if (File.Exists(pathToZip))
             {
-                string actualHashsum = GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName));
-
-                if (this.server.IsHashsumEqual(actualHashsum))
+                try
                 {
-                    return false;
+                    string actualHashsum = GetZipHashSum(Path.Combine(programFolderPath, Constants.ZipName));
+
+                    if (this.server.IsHashsumEqual(actualHashsum))
+                    {
+                        return false;
+                    }
+                }
+                catch (WebException exc)
+                {
+                    MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
                 }
             }
+
             MessageBox.Show("Archive file is broken. Try again", "Archive error");
             return true;
         }
@@ -62,7 +77,7 @@ namespace Updater
         public void RunConverter()
         {
             ProcessStartInfo info = new ProcessStartInfo(Path.Combine(programFolderPath, Constants.ConverterAppName));
-            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            info.WorkingDirectory = Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
             info.CreateNoWindow = true;
             Process process = Process.Start(info);
             Close();
@@ -83,17 +98,24 @@ namespace Updater
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
-        {                        
-            server.DownloadFile(Path.Combine(programFolderPath, Constants.ZipName), server.ArchiveUri);
-            if (!IsZipBroken())
+        {
+            try
             {
-                DeleteFiles();
-                ZipFile.ExtractToDirectory(
-                    sourceArchiveFileName: Path.Combine(programFolderPath, Constants.ZipName),
-                    destinationDirectoryName: Environment.CurrentDirectory);
-                File.Delete(Path.Combine(programFolderPath, Constants.ZipName));
+                server.DownloadFile(Path.Combine(programFolderPath, Constants.ZipName), server.ArchiveUri);
+                if (!IsZipBroken())
+                {
+                    DeleteFiles();
+                    ZipFile.ExtractToDirectory(
+                        sourceArchiveFileName: Path.Combine(programFolderPath, Constants.ZipName),
+                        destinationDirectoryName: Environment.CurrentDirectory);
+                    File.Delete(Path.Combine(programFolderPath, Constants.ZipName));
+                }
+                RunConverter();
             }
-            RunConverter();
+            catch (WebException exc)
+            {
+                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
