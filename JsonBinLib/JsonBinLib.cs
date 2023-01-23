@@ -20,6 +20,14 @@ namespace JsonBinLib
             }
         }
 
+        public static DateTime Baikal7BaseDateTime
+        {
+            get
+            {
+                return new DateTime(1980, 1, 1);                
+            }
+        }
+
         public static Dictionary<string, int> ComponentsIndex
         {
             get
@@ -73,6 +81,22 @@ namespace JsonBinLib
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
+        }        
+
+        public int Baikal7HeaderMemorySize
+        {
+            get
+            {
+                int headerMemorySize = 120 + 72 * Constants.channelsCount;
+                return headerMemorySize;
+            }
+        }
+
+        public ulong GetBaikal7SecondsForWriting(DateTime startTime)
+        {
+            double secondsDuration = (startTime - Constants.Baikal7BaseDateTime).TotalSeconds;
+            ulong secondsForWriting = Convert.ToUInt64(secondsDuration) * 256000000;
+            return secondsForWriting;
         }
 
         public Int32[] NormalizeSignal(float[] originSignal)
@@ -87,7 +111,7 @@ namespace JsonBinLib
             if (height == 0)
                 throw new DivideByZeroException();
 
-            coeffNorm = Constants.NormalizationMaximum * 2 / height;            
+            coeffNorm = Constants.NormalizationMaximum * 2 / height;
             double amplitudeOffset = minimumOrigin * coeffNorm + Constants.NormalizationMaximum;
 
             for (int i = 0; i < originSignal.Length; i++)
@@ -106,6 +130,8 @@ namespace JsonBinLib
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(filestream))
                 {
+                    Int32 value;
+
                     binaryWriter.Seek(0, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Constants.channelsCount));
                     binaryWriter.Seek(22, SeekOrigin.Begin);
@@ -114,19 +140,11 @@ namespace JsonBinLib
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.longitude));
                     binaryWriter.Seek(72, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.latitude));
-
-                    binaryWriter.Seek(104, SeekOrigin.Begin);
-                    DateTime constDatetime = new DateTime(1980, 1, 1);
-                    double secondsDuraion = (this.jsonInfo.startTime - constDatetime).TotalSeconds;
-                    ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
-                    binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
-
-                    int headerMemorySize = 120 + 72 * Constants.channelsCount;
-                    Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
-
-                    binaryWriter.Seek(headerMemorySize, SeekOrigin.Begin);
-
-                    Int32 value;
+                    binaryWriter.Seek(104, SeekOrigin.Begin);                    
+                    binaryWriter.Write(BitConverter.GetBytes(GetBaikal7SecondsForWriting(this.jsonInfo.startTime)));
+                    
+                    binaryWriter.Seek(Baikal7HeaderMemorySize, SeekOrigin.Begin);
+                    Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);                    
 
                     for (int i = 0; i < normalSignal.Length; i++)
                     {

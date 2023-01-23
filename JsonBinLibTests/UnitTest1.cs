@@ -79,5 +79,6 @@ namespace JsonBinLibTests
                 Assert.AreEqual(outputArrayOrigin[j], outputArray[j]);
             }
         }
+
     }
 }
