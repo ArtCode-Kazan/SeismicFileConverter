@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeisJsonConverterUpdater", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectorLib", "ServerConnector\ServerConnectorLib.csproj", "{1C81C72F-4B6C-41E1-B56E-016E322D817E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectionTests", "ServerConnectionTests\ServerConnectionTests.csproj", "{B67A601D-A075-4547-B05F-F1B1E8E393B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

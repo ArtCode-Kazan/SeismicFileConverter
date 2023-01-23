@@ -131,7 +131,7 @@ namespace ServerConnectorLib
             {
                 return false;
             }
-        }
+        }   
 
         public void DownloadFile(string savePath, Uri url)
         {
