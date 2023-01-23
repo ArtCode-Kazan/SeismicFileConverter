@@ -43,6 +43,7 @@ namespace JsonBinLibTests
                 Assert.AreEqual(outputArrayOrigin[j], outputArray[j]);
             }
         }
+
         [TestMethod]
         [ExpectedException(typeof(DivideByZeroException), "Invalid currency.(zero)")]
         [DataRow(@"C:\Users\user\Desktop\jsontests\inputZero.txt", @"C:\Users\user\Desktop\jsontests\outputZero.txt")]
@@ -80,5 +81,40 @@ namespace JsonBinLibTests
             }
         }
 
+        public DateTime AppendSecondsToDateTimeBaikal7(ulong secondsamount)
+        { 
+            DateTime Baikal7 = new DateTime(1980, 1, 1, 0, 0, 0).AddSeconds(secondsamount);
+            return Baikal7;
+        }
+
+        [TestMethod]
+        [DataRow((UInt64)0, (UInt64)0)]
+        [DataRow((UInt64)10, (UInt64)2560000000)]
+        [DataRow((UInt64)198651, (UInt64)50854656000000)]
+        [DataRow((UInt64)16516186181, (UInt64)4228143662336000000)]
+        [DataRow((UInt64)11911, (UInt64)3049216000000)]
+        public void TestGetBaikal7SecondsForWriting(ulong realSeconds, ulong formatSeconds)
+        {
+            SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
+            ulong actualSeconds = testclass.GetBaikal7SecondsForWriting(AppendSecondsToDateTimeBaikal7(realSeconds));
+            Assert.AreEqual(formatSeconds, actualSeconds);
+        }
+
+        [TestMethod]
+        public void Baikal7HeaderMemorySize()
+        {
+            SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
+            int actualSeconds = testclass.Baikal7HeaderMemorySize;
+            Assert.AreEqual(336, actualSeconds);
+        }
+        
+        [TestMethod]
+        [DataRow((UInt64)10, (UInt64)2560000000)]
+        public void Baikal7HeaderMemorySize(int signalLenght, int byteLenght)
+        {
+            SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(startTime), "");
+            int actualSeconds = testclass.Baikal7HeaderMemorySize;
+            Assert.AreEqual(336, actualSeconds);
+        }
     }
 }

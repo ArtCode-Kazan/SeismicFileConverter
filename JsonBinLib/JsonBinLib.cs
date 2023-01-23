@@ -54,7 +54,7 @@ namespace JsonBinLib
         public UInt16 frequency { get; set; }
         public string componentName { get; set; }
     }
-
+    
     public class JsonParser
     {
         public string pathToJsonFile;
