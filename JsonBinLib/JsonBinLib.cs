@@ -81,8 +81,13 @@ namespace JsonBinLib
 
             float minimumOrigin = originSignal.Min();
             float maximumOrigin = originSignal.Max();
-            float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);   
-            double coeffNorm = Constants.NormalizationMaximum * 2 / height;
+            float height = maximumOrigin - minimumOrigin;
+            double coeffNorm;
+
+            if (height == 0)
+                throw new DivideByZeroException();
+
+            coeffNorm = Constants.NormalizationMaximum * 2 / height;            
             double amplitudeOffset = minimumOrigin * coeffNorm + Constants.NormalizationMaximum;
 
             for (int i = 0; i < originSignal.Length; i++)
