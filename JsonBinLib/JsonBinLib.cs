@@ -18,6 +18,7 @@ namespace JsonBinLib
                 return Convert.ToUInt16(Constants.ComponentsOrder.Length);
             }
         }
+
         public static Dictionary<string, int> ComponentsIndex
         {
             get
@@ -72,6 +73,7 @@ namespace JsonBinLib
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
         }
+
         public Int32[] NormalizeSignal(float[] originSignal)
         {
             Int32[] normalizedSignal = new Int32[originSignal.Length];
