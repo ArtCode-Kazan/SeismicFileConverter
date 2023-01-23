@@ -11,6 +11,7 @@ namespace JsonBinLib
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
         public const Int32 nullValue = -9999;
+
         public static UInt16 channelsCount
         {
             get
