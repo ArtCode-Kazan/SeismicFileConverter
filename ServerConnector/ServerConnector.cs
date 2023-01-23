@@ -117,6 +117,7 @@ namespace ServerConnectorLib
             {
                 throw new InvalidVersionFormat("Invalid version format");
             }
+
             return true;
         }
 
