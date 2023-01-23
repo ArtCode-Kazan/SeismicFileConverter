@@ -26,7 +26,7 @@ namespace JsonBinLib
 
                 for (int i = 0; i < ComponentsOrder.Length; i++)
                 {
-                    componentsIndexes.Add(ComponentsOrder[i].ToString(), i);
+                    componentsIndexes.Add(key: ComponentsOrder[i].ToString(), value: i);
                 }
 
                 return componentsIndexes;
@@ -71,16 +71,16 @@ namespace JsonBinLib
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
-        }        
+        }
         public Int32[] NormalizeSignal(float[] originSignal)
         {
             Int32[] normalizedSignal = new Int32[originSignal.Length];
 
-            float minimumOrigin = originSignal.Min();            
-            float maximumOrigin = originSignal.Max();   
+            float minimumOrigin = originSignal.Min();
+            float maximumOrigin = originSignal.Max();
             float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
-            double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
-            double amplitudeOffset = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
+            double coeffNorm = Constants.NormalizationMaximum * 2 / height;
+            double amplitudeOffset = minimumOrigin * coeffNorm + Constants.NormalizationMaximum;
 
             for (int i = 0; i < originSignal.Length; i++)
             {
@@ -113,7 +113,7 @@ namespace JsonBinLib
                     ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
                     binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
 
-                    int headerMemorySize = 120 + 72 * Constants.channelsCount;                                        
+                    int headerMemorySize = 120 + 72 * Constants.channelsCount;
                     Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
 
                     binaryWriter.Seek(headerMemorySize, SeekOrigin.Begin);
