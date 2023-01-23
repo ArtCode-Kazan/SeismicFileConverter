@@ -92,7 +92,7 @@ namespace ServerConnectorLib
             }
             catch (WebException e)
             {
-                MessageBox.Show(text: e.Message, caption: "Exception Caught!");
+                throw new WebException(e.Message);
             }
 
             return new DesriptionInfo(serverVersion, serverHashsum);
@@ -136,7 +136,6 @@ namespace ServerConnectorLib
         {
             try
             {
-
                 using (WebClient wclient = new WebClient())
                 {
                     wclient.DownloadFile(address: url, fileName: savePath);
@@ -144,7 +143,7 @@ namespace ServerConnectorLib
             }
             catch (WebException e)
             {
-                MessageBox.Show(text: e.Message, caption: "Exception Caught!");
+                throw new WebException(e.Message);
             }
         }
 
