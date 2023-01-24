@@ -66,33 +66,27 @@ namespace ServerConnectorLib
             string line;
             string serverHashsum = "";
             string serverVersion = "";
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    using (Stream stream = client.OpenRead(DescriptionUri))
-                    {
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            while ((line = reader.ReadLine()) != null)
-                            {
-                                if (line.Contains(this.hashsumMD5FieldName))
-                                {
-                                    serverHashsum = line.Split(':')[1].Split(' ')[1];
-                                }
 
-                                if (line.Contains(this.versionFieldName))
-                                {
-                                    serverVersion = line.Split(':')[1].Split(' ')[1];
-                                }
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(DescriptionUri))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains(this.hashsumMD5FieldName))
+                            {
+                                serverHashsum = line.Split(':')[1].Split(' ')[1];
+                            }
+
+                            if (line.Contains(this.versionFieldName))
+                            {
+                                serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
                         }
                     }
                 }
-            }
-            catch (WebException e)
-            {
-                throw new WebException(e.Message);
             }
 
             return new DesriptionInfo(serverVersion, serverHashsum);
@@ -121,9 +115,9 @@ namespace ServerConnectorLib
         }
 
         public bool IsVersionLatest(string currentVersion)
-        {            
+        {
             if (LatestVersion(GetDescription().version, currentVersion) == currentVersion)
-                    return true;
+                return true;
 
             return false;
         }
@@ -150,20 +144,13 @@ namespace ServerConnectorLib
             {
                 return false;
             }
-        }   
+        }
 
         public void DownloadFile(string savePath, Uri url)
         {
-            try
+            using (WebClient wclient = new WebClient())
             {
-                using (WebClient wclient = new WebClient())
-                {
-                    wclient.DownloadFile(address: url, fileName: savePath);
-                }
-            }
-            catch (WebException e)
-            {
-                throw new WebException(e.Message);
+                wclient.DownloadFile(address: url, fileName: savePath);
             }
         }
 
