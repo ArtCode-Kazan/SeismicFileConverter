@@ -98,32 +98,51 @@ namespace ServerConnectorLib
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
 
-        public bool IsVersionLatest(string currentVersion)
+        public string LatestVersion(string firstVersion, string secondVersion)
         {
-            if (GetDescription().version.Split('.').Length == currentVersion.Split('.').Length)
+            if (firstVersion.Split('.').Length == secondVersion.Split('.').Length)
             {
-                string[] originVersion = currentVersion.Split('.');
-                string[] serverVersion = GetDescription().version.Split('.');
+                string[] firstVersionSlices = firstVersion.Split('.');
+                string[] secondVersionSlices = secondVersion.Split('.');
 
                 for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
-                    if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
+                    if (Convert.ToInt16(firstVersionSlices[i]) < Convert.ToInt16(secondVersionSlices[i]))
                     {
-                        return false;
+                        return secondVersion;
                     }
                 }
+                return firstVersion;
             }
             else
             {
                 throw new InvalidVersionFormat("Invalid version format");
             }
+        }
 
-            return true;
+        public bool IsVersionLatest(string currentVersion)
+        {            
+            if (LatestVersion(GetDescription().version, currentVersion) == currentVersion)
+                    return true;
+
+            return false;
+        }
+
+        public bool IsEqual(string first, string second)
+        {
+            if (first == second)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool IsHashsumEqual(string originHashsum)
         {
-            if (originHashsum == GetDescription().hashsum)
+            if (IsEqual(originHashsum, GetDescription().hashsum))
             {
                 return true;
             }
@@ -149,7 +168,7 @@ namespace ServerConnectorLib
         }
 
         [Serializable]
-        internal class InvalidVersionFormat : Exception
+        public class InvalidVersionFormat : Exception
         {
             public InvalidVersionFormat()
             {
