@@ -20,7 +20,15 @@ namespace ServerConnectorLib
         }
     }
 
-    public class ServerConnector
+    public interface IServerConector
+    {
+        DesriptionInfo GetDescription();
+        bool IsVersionLatest(string version);
+        bool IsHashsumEqual(string originHashsum);
+        void DownloadFile(string savePath, Uri url);
+    }
+
+    public class ServerConnector : IServerConector
     {
         public const int VersionSegmentsAmount = 4;
 
@@ -92,51 +100,32 @@ namespace ServerConnectorLib
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
 
-        public string LatestVersion(string firstVersion, string secondVersion)
+        public bool IsVersionLatest(string version)
         {
-            if (firstVersion.Split('.').Length == secondVersion.Split('.').Length)
+            if (GetDescription().version.Split('.').Length == version.Split('.').Length)
             {
-                string[] firstVersionSlices = firstVersion.Split('.');
-                string[] secondVersionSlices = secondVersion.Split('.');
+                string[] currentVersion = version.Split('.');
+                string[] serverVersion = GetDescription().version.Split('.');
 
                 for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
-                    if (Convert.ToInt16(firstVersionSlices[i]) < Convert.ToInt16(secondVersionSlices[i]))
+                    if (Convert.ToInt16(currentVersion[i]) < Convert.ToInt16(serverVersion[i]))
                     {
-                        return secondVersion;
+                        return false;
                     }
                 }
-                return firstVersion;
             }
             else
             {
                 throw new InvalidVersionFormat("Invalid version format");
             }
-        }
 
-        public bool IsVersionLatest(string currentVersion)
-        {
-            if (LatestVersion(GetDescription().version, currentVersion) == currentVersion)
-                return true;
-
-            return false;
-        }
-
-        public bool IsEqual(string first, string second)
-        {
-            if (first == second)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         public bool IsHashsumEqual(string originHashsum)
         {
-            if (IsEqual(originHashsum, GetDescription().hashsum))
+            if (originHashsum == GetDescription().hashsum)
             {
                 return true;
             }
