@@ -20,7 +20,15 @@ namespace ServerConnectorLib
         }
     }
 
-    public class ServerConnector
+    public interface IServerConnector
+    {
+        DesriptionInfo GetDescription();
+        bool IsVersionLatest(string version);
+        bool IsHashsumEqual(string originHashsum);
+        void DownloadFile(string savePath, Uri url);
+    }
+
+    public class ServerConnector : IServerConnector
     {
         public const int VersionSegmentsAmount = 4;
 
@@ -61,69 +69,61 @@ namespace ServerConnectorLib
             }
         }
 
-        public DesriptionInfo GetDescription()
+        public virtual DesriptionInfo GetDescription()
         {
             string line;
             string serverHashsum = "";
             string serverVersion = "";
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    using (Stream stream = client.OpenRead(DescriptionUri))
-                    {
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            while ((line = reader.ReadLine()) != null)
-                            {
-                                if (line.Contains(this.hashsumMD5FieldName))
-                                {
-                                    serverHashsum = line.Split(':')[1].Split(' ')[1];
-                                }
 
-                                if (line.Contains(this.versionFieldName))
-                                {
-                                    serverVersion = line.Split(':')[1].Split(' ')[1];
-                                }
+            using (WebClient client = new WebClient())
+            {
+                using (Stream stream = client.OpenRead(this.DescriptionUri))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains(this.hashsumMD5FieldName))
+                            {
+                                serverHashsum = line.Split(':')[1].Split(' ')[1];
+                            }
+
+                            if (line.Contains(this.versionFieldName))
+                            {
+                                serverVersion = line.Split(':')[1].Split(' ')[1];
                             }
                         }
                     }
                 }
             }
-            catch (WebException e)
-            {
-                throw new WebException(e.Message);
-            }
-
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
 
-        public bool IsVersionLatest(string currentVersion)
+        public virtual bool IsVersionLatest(string version)
         {
-            if (GetDescription().version.Split('.').Length == currentVersion.Split('.').Length)
-            {
-                string[] originVersion = currentVersion.Split('.');
-                string[] serverVersion = GetDescription().version.Split('.');
+            string[] currentVersion = version.Split('.');
+            string[] serverVersion = this.GetDescription().version.Split('.');
 
+            if (serverVersion.Length == currentVersion.Length)
+            {
                 for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
-                    if (Convert.ToInt16(originVersion[i]) < Convert.ToInt16(serverVersion[i]))
+                    if (Convert.ToInt16(currentVersion[i]) < Convert.ToInt16(serverVersion[i]))
                     {
                         return false;
                     }
                 }
+                return true;
             }
             else
             {
                 throw new InvalidVersionFormat("Invalid version format");
-            }
-
-            return true;
+            }            
         }
 
-        public bool IsHashsumEqual(string originHashsum)
+        public virtual bool IsHashsumEqual(string originHashsum)
         {
-            if (originHashsum == GetDescription().hashsum)
+            if (originHashsum == this.GetDescription().hashsum)
             {
                 return true;
             }
@@ -135,21 +135,14 @@ namespace ServerConnectorLib
 
         public void DownloadFile(string savePath, Uri url)
         {
-            try
+            using (WebClient wclient = new WebClient())
             {
-                using (WebClient wclient = new WebClient())
-                {
-                    wclient.DownloadFile(address: url, fileName: savePath);
-                }
-            }
-            catch (WebException e)
-            {
-                throw new WebException(e.Message);
+                wclient.DownloadFile(address: url, fileName: savePath);
             }
         }
 
         [Serializable]
-        internal class InvalidVersionFormat : Exception
+        public class InvalidVersionFormat : Exception
         {
             public InvalidVersionFormat()
             {
