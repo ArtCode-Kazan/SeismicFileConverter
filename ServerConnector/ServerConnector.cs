@@ -20,7 +20,7 @@ namespace ServerConnectorLib
         }
     }
 
-    public interface IServerConector
+    public interface IServerConnector
     {
         DesriptionInfo GetDescription();
         bool IsVersionLatest(string version);
@@ -28,7 +28,7 @@ namespace ServerConnectorLib
         void DownloadFile(string savePath, Uri url);
     }
 
-    public class ServerConnector : IServerConector
+    public class ServerConnector : IServerConnector
     {
         public const int VersionSegmentsAmount = 4;
 
@@ -69,7 +69,7 @@ namespace ServerConnectorLib
             }
         }
 
-        public DesriptionInfo GetDescription()
+        public virtual DesriptionInfo GetDescription()
         {
             string line;
             string serverHashsum = "";
@@ -96,13 +96,12 @@ namespace ServerConnectorLib
                     }
                 }
             }
-
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
 
-        public bool IsVersionLatest(string version)
+        public virtual bool IsVersionLatest(string version)
         {
-            if (GetDescription().version.Split('.').Length == version.Split('.').Length)
+            if (this.GetDescription().version.Split('.').Length == version.Split('.').Length)
             {
                 string[] currentVersion = version.Split('.');
                 string[] serverVersion = GetDescription().version.Split('.');
@@ -114,16 +113,15 @@ namespace ServerConnectorLib
                         return false;
                     }
                 }
+                return true;
             }
             else
             {
                 throw new InvalidVersionFormat("Invalid version format");
-            }
-
-            return true;
+            }            
         }
 
-        public bool IsHashsumEqual(string originHashsum)
+        public virtual bool IsHashsumEqual(string originHashsum)
         {
             if (originHashsum == GetDescription().hashsum)
             {
