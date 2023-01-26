@@ -101,11 +101,11 @@ namespace ServerConnectorLib
 
         public virtual bool IsVersionLatest(string version)
         {
-            if (this.GetDescription().version.Split('.').Length == version.Split('.').Length)
-            {
-                string[] currentVersion = version.Split('.');
-                string[] serverVersion = this.GetDescription().version.Split('.');
+            string[] currentVersion = version.Split('.');
+            string[] serverVersion = this.GetDescription().version.Split('.');
 
+            if (serverVersion.Length == currentVersion.Length)
+            {
                 for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
                     if (Convert.ToInt16(currentVersion[i]) < Convert.ToInt16(serverVersion[i]))
