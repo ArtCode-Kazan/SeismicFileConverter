@@ -77,7 +77,7 @@ namespace ServerConnectorLib
 
             using (WebClient client = new WebClient())
             {
-                using (Stream stream = client.OpenRead(DescriptionUri))
+                using (Stream stream = client.OpenRead(this.DescriptionUri))
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
@@ -104,7 +104,7 @@ namespace ServerConnectorLib
             if (this.GetDescription().version.Split('.').Length == version.Split('.').Length)
             {
                 string[] currentVersion = version.Split('.');
-                string[] serverVersion = GetDescription().version.Split('.');
+                string[] serverVersion = this.GetDescription().version.Split('.');
 
                 for (int i = 0; i < VersionSegmentsAmount; i++)
                 {
@@ -123,7 +123,7 @@ namespace ServerConnectorLib
 
         public virtual bool IsHashsumEqual(string originHashsum)
         {
-            if (originHashsum == GetDescription().hashsum)
+            if (originHashsum == this.GetDescription().hashsum)
             {
                 return true;
             }
