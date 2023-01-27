@@ -6,7 +6,7 @@ using Moq;
 
 namespace JsonBinLibTests
 {
-    public class Func
+    public class HelperFunctions
     {
         public static DateTime AppendSecondsToDateTimeBaikal7(ulong secondsamount)
         {
@@ -71,15 +71,15 @@ namespace JsonBinLibTests
         public void TestGetBaikal7SecondsForWriting(ulong realSeconds, ulong formatSeconds)
         {
             SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
-            ulong actualSeconds = testclass.GetBaikal7SecondsForWriting(Func.AppendSecondsToDateTimeBaikal7(realSeconds));
+            ulong actualSeconds = testclass.GetBaikal7SecondsForWriting(HelperFunctions.AppendSecondsToDateTimeBaikal7(realSeconds));
             Assert.AreEqual(formatSeconds, actualSeconds);
         }
 
         [TestMethod]
         public void TestNormalizeSignal()
         {
-            int[] outputArrayOrigin = Func.RandomArray(1000);
-            float[] inputArray = Func.FormatArray(Func.MoveArray(outputArrayOrigin));
+            int[] outputArrayOrigin = HelperFunctions.RandomArray(1000);
+            float[] inputArray = HelperFunctions.FormatArray(HelperFunctions.MoveArray(outputArrayOrigin));
             var mock = new Mock<SeisBinaryFile>(new JsonDataContainer(), "") { CallBase = true };
             int[] outputArrayProgram = mock.Object.NormalizeSignal(inputArray);
 
