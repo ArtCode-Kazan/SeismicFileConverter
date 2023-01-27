@@ -50,6 +50,7 @@ namespace JsonBinLibTests
             return arr;
         }
     }
+
     [TestClass]
     public class JsonBinLibTest
     {

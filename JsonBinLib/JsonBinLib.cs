@@ -24,7 +24,7 @@ namespace JsonBinLib
         {
             get
             {
-                return new DateTime(1980, 1, 1);                
+                return new DateTime(1980, 1, 1);
             }
         }
 
@@ -54,7 +54,7 @@ namespace JsonBinLib
         public UInt16 frequency { get; set; }
         public string componentName { get; set; }
     }
-    
+
     public class JsonParser
     {
         public string pathToJsonFile;
@@ -140,11 +140,11 @@ namespace JsonBinLib
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.longitude));
                     binaryWriter.Seek(72, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.latitude));
-                    binaryWriter.Seek(104, SeekOrigin.Begin);                    
+                    binaryWriter.Seek(104, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(GetBaikal7SecondsForWriting(this.jsonInfo.startTime)));
-                    
+
                     binaryWriter.Seek(Baikal7HeaderMemorySize, SeekOrigin.Begin);
-                    Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);                    
+                    Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
 
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
