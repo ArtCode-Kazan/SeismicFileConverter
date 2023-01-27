@@ -79,5 +79,25 @@ namespace JsonBinLibTests
                 Assert.AreEqual(outputArrayOrigin[j], outputArrayProgram[j]);
             }
         }
+
+        [TestMethod]
+        public void TestNormalizeSignalException()
+        {
+            float[] inputArray = new float[] { -9999, -9999, -9999, -9999, -9999 };
+            var mock = new Mock<SeisBinaryFile>(new JsonDataContainer(), "") { CallBase = true };
+            bool isException;
+
+            try
+            {
+                int[] outputArrayProgram = mock.Object.NormalizeSignal(inputArray);
+                isException = false;
+            }
+            catch
+            {
+                isException = true;
+            }
+
+            Assert.AreEqual(true, isException);
+        }
     }
 }
