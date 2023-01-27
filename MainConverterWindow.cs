@@ -158,9 +158,9 @@ namespace BinaryToJSONConverterApp
                     UpdateProgramm();
                 }
             }
-            catch (WebException exc)
+            catch (WebException)
             {
-                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
             }
         }
     }

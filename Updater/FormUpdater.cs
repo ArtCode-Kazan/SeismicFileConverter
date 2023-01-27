@@ -22,9 +22,9 @@ namespace Updater
             {
                 labelversion.Text = this.server.GetDescription().version;
             }
-            catch (WebException exc)
+            catch (WebException)
             {
-                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
             }
         }
 
@@ -64,9 +64,9 @@ namespace Updater
                         return false;
                     }
                 }
-                catch (WebException exc)
+                catch (WebException)
                 {
-                    MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+                    MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
                 }
             }
             MessageBox.Show("Archive file is broken. Try again", "Archive error");
@@ -111,9 +111,9 @@ namespace Updater
                 }
                 RunConverter();
             }
-            catch (WebException exc)
+            catch (WebException)
             {
-                MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
             }
         }
 
