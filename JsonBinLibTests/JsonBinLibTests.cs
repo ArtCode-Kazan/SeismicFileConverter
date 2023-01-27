@@ -38,6 +38,17 @@ namespace JsonBinLibTests
             }
             return formatArr;
         }
+
+        public static int[] MoveArray(int[] array, int coef = 2354)
+        {
+            int[] arr = new int[array.Length];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = array[i] - coef;
+            }
+            return arr;
+        }
     }
     [TestClass]
     public class JsonBinLibTest
@@ -45,8 +56,7 @@ namespace JsonBinLibTests
         [TestMethod]
         public void Baikal7HeaderMemorySize()
         {
-            var mock = new Mock<JsonDataContainer>() { CallBase = true };
-            SeisBinaryFile testclass = new SeisBinaryFile(mock.Object, "");
+            SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
             int actualSeconds = testclass.Baikal7HeaderMemorySize;
             Assert.AreEqual(336, actualSeconds);
         }
@@ -59,8 +69,7 @@ namespace JsonBinLibTests
         [DataRow((UInt64)11911, (UInt64)3049216000000)]
         public void TestGetBaikal7SecondsForWriting(ulong realSeconds, ulong formatSeconds)
         {
-            var mock = new Mock<JsonDataContainer>() { CallBase = true };
-            SeisBinaryFile testclass = new SeisBinaryFile(mock.Object, "");
+            SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
             ulong actualSeconds = testclass.GetBaikal7SecondsForWriting(Func.AppendSecondsToDateTimeBaikal7(realSeconds));
             Assert.AreEqual(formatSeconds, actualSeconds);
         }
@@ -69,8 +78,7 @@ namespace JsonBinLibTests
         public void TestNormalizeSignal()
         {
             int[] outputArrayOrigin = Func.RandomArray(1000);
-            float[] inputArray = Func.FormatArray(outputArrayOrigin);
-
+            float[] inputArray = Func.FormatArray(Func.MoveArray(outputArrayOrigin));
             var mock = new Mock<SeisBinaryFile>(new JsonDataContainer(), "") { CallBase = true };
             int[] outputArrayProgram = mock.Object.NormalizeSignal(inputArray);
 
