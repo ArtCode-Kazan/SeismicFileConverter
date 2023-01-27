@@ -24,12 +24,10 @@ namespace JsonBinLib
             get
             {
                 var componentsIndexes = new Dictionary<string, int>();
-
                 for (int i = 0; i < ComponentsOrder.Length; i++)
                 {
                     componentsIndexes.Add(key: ComponentsOrder[i].ToString(), value: i);
                 }
-
                 return componentsIndexes;
             }
         }
@@ -88,7 +86,6 @@ namespace JsonBinLib
             {
                 normalizedSignal[i] = Convert.ToInt32(originSignal[i] * coeffNorm - amplitudeOffset);
             }
-
             return normalizedSignal;
         }
 
