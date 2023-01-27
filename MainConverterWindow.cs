@@ -63,8 +63,8 @@ namespace BinaryToJSONConverterApp
             {
                 RunUpdater();
             }
+            TopMost = true;
 
-            this.TopMost = true;
         }
 
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)

@@ -10,6 +10,7 @@ namespace BinaryToJSONConverterApp
 
         public AboutProgramm()
         {
+            TopMost = true;
             InitializeComponent();
         }
 
