@@ -68,24 +68,24 @@ namespace JsonBinLibTests
         [DataRow((UInt64)198651, (UInt64)50854656000000)]
         [DataRow((UInt64)16516186181, (UInt64)4228143662336000000)]
         [DataRow((UInt64)11911, (UInt64)3049216000000)]
-        public void TestGetBaikal7SecondsForWriting(ulong realSeconds, ulong formatSeconds)
+        public void TestGetBaikal7SecondsForWriting(ulong realSeconds, ulong expectedSeconds)
         {
             SeisBinaryFile testclass = new SeisBinaryFile(new JsonDataContainer(), "");
             ulong actualSeconds = testclass.GetBaikal7SecondsForWriting(HelperFunctions.AppendSecondsToDateTimeBaikal7(realSeconds));
-            Assert.AreEqual(formatSeconds, actualSeconds);
+            Assert.AreEqual(expectedSeconds, actualSeconds);
         }
 
         [TestMethod]
         public void TestNormalizeSignal()
         {
-            int[] outputArrayOrigin = HelperFunctions.RandomArray(1000);
-            float[] inputArray = HelperFunctions.FormatArray(HelperFunctions.MoveArray(outputArrayOrigin));
+            int[] expectedArray = HelperFunctions.RandomArray(1000);
+            float[] inputArray = HelperFunctions.FormatArray(HelperFunctions.MoveArray(expectedArray));
             var mock = new Mock<SeisBinaryFile>(new JsonDataContainer(), "") { CallBase = true };
-            int[] outputArrayProgram = mock.Object.NormalizeSignal(inputArray);
+            int[] actualArray = mock.Object.NormalizeSignal(inputArray);
 
-            for (int j = 0; j < outputArrayProgram.Length; j++)
+            for (int j = 0; j < actualArray.Length; j++)
             {
-                Assert.AreEqual(outputArrayOrigin[j], outputArrayProgram[j]);
+                Assert.AreEqual(expectedArray[j], actualArray[j]);
             }
         }
 
@@ -94,19 +94,19 @@ namespace JsonBinLibTests
         {
             float[] inputArray = new float[] { -9999, -9999, -9999, -9999, -9999 };
             var mock = new Mock<SeisBinaryFile>(new JsonDataContainer(), "") { CallBase = true };
-            bool isException;
+            bool actualException;
 
             try
             {
                 int[] outputArrayProgram = mock.Object.NormalizeSignal(inputArray);
-                isException = false;
+                actualException = false;
             }
             catch
             {
-                isException = true;
+                actualException = true;
             }
 
-            Assert.AreEqual(true, isException);
+            Assert.AreEqual(true, actualException);
         }
     }
 }
