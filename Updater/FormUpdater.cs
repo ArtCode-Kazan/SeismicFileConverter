@@ -69,7 +69,6 @@ namespace Updater
                     MessageBox.Show(text: exc.Message, caption: "Exception Caught!");
                 }
             }
-
             MessageBox.Show("Archive file is broken. Try again", "Archive error");
             return true;
         }

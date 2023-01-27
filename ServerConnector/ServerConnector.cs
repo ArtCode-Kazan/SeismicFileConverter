@@ -118,7 +118,7 @@ namespace ServerConnectorLib
             else
             {
                 throw new InvalidVersionFormat("Invalid version format");
-            }            
+            }
         }
 
         public virtual bool IsHashsumEqual(string originHashsum)

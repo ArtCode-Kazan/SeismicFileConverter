@@ -43,7 +43,7 @@ namespace ServerConnectionTests
             catch
             {
                 actual = true;
-            }            
+            }
             Assert.AreEqual(exception, actual);
         }
 

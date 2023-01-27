@@ -102,7 +102,6 @@ namespace BinaryToJSONConverterApp
                 toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
                 statusStrip.Refresh();
             }
-
             toolStripStatusLabel.Text = "Success";
         }
 
