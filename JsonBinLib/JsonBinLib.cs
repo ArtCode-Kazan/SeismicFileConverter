@@ -81,7 +81,7 @@ namespace JsonBinLib
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
-        }        
+        }
 
         public int Baikal7HeaderMemorySize
         {
