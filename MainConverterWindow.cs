@@ -160,7 +160,10 @@ namespace BinaryToJSONConverterApp
             }
             catch (WebException)
             {
-                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection", 
+                    caption: "Error", 
+                    buttons: MessageBoxButtons.OK, 
+                    icon: MessageBoxIcon.Error);
             }
         }
     }

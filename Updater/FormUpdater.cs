@@ -24,7 +24,10 @@ namespace Updater
             }
             catch (WebException)
             {
-                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection",
+                    caption: "Error",
+                    buttons: MessageBoxButtons.OK,
+                    icon: MessageBoxIcon.Error);
             }
         }
 
@@ -65,7 +68,10 @@ namespace Updater
                 }
                 catch (WebException)
                 {
-                    MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
+                    MessageBox.Show(text: "No server connection",
+                    caption: "Error",
+                    buttons: MessageBoxButtons.OK,
+                    icon: MessageBoxIcon.Error);
                 }
             }
             MessageBox.Show("Archive file is broken. Try again", "Archive error");
@@ -112,7 +118,10 @@ namespace Updater
             }
             catch (WebException)
             {
-                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
+                MessageBox.Show(text: "No server connection",
+                    caption: "Error",
+                    buttons: MessageBoxButtons.OK,
+                    icon: MessageBoxIcon.Error);
             }
         }
 
