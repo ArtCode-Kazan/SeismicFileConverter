@@ -122,7 +122,7 @@ namespace BinaryToJSONConverterApp
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form formHelp = new AboutProgramm();
+            Form formHelp = new AboutProgram();
             formHelp.ShowDialog();
         }
 

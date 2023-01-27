@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace BinaryToJSONConverterApp
 {
-    public partial class AboutProgramm : Form
+    public partial class AboutProgram : Form
     {
         public static string mailtoMainAdress = "mailto:ArtCode-Kazan@yandex.ru";
 
-        public AboutProgramm()
+        public AboutProgram()
         {
             TopMost = true;
             InitializeComponent();
