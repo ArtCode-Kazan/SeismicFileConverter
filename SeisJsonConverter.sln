@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
@@ -11,7 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 EndProject
 Project("{E729F059-12D4-455F-A2A4-FDA8DD25E08A}") = "SeisJsonConverterInstall", "C:\InstallShield 2022 Projects\SeisJsonConverterInstall.isproj", "{5EF1B522-39DC-487A-BF30-F71C7A3C9ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBinLibTests", "JsonBinLibTests\JsonBinLibTests.csproj", "{55DDCD82-7DAE-4BED-980D-BD994771D689}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeisJsonConverterUpdater", "Updater\SeisJsonConverterUpdater.csproj", "{CB0978D8-C5FD-451C-941C-2B85DA040220}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectorLib", "ServerConnector\ServerConnectorLib.csproj", "{1C81C72F-4B6C-41E1-B56E-016E322D817E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectionTests", "ServerConnectionTests\ServerConnectionTests.csproj", "{B67A601D-A075-4547-B05F-F1B1E8E393B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +35,18 @@ Global
 		{5EF1B522-39DC-487A-BF30-F71C7A3C9ADF}.Debug|Any CPU.Build.0 = Debug
 		{5EF1B522-39DC-487A-BF30-F71C7A3C9ADF}.Release|Any CPU.ActiveCfg = Release
 		{5EF1B522-39DC-487A-BF30-F71C7A3C9ADF}.Release|Any CPU.Build.0 = Release
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB0978D8-C5FD-451C-941C-2B85DA040220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB0978D8-C5FD-451C-941C-2B85DA040220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB0978D8-C5FD-451C-941C-2B85DA040220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB0978D8-C5FD-451C-941C-2B85DA040220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

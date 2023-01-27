@@ -28,17 +28,16 @@ namespace JsonBinLib
             }
         }
 
+
         public static Dictionary<string, int> ComponentsIndex
         {
             get
             {
                 var componentsIndexes = new Dictionary<string, int>();
-
                 for (int i = 0; i < ComponentsOrder.Length; i++)
                 {
                     componentsIndexes.Add(key: ComponentsOrder[i].ToString(), value: i);
                 }
-
                 return componentsIndexes;
             }
         }
@@ -99,8 +98,10 @@ namespace JsonBinLib
             return secondsForWriting;
         }
 
+
         public Int32[] NormalizeSignal(float[] originSignal)
         {
+            
             Int32[] normalizedSignal = new Int32[originSignal.Length];
 
             float minimumOrigin = originSignal.Min();
@@ -145,7 +146,7 @@ namespace JsonBinLib
 
                     binaryWriter.Seek(Baikal7HeaderMemorySize, SeekOrigin.Begin);
                     Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
-
+                    
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
                         for (int j = 0; j < Constants.channelsCount; j++)

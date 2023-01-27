@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BinaryToJSONConverterApp
 {
     public partial class AboutProgramm : Form
     {
+        public static string mailtoMainAdress = "mailto:ArtCode-Kazan@yandex.ru";
+
         public AboutProgramm()
         {
             InitializeComponent();
@@ -24,11 +20,11 @@ namespace BinaryToJSONConverterApp
 
         private void buttonMail_Click(object sender, EventArgs e)
         {
-            string target = "mailto:ArtCode-Kazan@yandex.ru";
+            string mailtoUrl = mailtoMainAdress;
 
             try
             {
-                System.Diagnostics.Process.Start(target);
+                System.Diagnostics.Process.Start(mailtoUrl);
             }
             catch (Win32Exception noBrowser)
             {

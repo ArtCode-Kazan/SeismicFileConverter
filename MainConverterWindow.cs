@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Windows.Forms;
 using JsonBinLib;
+using ServerConnectorLib;
 
 namespace BinaryToJSONConverterApp
 {
     public partial class MainConverterWindow : Form
     {
-        public const string HelpFileName = "ConverterHelpFile.chm";
+        ServerConnector server = new ServerConnector(Constants.serverUrlString, Constants.archiveName);
 
         public List<string> pathsJsons = new List<string>();
         public string pathFolderBinarySave = "";
@@ -19,12 +23,56 @@ namespace BinaryToJSONConverterApp
             toolStripStatusLabel.Text = "Ready";
         }
 
+        public string OriginAssemblyVersion
+        {
+            get
+            {
+                string appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return appVersion;
+            }
+        }
+
+        public string ProgramFolderPath
+        {
+            get
+            {
+                string pathToFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                return pathToFolder;
+            }
+        }
+
+        public void RunUpdater()
+        {
+            ProcessStartInfo info = new ProcessStartInfo(Path.Combine(ProgramFolderPath, Constants.UpdaterAppName));
+            info.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Process process = Process.Start(info);
+            Close();
+        }
+
+        public void UpdateProgramm()
+        {
+            DialogResult result = MessageBox.Show(
+            text: "New version available.\nUpdate?",
+            caption: "Update",
+            buttons: MessageBoxButtons.YesNo,
+            icon: MessageBoxIcon.Information,
+            defaultButton: MessageBoxDefaultButton.Button1,
+            options: MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result == DialogResult.Yes)
+            {
+                RunUpdater();
+            }
+
+            this.TopMost = true;
+        }
+
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = "";
-                foreach (String path in openFileDialog.FileNames)
+                foreach (string path in openFileDialog.FileNames)
                 {
                     this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
@@ -49,23 +97,22 @@ namespace BinaryToJSONConverterApp
                 JsonParser jsonParser = new JsonParser(path);
                 string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
                 string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);
-                SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, pathSaveBinary);
+                SeisBinaryFile binaryFile = new SeisBinaryFile(jsonDeserialized: jsonParser.jsonDeserialized, savePath: pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
                 toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
                 statusStrip.Refresh();
             }
-
             toolStripStatusLabel.Text = "Success";
         }
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string helpFilePath = Path.Combine(exeDirectory, HelpFileName);
+            string exeDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string helpFilePath = Path.Combine(exeDirectory, Constants.HelpFileName);
 
             if (File.Exists(helpFilePath))
             {
-                Help.ShowHelp(this, helpFilePath);
+                Help.ShowHelp(parent: this, url: helpFilePath);
             }
             else
             {
@@ -81,11 +128,11 @@ namespace BinaryToJSONConverterApp
 
         private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string target = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+            string mailtoUrl = Constants.SupportMailtoUrl;
 
             try
             {
-                System.Diagnostics.Process.Start(target);
+                Process.Start(mailtoUrl);
             }
             catch (System.ComponentModel.Win32Exception noBrowser)
             {
@@ -97,5 +144,33 @@ namespace BinaryToJSONConverterApp
                 MessageBox.Show(other.Message);
             }
         }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (server.IsVersionLatest(OriginAssemblyVersion))
+                {
+                    MessageBox.Show(text: "The latest version is installed", caption: "Update");
+                }
+                else
+                {
+                    UpdateProgramm();
+                }
+            }
+            catch (WebException)
+            {
+                MessageBox.Show(text: "No server connection", caption: "Exception Caught!");
+            }
+        }
+    }
+
+    public class Constants
+    {
+        public const string SupportMailtoUrl = "mailto:ArtCode-Kazan@yandex.ru?subject=Support.JsonConverter";
+        public const string UpdaterAppName = "SeisJsonConverterUpdater.exe";
+        public const string HelpFileName = "ConverterHelpFile.chm";
+        public const string serverUrlString = "https://sigma-geophys.com/Distr/";
+        public const string archiveName = "SeisJsonConveter.zip";
     }
 }
