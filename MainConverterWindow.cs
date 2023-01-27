@@ -11,15 +11,16 @@ namespace BinaryToJSONConverterApp
         public const string HelpFileName = "ConverterHelpFile.chm";
 
         public List<string> pathsJsons = new List<string>();
-        public string pathFolderBinarySave = "";        
+        public string pathFolderBinarySave = "";
 
         public MainConverterWindow()
         {
             InitializeComponent();
-            toolStripStatusLabel.Text = "Ready";            
+            toolStripStatusLabel.Text = "Ready";
         }
+
         public void buttonBrowseJsonFiles_Click(object sender, EventArgs e)
-        {                                    
+        {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxLoadFromFolder.Text = "";
@@ -27,9 +28,10 @@ namespace BinaryToJSONConverterApp
                 {
                     this.pathsJsons.Add(path);
                     textBoxLoadFromFolder.Text += openFileDialog.FileName + ";";
-                }                
+                }
             }
         }
+
         internal void buttonBrowseSaveFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -38,22 +40,23 @@ namespace BinaryToJSONConverterApp
                 this.pathFolderBinarySave = folderBrowserDialog.SelectedPath;
             }
         }
+
         internal void buttonConvert_Click(object sender, EventArgs e)
-        {            
-            for (int i = 0; i < this.pathsJsons.Count; i++)  
+        {
+            for (int i = 0; i < this.pathsJsons.Count; i++)
             {
                 string path = this.pathsJsons[i];
-                JsonParser jsonParser = new JsonParser(path);                
+                JsonParser jsonParser = new JsonParser(path);
                 string binaryFileName = jsonParser.jsonDeserialized.fileName + ".00";
-                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);                    
+                string pathSaveBinary = Path.Combine(this.pathFolderBinarySave, binaryFileName);
                 SeisBinaryFile binaryFile = new SeisBinaryFile(jsonParser.jsonDeserialized, pathSaveBinary);
                 binaryFile.SaveToBaykal7Format();
-                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";                
-                statusStrip.Refresh();             
+                toolStripStatusLabel.Text = "Processing...(" + (i + 1) + "/" + Convert.ToString(this.pathsJsons.Count) + ")";
+                statusStrip.Refresh();
             }
 
             toolStripStatusLabel.Text = "Success";
-        }                      
+        }
 
         private void OpenHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -73,7 +76,7 @@ namespace BinaryToJSONConverterApp
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form formHelp = new AboutProgramm();
-            formHelp.ShowDialog();            
+            formHelp.ShowDialog();
         }
 
         private void ReportAProblemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,5 +97,5 @@ namespace BinaryToJSONConverterApp
                 MessageBox.Show(other.Message);
             }
         }
-    }       
+    }
 }

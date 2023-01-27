@@ -11,6 +11,7 @@ namespace JsonBinLib
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
         public const Int32 nullValue = -9999;
+
         public static UInt16 channelsCount
         {
             get
@@ -18,6 +19,15 @@ namespace JsonBinLib
                 return Convert.ToUInt16(Constants.ComponentsOrder.Length);
             }
         }
+
+        public static DateTime Baikal7BaseDateTime
+        {
+            get
+            {
+                return new DateTime(1980, 1, 1);
+            }
+        }
+
         public static Dictionary<string, int> ComponentsIndex
         {
             get
@@ -26,7 +36,7 @@ namespace JsonBinLib
 
                 for (int i = 0; i < ComponentsOrder.Length; i++)
                 {
-                    componentsIndexes.Add(ComponentsOrder[i].ToString(), i);
+                    componentsIndexes.Add(key: ComponentsOrder[i].ToString(), value: i);
                 }
 
                 return componentsIndexes;
@@ -71,16 +81,38 @@ namespace JsonBinLib
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
-        }        
+        }
+
+        public int Baikal7HeaderMemorySize
+        {
+            get
+            {
+                int headerMemorySize = 120 + 72 * Constants.channelsCount;
+                return headerMemorySize;
+            }
+        }
+
+        public ulong GetBaikal7SecondsForWriting(DateTime startTime)
+        {
+            double secondsDuration = (startTime - Constants.Baikal7BaseDateTime).TotalSeconds;
+            ulong secondsForWriting = Convert.ToUInt64(secondsDuration) * 256000000;
+            return secondsForWriting;
+        }
+
         public Int32[] NormalizeSignal(float[] originSignal)
         {
             Int32[] normalizedSignal = new Int32[originSignal.Length];
 
-            float minimumOrigin = originSignal.Min();            
-            float maximumOrigin = originSignal.Max();   
-            float height = Math.Abs(minimumOrigin) + Math.Abs(maximumOrigin);
-            double coeffNorm = (Constants.NormalizationMaximum * 2) / height;                                    
-            double amplitudeOffset = Constants.NormalizationMaximum + (minimumOrigin * coeffNorm);
+            float minimumOrigin = originSignal.Min();
+            float maximumOrigin = originSignal.Max();
+            float height = maximumOrigin - minimumOrigin;
+            double coeffNorm;
+
+            if (height == 0)
+                throw new DivideByZeroException();
+
+            coeffNorm = Constants.NormalizationMaximum * 2 / height;
+            double amplitudeOffset = minimumOrigin * coeffNorm + Constants.NormalizationMaximum;
 
             for (int i = 0; i < originSignal.Length; i++)
             {
@@ -98,6 +130,8 @@ namespace JsonBinLib
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(filestream))
                 {
+                    Int32 value;
+
                     binaryWriter.Seek(0, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(Constants.channelsCount));
                     binaryWriter.Seek(22, SeekOrigin.Begin);
@@ -106,19 +140,11 @@ namespace JsonBinLib
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.longitude));
                     binaryWriter.Seek(72, SeekOrigin.Begin);
                     binaryWriter.Write(BitConverter.GetBytes(this.jsonInfo.latitude));
-
                     binaryWriter.Seek(104, SeekOrigin.Begin);
-                    DateTime constDatetime = new DateTime(1980, 1, 1);
-                    double secondsDuraion = (this.jsonInfo.startTime - constDatetime).TotalSeconds;
-                    ulong secondsForWriting = Convert.ToUInt64(secondsDuraion) * 256000000;
-                    binaryWriter.Write(BitConverter.GetBytes(secondsForWriting));
+                    binaryWriter.Write(BitConverter.GetBytes(GetBaikal7SecondsForWriting(this.jsonInfo.startTime)));
 
-                    int headerMemorySize = 120 + 72 * Constants.channelsCount;                                        
+                    binaryWriter.Seek(Baikal7HeaderMemorySize, SeekOrigin.Begin);
                     Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
-
-                    binaryWriter.Seek(headerMemorySize, SeekOrigin.Begin);
-
-                    Int32 value;
 
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
