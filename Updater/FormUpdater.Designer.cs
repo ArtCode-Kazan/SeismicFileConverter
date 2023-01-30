@@ -73,9 +73,9 @@
             this.labelversion.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.labelversion.Location = new System.Drawing.Point(12, 43);
             this.labelversion.Name = "labelversion";
-            this.labelversion.Size = new System.Drawing.Size(25, 15);
+            this.labelversion.Size = new System.Drawing.Size(57, 15);
             this.labelversion.TabIndex = 3;
-            this.labelversion.Text = "123";
+            this.labelversion.Text = "unknown";
             // 
             // FormUpdater
             // 
