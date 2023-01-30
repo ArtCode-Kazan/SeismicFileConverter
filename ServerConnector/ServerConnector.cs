@@ -112,6 +112,10 @@ namespace ServerConnectorLib
                     {
                         return false;
                     }
+                    else if (Convert.ToInt16(currentVersion[i]) > Convert.ToInt16(serverVersion[i]))
+                    {
+                        return true;
+                    }
                 }
                 return true;
             }

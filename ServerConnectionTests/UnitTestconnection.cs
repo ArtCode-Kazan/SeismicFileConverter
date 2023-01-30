@@ -8,6 +8,7 @@ namespace ServerConnectionTests
     public class ServerConnectionTests
     {
         [TestMethod]
+        [DataRow("1.0.0.0", "0.0.0.1", true)]
         [DataRow("2.0.0.0", "1.0.0.0", true)]
         [DataRow("1.1.0.0", "1.0.0.0", true)]
         [DataRow("1.0.1.0", "1.0.0.0", true)]
@@ -15,7 +16,7 @@ namespace ServerConnectionTests
         [DataRow("1.0.0.0", "2.0.0.0", false)]
         [DataRow("1.0.0.0", "1.2.0.0", false)]
         [DataRow("1.0.0.0", "1.0.2.0", false)]
-        [DataRow("1.0.0.0", "1.0.0.2", false)]
+        [DataRow("1.0.0.0", "1.0.0.2", false)]        
         public void IsVersionLatest(string programmVersion, string serverVersion, bool expected)
         {
             var desc = new DesriptionInfo(serverVersion, "QWERTY");
