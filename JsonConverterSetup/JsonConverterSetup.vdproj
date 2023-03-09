@@ -27,20 +27,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1B5D507E1FC414A1013EE21CA3F1E41E"
-        "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_322553E7B01A1B6600EBD831325C2505"
         "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_36DE6734CCEF4F85BD721FF60E6B1C81"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7B8A83333A00EC30CCD349EFD05DAE11"
-        "OwnerKey" = "8:_1B5D507E1FC414A1013EE21CA3F1E41E"
+        "OwnerKey" = "8:_AA087F12911C4CAD8C658A1334BBAE4F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -75,6 +63,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AA087F12911C4CAD8C658A1334BBAE4F"
+        "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DCE780F1787DDD7108BCA6305930A308"
         "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
         "MsmSig" = "8:_UNDEFINED"
@@ -87,6 +81,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F34B1D50715148ABBC6A78751DB7F268"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FEED3EF5232E4A0BBCCACA8C914F9EA7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -94,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_636B156DE9E5435C10C861BF0533865A"
+        "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_82F245A7036B4E37A9256284211A235A"
+        "OwnerKey" = "8:_AA087F12911C4CAD8C658A1334BBAE4F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -113,12 +113,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_13A9D8ACA4243A72B3E65223B23A3A7A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1B5D507E1FC414A1013EE21CA3F1E41E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -139,6 +133,12 @@
         "OwnerKey" = "8:_DCE780F1787DDD7108BCA6305930A308"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_636B156DE9E5435C10C861BF0533865A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -157,6 +157,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -173,6 +181,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -233,37 +249,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1B5D507E1FC414A1013EE21CA3F1E41E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:JsonBinLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1B5D507E1FC414A1013EE21CA3F1E41E"
-                    {
-                    "Name" = "8:JsonBinLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:JsonBinLib.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_9ED1F400565845D08CAA5126BF71AD58"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_322553E7B01A1B6600EBD831325C2505"
             {
             "AssemblyRegister" = "3:1"
@@ -293,26 +278,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_36DE6734CCEF4F85BD721FF60E6B1C81"
-            {
-            "SourcePath" = "8:..\\BinaryToJSONConverterApp\\bin\\Release\\ConverterHelpFile.chm"
-            "TargetName" = "8:ConverterHelpFile.chm"
-            "Tag" = "8:"
-            "Folder" = "8:_9ED1F400565845D08CAA5126BF71AD58"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4172E477EEC927E11E6C77FA6A289CB4"
@@ -408,6 +373,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AA087F12911C4CAD8C658A1334BBAE4F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:JsonBinLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AA087F12911C4CAD8C658A1334BBAE4F"
+                    {
+                    "Name" = "8:JsonBinLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:JsonBinLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_9ED1F400565845D08CAA5126BF71AD58"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCE780F1787DDD7108BCA6305930A308"
             {
             "AssemblyRegister" = "3:1"
@@ -437,6 +433,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F34B1D50715148ABBC6A78751DB7F268"
+            {
+            "SourcePath" = "8:..\\bin\\Debug\\ConverterHelpFile.chm"
+            "TargetName" = "8:ConverterHelpFile.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_9ED1F400565845D08CAA5126BF71AD58"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FEED3EF5232E4A0BBCCACA8C914F9EA7"
@@ -1051,7 +1067,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_82F245A7036B4E37A9256284211A235A"
             {
-            "SourcePath" = "8:..\\BinaryToJSONConverterApp\\obj\\Debug\\SeisJsonConverter.exe"
+            "SourcePath" = "8:..\\obj\\Release\\SeisJsonConverter.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9ED1F400565845D08CAA5126BF71AD58"

@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using JsonBinLib;
 using System;
-using System.IO;
 using Moq;
 
 namespace JsonBinLibTests

@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServerConnectorLib;
 
-namespace ServerConnectionTests
+namespace UnitTestconnection
 {
     [TestClass]
-    public class ServerConnectionTests
+    public class UnitTestconnection
     {
         [TestMethod]
         [DataRow("1.0.0.0", "0.0.0.1", true)]
@@ -16,7 +16,7 @@ namespace ServerConnectionTests
         [DataRow("1.0.0.0", "2.0.0.0", false)]
         [DataRow("1.0.0.0", "1.2.0.0", false)]
         [DataRow("1.0.0.0", "1.0.2.0", false)]
-        [DataRow("1.0.0.0", "1.0.0.2", false)]        
+        [DataRow("1.0.0.0", "1.0.0.2", false)]
         public void IsVersionLatest(string programmVersion, string serverVersion, bool expected)
         {
             var desc = new DesriptionInfo(serverVersion, "QWERTY");

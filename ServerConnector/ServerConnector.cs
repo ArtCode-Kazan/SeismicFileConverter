@@ -5,11 +5,19 @@ using System.Runtime.Serialization;
 
 namespace ServerConnectorLib
 {
+    /// <summary>
+    /// Class DesriptionInfo for information about program.
+    /// </summary>
     public class DesriptionInfo
     {
         public string version;
         public string hashsum;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesriptionInfo"/> class.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="hashsum">The hashsum.</param>
         public DesriptionInfo(
             string version,
             string hashsum
@@ -28,8 +36,16 @@ namespace ServerConnectorLib
         void DownloadFile(string savePath, Uri url);
     }
 
+    /// <summary>
+    /// Class ServerConnector.
+    /// Implements the <see cref="ServerConnectorLib.IServerConnector" />
+    /// </summary>
+    /// <seealso cref="ServerConnectorLib.IServerConnector" />
     public class ServerConnector : IServerConnector
     {
+        /// <summary>
+        /// Amount of number beetwen dots.
+        /// </summary>
         public const int VersionSegmentsAmount = 4;
 
         public Uri serverUrl;
@@ -38,6 +54,14 @@ namespace ServerConnectorLib
         public string versionFieldName;
         public string hashsumMD5FieldName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerConnector"/> class.
+        /// </summary>
+        /// <param name="serverUrlString">The server URL string.</param>
+        /// <param name="archiveName">Name of the archive.</param>
+        /// <param name="descriptionName">Name of the description file with extension.</param>
+        /// <param name="versionFieldName">Field name of the version.</param>
+        /// <param name="hashsumMD5FieldName">Field name of the hashsum md5.</param>
         public ServerConnector(string serverUrlString,
             string archiveName,
             string descriptionName = "version.txt",
@@ -51,6 +75,10 @@ namespace ServerConnectorLib
             this.hashsumMD5FieldName = hashsumMD5FieldName;
         }
 
+        /// <summary>
+        /// Gets the description URI.
+        /// </summary>
+        /// <value>The description URI.</value>
         public Uri DescriptionUri
         {
             get
@@ -60,6 +88,10 @@ namespace ServerConnectorLib
             }
         }
 
+        /// <summary>
+        /// Gets the archive URI.
+        /// </summary>
+        /// <value>The archive URI.</value>
         public Uri ArchiveUri
         {
             get
@@ -69,6 +101,10 @@ namespace ServerConnectorLib
             }
         }
 
+        /// <summary>
+        /// Gets the actual information about version and hashsum.
+        /// </summary>
+        /// <returns>DesriptionInfo with actual information from server</returns>
         public virtual DesriptionInfo GetDescription()
         {
             string line;
@@ -99,6 +135,12 @@ namespace ServerConnectorLib
             return new DesriptionInfo(serverVersion, serverHashsum);
         }
 
+        /// <summary>
+        /// Determines whether [is version latest] [the specified version].
+        /// </summary>
+        /// <param name="version">The current version.</param>
+        /// <returns><c>true</c> if [is version latest] [the specified version]; otherwise, <c>false</c>.</returns>
+        /// <exception cref="ServerConnectorLib.ServerConnector.InvalidVersionFormat">Invalid version format</exception>
         public virtual bool IsVersionLatest(string version)
         {
             string[] currentVersion = version.Split('.');
@@ -125,6 +167,11 @@ namespace ServerConnectorLib
             }
         }
 
+        /// <summary>
+        /// Determines whether [is hashsum equal] [the specified origin hashsum].
+        /// </summary>
+        /// <param name="originHashsum">The current hashsum.</param>
+        /// <returns><c>true</c> if [is hashsum equal] [the specified origin hashsum]; otherwise, <c>false</c>.</returns>
         public virtual bool IsHashsumEqual(string originHashsum)
         {
             if (originHashsum == this.GetDescription().hashsum)
@@ -137,6 +184,11 @@ namespace ServerConnectorLib
             }
         }
 
+        /// <summary>
+        /// Downloads the file.
+        /// </summary>
+        /// <param name="savePath">The save path.</param>
+        /// <param name="url">The URL.</param>
         public void DownloadFile(string savePath, Uri url)
         {
             using (WebClient wclient = new WebClient())
