@@ -6,12 +6,19 @@ using System.Linq;
 
 namespace JsonBinLib
 {
+    /// <summary>
+    /// Class Constants.
+    /// </summary>
     internal class Constants
     {
         public const string ComponentsOrder = "ZXY";
         public const int NormalizationMaximum = 32768;
         public const Int32 nullValue = -9999;
 
+        /// <summary>
+        /// Gets the channels count.
+        /// </summary>
+        /// <value>The channels count.</value>
         public static UInt16 channelsCount
         {
             get
@@ -20,6 +27,10 @@ namespace JsonBinLib
             }
         }
 
+        /// <summary>
+        /// Gets the baikal7 base date time.
+        /// </summary>
+        /// <value>The baikal7 base date time.</value>
         public static DateTime Baikal7BaseDateTime
         {
             get
@@ -28,7 +39,10 @@ namespace JsonBinLib
             }
         }
 
-
+        /// <summary>
+        /// Gets the index of the components.
+        /// </summary>
+        /// <value>String with the index of the components.</value>
         public static Dictionary<string, int> ComponentsIndex
         {
             get
@@ -43,6 +57,9 @@ namespace JsonBinLib
         }
     }
 
+    /// <summary>
+    /// Class JsonDataContainer, contains information from json.
+    /// </summary>
     public class JsonDataContainer
     {
         public DateTime startTime { get; set; }
@@ -54,11 +71,18 @@ namespace JsonBinLib
         public string componentName { get; set; }
     }
 
+    /// <summary>
+    /// Class JsonParser, for deserialize json.
+    /// </summary>
     public class JsonParser
     {
         public string pathToJsonFile;
         public JsonDataContainer jsonDeserialized;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonParser"/> class.
+        /// </summary>
+        /// <param name="pathToJsonFile">The path to json file.</param>
         public JsonParser(string pathToJsonFile)
         {
             this.pathToJsonFile = pathToJsonFile;
@@ -71,17 +95,29 @@ namespace JsonBinLib
         }
     }
 
+    /// <summary>
+    /// Class SeisBinaryFile.
+    /// </summary>
     public class SeisBinaryFile
     {
         public JsonDataContainer jsonInfo;
         public string savePath;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SeisBinaryFile"/> class.
+        /// </summary>
+        /// <param name="jsonDeserialized">Class JsonDataContainer with information</param>
+        /// <param name="savePath">The path to save binary file.</param>
         public SeisBinaryFile(JsonDataContainer jsonDeserialized, string savePath)
         {
             this.jsonInfo = jsonDeserialized;
             this.savePath = savePath;
         }
 
+        /// <summary>
+        /// Gets the byte size of the baikal7 header in memory.
+        /// </summary>
+        /// <value>Amount of bytes.</value>
         public int Baikal7HeaderMemorySize
         {
             get
@@ -91,6 +127,11 @@ namespace JsonBinLib
             }
         }
 
+        /// <summary>
+        /// Gets the baikal7 seconds for writing.
+        /// </summary>
+        /// <param name="startTime">The start time.</param>
+        /// <returns>Second amount.</returns>
         public ulong GetBaikal7SecondsForWriting(DateTime startTime)
         {
             double secondsDuration = (startTime - Constants.Baikal7BaseDateTime).TotalSeconds;
@@ -98,7 +139,12 @@ namespace JsonBinLib
             return secondsForWriting;
         }
 
-
+        /// <summary>
+        /// Normalizes the signal, move wave in normalization range.
+        /// </summary>
+        /// <param name="originSignal">The origin signal.</param>
+        /// <returns>Normalized signal</returns>
+        /// <exception cref="System.DivideByZeroException"></exception>
         public Int32[] NormalizeSignal(float[] originSignal)
         {
 
@@ -123,6 +169,9 @@ namespace JsonBinLib
             return normalizedSignal;
         }
 
+        /// <summary>
+        /// Saves binary seismic file in Baykal7 format.
+        /// </summary>
         public void SaveToBaykal7Format()
         {
             Int32[] normalSignal = NormalizeSignal(this.jsonInfo.signal);
