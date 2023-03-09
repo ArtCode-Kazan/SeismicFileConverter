@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServerConnectorLib;
 
-namespace UnitTestconnection
+namespace ServerConnectionTests
 {
     [TestClass]
-    public class UnitTestconnection
+    public class ServerConnectionTests
     {
         [TestMethod]
         [DataRow("1.0.0.0", "0.0.0.1", true)]

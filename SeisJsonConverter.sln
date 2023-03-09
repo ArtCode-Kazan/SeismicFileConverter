@@ -10,11 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeisJsonConverterUpdater", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectorLib", "ServerConnector\ServerConnectorLib.csproj", "{1C81C72F-4B6C-41E1-B56E-016E322D817E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConnectionTests", "ServerConnectionTests\ServerConnectionTests.csproj", "{B67A601D-A075-4547-B05F-F1B1E8E393B5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBinLibTests", "JsonBinLibTests\JsonBinLibTests.csproj", "{55DDCD82-7DAE-4BED-980D-BD994771D689}"
-EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "JsonConverterSetup", "JsonConverterSetup\JsonConverterSetup.vdproj", "{4AB42F9B-3701-4D49-8EC3-5FE80A08BD32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonBinLibTests", "JsonBinLibTests\JsonBinLibTests.csproj", "{3F0844DE-5B8C-40BA-91C2-4A6BF6119013}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerConnectionTests", "ServerConnectionTests\ServerConnectionTests.csproj", "{A5E2023B-8984-49EE-BA33-3D07F9C018B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,18 +38,18 @@ Global
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C81C72F-4B6C-41E1-B56E-016E322D817E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B67A601D-A075-4547-B05F-F1B1E8E393B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55DDCD82-7DAE-4BED-980D-BD994771D689}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AB42F9B-3701-4D49-8EC3-5FE80A08BD32}.Debug|Any CPU.ActiveCfg = Debug
 		{4AB42F9B-3701-4D49-8EC3-5FE80A08BD32}.Debug|Any CPU.Build.0 = Debug
 		{4AB42F9B-3701-4D49-8EC3-5FE80A08BD32}.Release|Any CPU.ActiveCfg = Release
 		{4AB42F9B-3701-4D49-8EC3-5FE80A08BD32}.Release|Any CPU.Build.0 = Release
+		{3F0844DE-5B8C-40BA-91C2-4A6BF6119013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0844DE-5B8C-40BA-91C2-4A6BF6119013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0844DE-5B8C-40BA-91C2-4A6BF6119013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0844DE-5B8C-40BA-91C2-4A6BF6119013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E2023B-8984-49EE-BA33-3D07F9C018B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E2023B-8984-49EE-BA33-3D07F9C018B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E2023B-8984-49EE-BA33-3D07F9C018B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E2023B-8984-49EE-BA33-3D07F9C018B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -101,7 +101,7 @@ namespace JsonBinLib
 
         public Int32[] NormalizeSignal(float[] originSignal)
         {
-            
+
             Int32[] normalizedSignal = new Int32[originSignal.Length];
 
             float minimumOrigin = originSignal.Min();
@@ -146,7 +146,7 @@ namespace JsonBinLib
 
                     binaryWriter.Seek(Baikal7HeaderMemorySize, SeekOrigin.Begin);
                     Constants.ComponentsIndex.TryGetValue(this.jsonInfo.componentName, out int columnIndex);
-                    
+
                     for (int i = 0; i < normalSignal.Length; i++)
                     {
                         for (int j = 0; j < Constants.channelsCount; j++)
